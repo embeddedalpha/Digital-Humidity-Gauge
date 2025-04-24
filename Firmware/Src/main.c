@@ -16,14 +16,60 @@
  ******************************************************************************
  */
 
-#include <stdint.h>
+#include "main.h"
+#include "Console/Console.h"
+#include "I2C/I2C.h"
+#include "GPIO/GPIO.h"
+#include "BME280.h"
+#include "Humidity_Gauge/Humidity_Gauge.h"
 
-#if !defined(__SOFT_FP__) && defined(__ARM_FP)
-  #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
-#endif
+I2C_Config BME280;
+
+
+
+
+
+
 
 int main(void)
 {
-    /* Loop forever */
+	MCU_Clock_Setup();
+
+	BME280.Port = I2C1;
+	BME280.SCL_Pin = I2C_Configuration.Pin.__I2C1__.SCL.PB6;
+	BME280.SDA_Pin = I2C_Configuration.Pin.__I2C1__.SDA.PB7;
+	BME280.Speed_Mode = I2C_Configuration.Speed_Mode.FM_Mode;
+	BME280.Mode = I2C_Configuration.Mode.Master;
+	BME280.Interrupts_Enable = I2C_Configuration.Interrupts_Enable.Disable;
+	BME280.DMA_Control = I2C_Configuration.DMA_Control.RX_DMA_Enable;
+
+	I2C_Init(&BME280);
+
+
+	// Read ID
+
+	BME280_Init(&BME280);
+
+	bme280_raw raw_values;
+
+	BME280_Get_Raw(&BME280, &raw_values);
+
+
+	float T_C  = BME280_Compensate_T(raw_values.Temperature_Raw) * 0.01f;
+	float P_kPa= BME280_Compensate_P(raw_values.Pressure_Raw) / 1000.0f;
+	float RH   = BME280_Compensate_H(raw_values.Humidity_Raw) / 1024.0f;
+
+
+	psychro_t Data = psychro_from_bme280(T_C, RH, P_kPa);
+
+
+
+
 	for(;;);
+}
+
+
+void Get_Psychometric_Data()
+{
+
 }

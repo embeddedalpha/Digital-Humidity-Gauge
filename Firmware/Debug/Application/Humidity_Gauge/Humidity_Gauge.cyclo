@@ -1,0 +1,4 @@
+../Application/Humidity_Gauge/Humidity_Gauge.c:13:21:p_sat_kPa	1
+../Application/Humidity_Gauge/Humidity_Gauge.c:19:14:dew_point	1
+../Application/Humidity_Gauge/Humidity_Gauge.c:26:14:wet_bulb_stull	1
+../Application/Humidity_Gauge/Humidity_Gauge.c:37:11:psychro_from_bme280	1

@@ -590,6 +590,16 @@ int I2C_Read_Register(I2C_Config *config, uint16_t device_address, uint8_t reg_a
 int I2C_Master_Read_Registers_Bulk(I2C_Config *config, uint8_t device_address, uint8_t reg_address, uint8_t *data, uint16_t length)
 {
 
+	if(config -> DMA_Control == I2C_Configuration.DMA_Control.Disable)
+	{
+		I2C_Master_Start(config);
+		I2C_Master_Address(config, device_address, 0);
+		I2C_Master_Send_Byte(config, reg_address);
+		I2C_Master_Stop(config);
+		I2C_Master_Start(config);
+		I2C_Master_Address(config, device_address, 1);
+	}
+
 	if(config->Port == I2C1)
 	{
 		xI2C1_RX.memory_address = (uint32_t)&data[0];

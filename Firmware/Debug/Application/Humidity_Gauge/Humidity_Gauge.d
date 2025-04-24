@@ -1,0 +1,30 @@
+Application/Humidity_Gauge/Humidity_Gauge.o: \
+ ../Application/Humidity_Gauge/Humidity_Gauge.c \
+ ../Application/Humidity_Gauge/Humidity_Gauge.h ../Inc/main.h \
+ ../Inc/stm32f407xx.h ../Inc/core_cm4.h ../Inc/cmsis_version.h \
+ ../Inc/cmsis_compiler.h ../Inc/cmsis_gcc.h ../Inc/mpu_armv7.h \
+ ../Inc/system_stm32f4xx.h ../Inc/stm32f4xx.h \
+ D:/STM32F407_Projects/Digital-Humidity-Gauge/Devices/BME280/BME280.h \
+ D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/GPIO/GPIO.h \
+ D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/GPIO/GPIO_Defs.h \
+ D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/I2C/I2C.h \
+ D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/DMA/DMA.h \
+ D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/DMA/DMA_Defs.h \
+ D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/I2C/I2C_Defs.h
+../Application/Humidity_Gauge/Humidity_Gauge.h:
+../Inc/main.h:
+../Inc/stm32f407xx.h:
+../Inc/core_cm4.h:
+../Inc/cmsis_version.h:
+../Inc/cmsis_compiler.h:
+../Inc/cmsis_gcc.h:
+../Inc/mpu_armv7.h:
+../Inc/system_stm32f4xx.h:
+../Inc/stm32f4xx.h:
+D:/STM32F407_Projects/Digital-Humidity-Gauge/Devices/BME280/BME280.h:
+D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/GPIO/GPIO.h:
+D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/GPIO/GPIO_Defs.h:
+D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/I2C/I2C.h:
+D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/DMA/DMA.h:
+D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/DMA/DMA_Defs.h:
+D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/I2C/I2C_Defs.h:
