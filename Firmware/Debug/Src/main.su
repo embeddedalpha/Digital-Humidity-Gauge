@@ -1,5 +1,7 @@
 ../Inc/core_cm4.h:1814:22:__NVIC_SetPriority	16	static
 ../Inc/core_cm4.h:2022:26:SysTick_Config	16	static
 ../Inc/main.h:51:22:MCU_Clock_Setup	16	static
-../Src/main.c:34:5:main	80	static
-../Src/main.c:72:6:Get_Psychometric_Data	4	static
+../Src/main.c:33:6:Hold_Button_ISR	4	static
+../Src/main.c:38:6:Degree_Button_ISR	4	static
+../Src/main.c:46:5:main	104	static
+../Src/main.c:90:6:Get_Psychometric_Data	4	static

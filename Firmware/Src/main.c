@@ -26,7 +26,19 @@
 I2C_Config BME280;
 
 
+// Hold Button
+// C/F Degree Button
 
+
+void Hold_Button_ISR(void)
+{
+
+}
+
+void Degree_Button_ISR(void)
+{
+
+}
 
 
 
@@ -34,6 +46,12 @@ I2C_Config BME280;
 int main(void)
 {
 	MCU_Clock_Setup();
+
+	GPIO_Pin_Init(GPIOA, 5, GPIO_Configuration.Mode.Input, GPIO_Configuration.Output_Type.Open_Drain, GPIO_Configuration.Speed.None, GPIO_Configuration.Pull.Pull_Down, GPIO_Configuration.Alternate_Functions.None);
+	GPIO_Pin_Init(GPIOA, 6, GPIO_Configuration.Mode.Input, GPIO_Configuration.Output_Type.Open_Drain, GPIO_Configuration.Speed.None, GPIO_Configuration.Pull.Pull_Down, GPIO_Configuration.Alternate_Functions.None);
+
+	GPIO_Interrupt_Setup(GPIOA, 5, GPIO_Configuration.Interrupt_Edge.RISING_EDGE, 0, Hold_Button_ISR);
+	GPIO_Interrupt_Setup(GPIOA, 6, GPIO_Configuration.Interrupt_Edge.RISING_EDGE, 0, Degree_Button_ISR);
 
 	BME280.Port = I2C1;
 	BME280.SCL_Pin = I2C_Configuration.Pin.__I2C1__.SCL.PB6;
