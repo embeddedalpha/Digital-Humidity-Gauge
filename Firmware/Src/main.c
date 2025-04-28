@@ -25,10 +25,25 @@
 
 I2C_Config BME280;
 
+typedef enum
+{
+	UNIT_CELSIUS = 0,
+	UNIT_FAHRENHEIT = 1
+} DisplayUnit;
 
-// Hold Button
-// C/F Degree Button
+volatile DisplayUnit currentUnit = UNIT_CELSIUS;
 
+
+typedef enum
+{
+	Page_0 = 0,
+	Page_1,
+	Page_2,
+	Page_3,
+	Page_4,
+}DisplayPage;
+
+volatile DisplayPage currentPage = Page_0;
 
 void Hold_Button_ISR(void)
 {
@@ -37,10 +52,27 @@ void Hold_Button_ISR(void)
 
 void Degree_Button_ISR(void)
 {
+    currentUnit = (currentUnit == UNIT_CELSIUS)
+                  ? UNIT_FAHRENHEIT
+                  : UNIT_CELSIUS;
 
 }
 
+void Reset_Button_ISR(void)
+{
 
+}
+
+void Top_Arrow_Button_ISR(void)
+{
+	currentPage = (DisplayPage)((currentPage + 1) % 5);
+}
+
+
+void Bottom_Arrow_Button_ISR(void)
+{
+	currentPage = (DisplayPage)((currentPage + 4) % 5);
+}
 
 
 int main(void)
@@ -48,10 +80,23 @@ int main(void)
 	MCU_Clock_Setup();
 
 	GPIO_Pin_Init(GPIOA, 5, GPIO_Configuration.Mode.Input, GPIO_Configuration.Output_Type.Open_Drain, GPIO_Configuration.Speed.None, GPIO_Configuration.Pull.Pull_Down, GPIO_Configuration.Alternate_Functions.None);
-	GPIO_Pin_Init(GPIOA, 6, GPIO_Configuration.Mode.Input, GPIO_Configuration.Output_Type.Open_Drain, GPIO_Configuration.Speed.None, GPIO_Configuration.Pull.Pull_Down, GPIO_Configuration.Alternate_Functions.None);
-
 	GPIO_Interrupt_Setup(GPIOA, 5, GPIO_Configuration.Interrupt_Edge.RISING_EDGE, 0, Hold_Button_ISR);
+
+	GPIO_Pin_Init(GPIOA, 6, GPIO_Configuration.Mode.Input, GPIO_Configuration.Output_Type.Open_Drain, GPIO_Configuration.Speed.None, GPIO_Configuration.Pull.Pull_Down, GPIO_Configuration.Alternate_Functions.None);
 	GPIO_Interrupt_Setup(GPIOA, 6, GPIO_Configuration.Interrupt_Edge.RISING_EDGE, 0, Degree_Button_ISR);
+
+	GPIO_Pin_Init(GPIOA, 7, GPIO_Configuration.Mode.Input, GPIO_Configuration.Output_Type.Open_Drain, GPIO_Configuration.Speed.None, GPIO_Configuration.Pull.Pull_Down, GPIO_Configuration.Alternate_Functions.None);
+	GPIO_Interrupt_Setup(GPIOA, 7, GPIO_Configuration.Interrupt_Edge.RISING_EDGE, 0, Reset_Button_ISR);
+
+
+	GPIO_Pin_Init(GPIOA, 8, GPIO_Configuration.Mode.Input, GPIO_Configuration.Output_Type.Open_Drain, GPIO_Configuration.Speed.None, GPIO_Configuration.Pull.Pull_Down, GPIO_Configuration.Alternate_Functions.None);
+	GPIO_Interrupt_Setup(GPIOA, 8, GPIO_Configuration.Interrupt_Edge.RISING_EDGE, 0, Top_Arrow_Button_ISR);
+
+	GPIO_Pin_Init(GPIOA, 9, GPIO_Configuration.Mode.Input, GPIO_Configuration.Output_Type.Open_Drain, GPIO_Configuration.Speed.None, GPIO_Configuration.Pull.Pull_Down, GPIO_Configuration.Alternate_Functions.None);
+	GPIO_Interrupt_Setup(GPIOA, 9, GPIO_Configuration.Interrupt_Edge.RISING_EDGE, 0, Bottom_Arrow_Button_ISR);
+
+
+
 
 	BME280.Port = I2C1;
 	BME280.SCL_Pin = I2C_Configuration.Pin.__I2C1__.SCL.PB6;
@@ -83,11 +128,12 @@ int main(void)
 
 
 
-	for(;;);
+	for(;;)
+	{
+
+
+
+	}
 }
 
 
-void Get_Psychometric_Data()
-{
-
-}
