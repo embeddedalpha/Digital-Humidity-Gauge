@@ -24,12 +24,14 @@ C_DEPS :=
 SUBDIRS := \
 Application/Humidity_Gauge \
 Devices/BME280 \
+Devices/GC9A01 \
 Driver/CAN \
 Driver/Console \
 Driver/DMA \
 Driver/GPIO \
 Driver/I2C \
 Driver/Logs \
+Driver/SPI \
 Driver/Timer \
 Driver/USART \
 Src \

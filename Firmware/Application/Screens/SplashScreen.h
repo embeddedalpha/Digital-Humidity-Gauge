@@ -9,5 +9,11 @@
 #define SCREENS_SPLASHSCREEN_H_
 
 
+#include "main.h"
+
+
+
+
+
 
 #endif /* SCREENS_SPLASHSCREEN_H_ */

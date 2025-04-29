@@ -123,13 +123,22 @@ int main(void)
 	float RH   = BME280_Compensate_H(raw_values.Humidity_Raw) / 1024.0f;
 
 
-	psychro_t Data = psychro_from_bme280(T_C, RH, P_kPa);
+	psychro_t Data;
 
 
 
 
 	for(;;)
 	{
+
+		if(currentUnit == UNIT_FAHRENHEIT)
+		{
+
+		}
+		else
+		{
+			Data = psychro_from_bme280(T_C, RH, P_kPa);
+		}
 
 
 
