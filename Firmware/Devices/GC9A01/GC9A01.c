@@ -8,6 +8,8 @@
 
 #include "GC9A01.h"
 
+uint32_t image_buffer[240*240];
+
 static void command_line_high(GC9A01_Typedef *config)
 {
 	GPIO_Pin_High(config->DC_Port, config->DC_Pin);
@@ -472,6 +474,7 @@ void GC9A01_Splash_Screen(GC9A01_Typedef *config, uint16_t color)
 
 void GC9A01_Draw_Mercury(GC9A01_Typedef *config)
 {
+
 
 	size_t buffer_size = sizeof(image_buffer);
 	size_t num_elements = buffer_size / sizeof(uint16_t);
