@@ -868,71 +868,87 @@ void DMA2_Stream3_IRQHandler(void)
 
 	if(DMA_LISR & DMA_LISR_FEIF3)
 	{
-	    if (__DMA2_Stream3_Config__ -> ISR_Routines.FIFO_Error_ISR)
-	    {
-	    	__DMA2_Stream3_Config__ ->ISR_Routines.FIFO_Error_ISR();
-	    	DMA2 -> LIFCR |= DMA_LIFCR_CFEIF3;
-	    }
+		if(__DMA2_Stream3_Config__->interrupts & DMA_Configuration.DMA_Interrupts.Fifo_Error)
+		{
+		    if (__DMA2_Stream3_Config__ -> ISR_Routines.FIFO_Error_ISR)
+		    {
+		    	__DMA2_Stream3_Config__ ->ISR_Routines.FIFO_Error_ISR();
+		    	DMA2 -> LIFCR |= DMA_LIFCR_CFEIF3;
+		    }
+		}
 	}
 
 	if(DMA_LISR & DMA_LISR_DMEIF3)
 	{
-	    if (__DMA2_Stream3_Config__ -> ISR_Routines.Direct_Mode_Error_ISR)
-	    {
-	    	__DMA2_Stream3_Config__ ->ISR_Routines.Direct_Mode_Error_ISR();
-	    	DMA2 -> LIFCR |= DMA_LIFCR_CDMEIF3;
-	    }
+		if(__DMA2_Stream3_Config__->interrupts & DMA_Configuration.DMA_Interrupts.Direct_Mode_Error)
+		{
+		    if (__DMA2_Stream3_Config__ -> ISR_Routines.Direct_Mode_Error_ISR)
+		    {
+		    	__DMA2_Stream3_Config__ ->ISR_Routines.Direct_Mode_Error_ISR();
+		    	DMA2 -> LIFCR |= DMA_LIFCR_CDMEIF3;
+		    }
+		}
 	}
 
 	if(DMA_LISR & DMA_LISR_TEIF3)
 	{
-	    if (__DMA2_Stream3_Config__ -> ISR_Routines.Transfer_Error_ISR)
-	    {
-	    	__DMA2_Stream3_Config__ ->ISR_Routines.Transfer_Error_ISR();
-	    	DMA2 -> LIFCR |= DMA_LIFCR_CTEIF3;
-	    }
+		if(__DMA2_Stream3_Config__->interrupts & DMA_Configuration.DMA_Interrupts.Transfer_Error)
+		{
+		    if (__DMA2_Stream3_Config__ -> ISR_Routines.Transfer_Error_ISR)
+		    {
+		    	__DMA2_Stream3_Config__ ->ISR_Routines.Transfer_Error_ISR();
+		    	DMA2 -> LIFCR |= DMA_LIFCR_CTEIF3;
+		    }
+		}
 	}
 
 	if(DMA_LISR & DMA_LISR_HTIF3)
 	{
-	    if (__DMA2_Stream3_Config__ -> ISR_Routines.Half_Transfer_Complete_ISR)
-	    {
-	    	__DMA2_Stream3_Config__ ->ISR_Routines.Half_Transfer_Complete_ISR();
-	    	DMA2 -> LIFCR |= DMA_LIFCR_CHTIF3;
+		if(__DMA2_Stream3_Config__->interrupts & DMA_Configuration.DMA_Interrupts.Half_Transfer_Complete)
+		{
+		    if (__DMA2_Stream3_Config__ -> ISR_Routines.Half_Transfer_Complete_ISR)
+		    {
+		    	__DMA2_Stream3_Config__ ->ISR_Routines.Half_Transfer_Complete_ISR();
+		    	DMA2 -> LIFCR |= DMA_LIFCR_CHTIF3;
 
-	    	if(__DMA2_Stream3_Config__->double_buffer_mode == DMA_Configuration.Double_Buffer_Mode.Enable )
-	    	{
-	    		if((__DMA2_Stream3_Config__->Request.Stream->CR & DMA_SxCR_DBM_Msk) != 0)
-	    		{
-	    			__DMA2_Stream3_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_1_ISR();
-	    		}
-	    		else
-	    		{
-	    			__DMA2_Stream3_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_2_ISR();
-	    		}
-	    	}
-	    }
+		    	if(__DMA2_Stream3_Config__->double_buffer_mode == DMA_Configuration.Double_Buffer_Mode.Enable )
+		    	{
+		    		if((__DMA2_Stream3_Config__->Request.Stream->CR & DMA_SxCR_DBM_Msk) != 0)
+		    		{
+		    			__DMA2_Stream3_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_1_ISR();
+		    		}
+		    		else
+		    		{
+		    			__DMA2_Stream3_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_2_ISR();
+		    		}
+		    	}
+		    }
+		}
+
 	}
 
 	if(DMA_LISR & DMA_LISR_TCIF3)
 	{
-	    if (__DMA2_Stream3_Config__ -> ISR_Routines.Full_Transfer_Commplete_ISR)
-	    {
-	    	__DMA2_Stream3_Config__ ->ISR_Routines.Half_Transfer_Complete_ISR();
-	    	DMA2 -> LIFCR |= DMA_LIFCR_CTCIF3;
+		if(__DMA2_Stream3_Config__->interrupts & DMA_Configuration.DMA_Interrupts.Transfer_Complete)
+		{
+		    if (__DMA2_Stream3_Config__ -> ISR_Routines.Full_Transfer_Commplete_ISR)
+		    {
+		    	__DMA2_Stream3_Config__ ->ISR_Routines.Full_Transfer_Commplete_ISR();
+		    	DMA2 -> LIFCR |= DMA_LIFCR_CTCIF3;
 
-	    	if(__DMA2_Stream3_Config__->double_buffer_mode == DMA_Configuration.Double_Buffer_Mode.Enable )
-	    	{
-	    		if((__DMA2_Stream3_Config__->Request.Stream->CR & DMA_SxCR_DBM_Msk) != 0)
-	    		{
-	    			__DMA2_Stream3_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_1_ISR();
-	    		}
-	    		else
-	    		{
-	    			__DMA2_Stream3_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_2_ISR();
-	    		}
-	    	}
-	    }
+		    	if(__DMA2_Stream3_Config__->double_buffer_mode == DMA_Configuration.Double_Buffer_Mode.Enable )
+		    	{
+		    		if((__DMA2_Stream3_Config__->Request.Stream->CR & DMA_SxCR_DBM_Msk) != 0)
+		    		{
+		    			__DMA2_Stream3_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_1_ISR();
+		    		}
+		    		else
+		    		{
+		    			__DMA2_Stream3_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_2_ISR();
+		    		}
+		    	}
+		    }
+		}
 	}
 }
 
@@ -1351,26 +1367,26 @@ int8_t DMA_Init(DMA_Config *config)
      if(config->interrupts != DMA_Configuration.DMA_Interrupts.Disable)
     {
 
-        if(config->interrupts |= DMA_Configuration.DMA_Interrupts.Fifo_Error)
+        if(config->interrupts & DMA_Configuration.DMA_Interrupts.Fifo_Error)
         {
         	config->Request.Stream->FCR |= config->interrupts;
         }
 
-        if(config->interrupts |= DMA_Configuration.DMA_Interrupts.Transfer_Complete)
+        if(config->interrupts & DMA_Configuration.DMA_Interrupts.Transfer_Complete)
         {
         	config->Request.Stream->CR |= DMA_SxCR_TCIE;
         }
 
-        if(config->interrupts |= DMA_Configuration.DMA_Interrupts.Half_Transfer_Complete)
+        if(config->interrupts & DMA_Configuration.DMA_Interrupts.Half_Transfer_Complete)
         {
         	config->Request.Stream->CR |= DMA_SxCR_HTIE;
         }
 
-        if(config->interrupts |= DMA_Configuration.DMA_Interrupts.Transfer_Error)
+        if(config->interrupts & DMA_Configuration.DMA_Interrupts.Transfer_Error)
         {
         	config->Request.Stream->CR |= DMA_SxCR_TEIE;
         }
-        if(config->interrupts |= DMA_Configuration.DMA_Interrupts.Direct_Mode_Error)
+        if(config->interrupts & DMA_Configuration.DMA_Interrupts.Direct_Mode_Error)
         {
         	config->Request.Stream->CR |= DMA_SxCR_DMEIE;
         }
@@ -1379,54 +1395,70 @@ int8_t DMA_Init(DMA_Config *config)
         if(config->Request.Controller == DMA1)
         {
             if(config->Request.Stream == DMA1_Stream0){
+            	__DMA1_Stream0_Config__ = config;
             	NVIC_EnableIRQ(DMA1_Stream0_IRQn);
             }
             else if(config->Request.Stream == DMA1_Stream1){
+            	__DMA1_Stream1_Config__ = config;
             	NVIC_EnableIRQ(DMA1_Stream1_IRQn);
             }
             else if(config->Request.Stream == DMA1_Stream2){
+            	__DMA1_Stream2_Config__ = config;
             	NVIC_EnableIRQ(DMA1_Stream2_IRQn);
             }
             else if(config->Request.Stream == DMA1_Stream3){
+            	__DMA1_Stream3_Config__ = config;
             	NVIC_EnableIRQ(DMA1_Stream3_IRQn);
             }
             else if(config->Request.Stream == DMA1_Stream4){
+            	__DMA1_Stream4_Config__ = config;
             	NVIC_EnableIRQ(DMA1_Stream4_IRQn);
             }
             else if(config->Request.Stream == DMA1_Stream5){
+            	__DMA1_Stream5_Config__ = config;
             	NVIC_EnableIRQ(DMA1_Stream5_IRQn);
             }
             else if(config->Request.Stream == DMA1_Stream6) {
+            	__DMA1_Stream6_Config__ = config;
             	NVIC_EnableIRQ(DMA1_Stream6_IRQn);
             }
             else if(config->Request.Stream == DMA1_Stream7){
+            	__DMA1_Stream7_Config__ = config;
             	NVIC_EnableIRQ(DMA1_Stream7_IRQn);
             }
         }
         else if(config->Request.Controller == DMA2)
         {
             if(config->Request.Stream == DMA2_Stream0){
+            	__DMA2_Stream0_Config__ = config;
             	NVIC_EnableIRQ(DMA2_Stream0_IRQn);
             }
             else if(config->Request.Stream == DMA2_Stream1){
+            	__DMA2_Stream1_Config__ = config;
             	NVIC_EnableIRQ(DMA2_Stream1_IRQn);
             }
             else if(config->Request.Stream == DMA2_Stream2){
+            	__DMA2_Stream2_Config__ = config;
             	NVIC_EnableIRQ(DMA2_Stream2_IRQn);
             }
             else if(config->Request.Stream == DMA2_Stream3){
+            	__DMA2_Stream3_Config__ = config;
             	NVIC_EnableIRQ(DMA2_Stream3_IRQn);
             }
             else if(config->Request.Stream == DMA2_Stream4){
+            	__DMA2_Stream4_Config__ = config;
             	NVIC_EnableIRQ(DMA2_Stream4_IRQn);
             }
             else if(config->Request.Stream == DMA2_Stream5){
+            	__DMA2_Stream5_Config__ = config;
             	NVIC_EnableIRQ(DMA2_Stream5_IRQn);
             }
             else if(config->Request.Stream == DMA2_Stream6){
+            	__DMA2_Stream6_Config__ = config;
             	NVIC_EnableIRQ(DMA2_Stream6_IRQn);
             }
             else if(config->Request.Stream == DMA2_Stream7){
+            	__DMA2_Stream7_Config__ = config;
 //            	NVIC_SetPriority(DMA2_Stream7_IRQn,0);
             	NVIC_EnableIRQ(DMA2_Stream7_IRQn);
 

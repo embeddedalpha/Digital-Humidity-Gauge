@@ -13,6 +13,11 @@
 #include "SPI.h"
 
 
+volatile bool TX_Complete = 0;
+void SPI1_ISR()
+{
+	TX_Complete = 1;
+}
 
 DMA_Config xDMA1_TX; /**< DMA configuration for SPI1 TX. */
 DMA_Config xDMA1_RX; /**< DMA configuration for SPI1 RX. */
@@ -39,6 +44,7 @@ static void xDMA1_TX_Init()
 	xDMA1_TX.peripheral_pointer_increment = DMA_Configuration.Peripheral_Pointer_Increment.Disable;
 	xDMA1_TX.memory_pointer_increment = DMA_Configuration.Memory_Pointer_Increment.Enable;
 	xDMA1_TX.priority_level = DMA_Configuration.Priority_Level.Very_high;
+	xDMA1_TX.ISR_Routines.Full_Transfer_Commplete_ISR = SPI1_ISR;
 	DMA_Init(&xDMA1_TX);
 }
 
@@ -398,8 +404,8 @@ int8_t SPI_Init(SPI_Config *config)
 		 }
 		else if(config -> dma == SPI_Configurations.DMA_Type.RX_DMA_Enable)
 		{
-			config -> Port -> CR2 |=  SPI_CR2_RXDMAEN;
-			config -> Port -> CR2 |=  SPI_CR2_TXDMAEN;
+//			config -> Port -> CR2 |=  SPI_CR2_RXDMAEN;
+//			config -> Port -> CR2 |=  SPI_CR2_TXDMAEN;
 			if(config -> Port == SPI1){
 				xDMA1_RX_Init();
 			}
@@ -416,7 +422,7 @@ int8_t SPI_Init(SPI_Config *config)
 			config -> Port -> CR2 &= ~SPI_CR2_TXDMAEN;
 		}
 		else if(config -> dma == SPI_Configurations.DMA_Type.TX_DMA_Enable){
-			config -> Port -> CR2 |=  SPI_CR2_TXDMAEN;
+//			config -> Port -> CR2 |=  SPI_CR2_TXDMAEN;
 			if(config -> Port == SPI1){
 				xDMA1_TX_Init();
 			}
@@ -528,7 +534,7 @@ int8_t SPI_TRX_Buffer(SPI_Config *config, uint16_t *tx_buffer,uint16_t *rx_buffe
 			xDMA1_TX.peripheral_address = (uint32_t)&config->Port->DR;
 			if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA1_TX.peripheral_data_size = DMA_Configuration.Peripheral_Data_Size.byte;
 			else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA1_TX.peripheral_data_size = DMA_Configuration.Peripheral_Data_Size.half_word;
-			xDMA1_TX.buffer_length = tx_length + 2;
+			xDMA1_TX.buffer_length = tx_length;
 			xDMA1_TX.memory_pointer_increment = DMA_Configuration.Memory_Pointer_Increment.Enable;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			xDMA1_RX.memory_address = (uint32_t)&rx_buffer[0];
@@ -542,14 +548,13 @@ int8_t SPI_TRX_Buffer(SPI_Config *config, uint16_t *tx_buffer,uint16_t *rx_buffe
 			DMA_Set_Target(&xDMA1_TX);
 //			DMA_Set_Target(&xDMA1_RX);
 			DMA_Set_Trigger(&xDMA1_TX);
-//			DMA_Set_Trigger(&xDMA1_RX);
 
-//			while((SPI1_TX_DMA_Flag.Transfer_Complete_Flag == false)){}
-//			SPI1_TX_DMA_Flag.Transfer_Complete_Flag = false;
+			config -> Port -> CR2 |=  SPI_CR2_RXDMAEN;
+			config -> Port -> CR2 |=  SPI_CR2_TXDMAEN;
 
-//			while((DMA2_Stream3_Flag.Transfer_Complete_Flag == false)){}
-//			DMA2_Stream3_Flag.Transfer_Complete_Flag = false;
-
+			while(TX_Complete == 0){}
+			TX_Complete = 0;
+			Delay_us(1);
 
 		}
 		else if(config->Port == SPI2)
@@ -605,6 +610,8 @@ int8_t SPI_TRX_Buffer(SPI_Config *config, uint16_t *tx_buffer,uint16_t *rx_buffe
 //			DMA_Set_Target(&xDMA3_RX);
 			DMA_Set_Trigger(&xDMA3_TX);
 //			DMA_Set_Trigger(&xDMA3_RX);
+
+
 
 //			while((SPI3_TX_DMA_Flag.Transfer_Complete_Flag == false)){}
 //			SPI3_TX_DMA_Flag.Transfer_Complete_Flag = false;
