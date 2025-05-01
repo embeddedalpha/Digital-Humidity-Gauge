@@ -338,10 +338,18 @@ int8_t SPI_Init(SPI_Config *config)
 	SPI_Clock_Enable(config);
 	SPI_Pin_Init(config);
 
+	SPI_NSS_High(config);
+
 	config -> Port -> CR1 &= ~SPI_CR1_SPE;
+
+
 
 	if((config -> Port == SPI1) || (config -> Port == SPI2) || (config -> Port == SPI3))
 	{
+
+		config -> Port ->CR1 |= SPI_CR1_SSM | SPI_CR1_SSI;
+
+
 		     if(config -> clock_phase == SPI_Configurations.Clock_Phase.Low_0) config-> Port -> CR1 &= ~SPI_CR1_CPHA;
 		else if(config -> clock_phase == SPI_Configurations.Clock_Phase.High_1) config-> Port -> CR1 |= SPI_CR1_CPHA;
 		else {return -1;}
@@ -382,6 +390,9 @@ int8_t SPI_Init(SPI_Config *config)
 		else if(config->interrupt == SPI_Configurations.Interrupts.Error) config -> Port ->  CR2 |=  SPI_CR2_ERRIE;
 		else { return -1;}
 
+
+
+
 		if(config -> dma == SPI_Configurations.DMA_Type.RX_DMA_Disable){
 		    config -> Port -> CR2 &= ~SPI_CR2_RXDMAEN;
 		 }
@@ -419,8 +430,8 @@ int8_t SPI_Init(SPI_Config *config)
 		}
 		else {return -1;}
 
-		config -> Port -> CR1 &= ~SPI_CR1_SSM ;
-		config -> Port -> CR2 |=  SPI_CR2_SSOE ;
+
+
 
 	}
 	else
@@ -533,8 +544,8 @@ int8_t SPI_TRX_Buffer(SPI_Config *config, uint16_t *tx_buffer,uint16_t *rx_buffe
 			DMA_Set_Trigger(&xDMA1_TX);
 //			DMA_Set_Trigger(&xDMA1_RX);
 
-			while((SPI1_TX_DMA_Flag.Transfer_Complete_Flag == false)){}
-			SPI1_TX_DMA_Flag.Transfer_Complete_Flag = false;
+//			while((SPI1_TX_DMA_Flag.Transfer_Complete_Flag == false)){}
+//			SPI1_TX_DMA_Flag.Transfer_Complete_Flag = false;
 
 //			while((DMA2_Stream3_Flag.Transfer_Complete_Flag == false)){}
 //			DMA2_Stream3_Flag.Transfer_Complete_Flag = false;
@@ -566,8 +577,8 @@ int8_t SPI_TRX_Buffer(SPI_Config *config, uint16_t *tx_buffer,uint16_t *rx_buffe
 			DMA_Set_Trigger(&xDMA2_TX);
 //			DMA_Set_Trigger(&xDMA2_RX);
 
-			while((SPI2_TX_DMA_Flag.Transfer_Complete_Flag == false)){}
-			SPI2_TX_DMA_Flag.Transfer_Complete_Flag = false;
+//			while((SPI2_TX_DMA_Flag.Transfer_Complete_Flag == false)){}
+//			SPI2_TX_DMA_Flag.Transfer_Complete_Flag = false;
 
 		}
 		else if(config->Port == SPI3)
@@ -595,8 +606,8 @@ int8_t SPI_TRX_Buffer(SPI_Config *config, uint16_t *tx_buffer,uint16_t *rx_buffe
 			DMA_Set_Trigger(&xDMA3_TX);
 //			DMA_Set_Trigger(&xDMA3_RX);
 
-			while((SPI3_TX_DMA_Flag.Transfer_Complete_Flag == false)){}
-			SPI3_TX_DMA_Flag.Transfer_Complete_Flag = false;
+//			while((SPI3_TX_DMA_Flag.Transfer_Complete_Flag == false)){}
+//			SPI3_TX_DMA_Flag.Transfer_Complete_Flag = false;
 
 		}
 		else
