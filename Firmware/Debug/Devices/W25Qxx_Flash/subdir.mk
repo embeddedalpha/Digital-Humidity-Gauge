@@ -5,23 +5,23 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Driver/Console/Console.c 
+../Devices/W25Qxx_Flash/W25Qxx_Flash.c 
 
 OBJS += \
-./Driver/Console/Console.o 
+./Devices/W25Qxx_Flash/W25Qxx_Flash.o 
 
 C_DEPS += \
-./Driver/Console/Console.d 
+./Devices/W25Qxx_Flash/W25Qxx_Flash.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-Driver/Console/%.o Driver/Console/%.su Driver/Console/%.cyclo: ../Driver/Console/%.c Driver/Console/subdir.mk
+Devices/W25Qxx_Flash/%.o Devices/W25Qxx_Flash/%.su Devices/W25Qxx_Flash/%.cyclo: ../Devices/W25Qxx_Flash/%.c Devices/W25Qxx_Flash/subdir.mk
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver" -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Application" -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Devices" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 
-clean: clean-Driver-2f-Console
+clean: clean-Devices-2f-W25Qxx_Flash
 
-clean-Driver-2f-Console:
-	-$(RM) ./Driver/Console/Console.cyclo ./Driver/Console/Console.d ./Driver/Console/Console.o ./Driver/Console/Console.su
+clean-Devices-2f-W25Qxx_Flash:
+	-$(RM) ./Devices/W25Qxx_Flash/W25Qxx_Flash.cyclo ./Devices/W25Qxx_Flash/W25Qxx_Flash.d ./Devices/W25Qxx_Flash/W25Qxx_Flash.o ./Devices/W25Qxx_Flash/W25Qxx_Flash.su
 
-.PHONY: clean-Driver-2f-Console
+.PHONY: clean-Devices-2f-W25Qxx_Flash
 

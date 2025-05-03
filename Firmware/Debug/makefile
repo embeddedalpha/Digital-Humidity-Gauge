@@ -11,6 +11,7 @@ RM := rm -rf
 -include sources.mk
 -include Startup/subdir.mk
 -include Src/subdir.mk
+-include Driver/W25Qxx_Flash/subdir.mk
 -include Driver/USART/subdir.mk
 -include Driver/Timer/subdir.mk
 -include Driver/SPI/subdir.mk

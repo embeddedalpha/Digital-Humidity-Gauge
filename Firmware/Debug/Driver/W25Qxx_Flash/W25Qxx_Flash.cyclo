@@ -1,0 +1,5 @@
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:11:17:Read_Status_Registers	4
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:34:15:W25Qxx_Release_Power_Down	1
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:43:15:W25Qxx_Init	1
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:61:15:W25Qxx_Read_ID	1
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:91:15:W25Qxx_Chip_Erase	1

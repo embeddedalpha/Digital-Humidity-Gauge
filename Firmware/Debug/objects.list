@@ -10,6 +10,7 @@
 "./Driver/SPI/SPI.o"
 "./Driver/Timer/Timer.o"
 "./Driver/USART/USART.o"
+"./Driver/W25Qxx_Flash/W25Qxx_Flash.o"
 "./Src/main.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"

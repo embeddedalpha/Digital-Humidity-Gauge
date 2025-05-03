@@ -9,7 +9,7 @@
 #define HUMIDITY_GAUGE_HUMIDITY_GAUGE_H_
 
 #include "main.h"
-#include "BME280.h"
+#include "BME280\BME280.h"
 
 /* ---------- constants (SI) -------------------------------------- */
 #define R_DA   287.05f    /* J·kg⁻¹·K⁻¹  gas constant, dry air   */

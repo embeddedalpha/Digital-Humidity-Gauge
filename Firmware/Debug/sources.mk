@@ -34,6 +34,7 @@ Driver/Logs \
 Driver/SPI \
 Driver/Timer \
 Driver/USART \
+Driver/W25Qxx_Flash \
 Src \
 Startup \
 

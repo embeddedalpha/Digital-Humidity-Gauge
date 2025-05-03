@@ -75,10 +75,7 @@ typedef struct SPI_Config
     uint16_t interrupt;        /**< Interrupt enable/disable. */
     uint16_t dma;              /**< DMA enable/disable. */
 
-    struct DMA_Setting
-    {
-        // Add DMA-specific configuration fields here if needed.
-    } DMA_Setting;             /**< DMA settings structure. */
+
 
 } SPI_Config;
 
