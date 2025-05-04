@@ -1,5 +1,8 @@
-../Driver/W25Qxx_Flash/W25Qxx_Flash.c:11:17:Read_Status_Registers	24	static
-../Driver/W25Qxx_Flash/W25Qxx_Flash.c:34:15:W25Qxx_Release_Power_Down	16	static
-../Driver/W25Qxx_Flash/W25Qxx_Flash.c:43:15:W25Qxx_Init	24	static
-../Driver/W25Qxx_Flash/W25Qxx_Flash.c:61:15:W25Qxx_Read_ID	160	static
-../Driver/W25Qxx_Flash/W25Qxx_Flash.c:91:15:W25Qxx_Chip_Erase	16	static
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:37:17:Read_Status_Registers	32	static
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:60:22:Write_Enable	16	static
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:69:15:W25Qxx_Release_Power_Down	16	static
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:78:15:W25Qxx_Init	16	static
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:96:15:W25Qxx_Read_ID	160	static
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:126:15:W25Qxx_Chip_Erase	16	static
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:139:15:W25Qxx_Power_Down	16	static
+../Driver/W25Qxx_Flash/W25Qxx_Flash.c:149:15:W25Qxx_Page_Program	32	static

@@ -2,7 +2,7 @@
 #include "Console/Console.h"
 #include "GPIO/GPIO.h"
 #include "SPI/SPI.h"
-#include "BME280.h"
+//#include "BME280.h"
 #include "W25Qxx_Flash/W25Qxx_Flash.h"
 
 

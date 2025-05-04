@@ -1,6 +1,4 @@
 "./Application/Humidity_Gauge/Humidity_Gauge.o"
-"./Devices/BME280/BME280.o"
-"./Devices/GC9A01/GC9A01.o"
 "./Driver/CAN/CAN.o"
 "./Driver/Console/Console.o"
 "./Driver/DMA/DMA.o"

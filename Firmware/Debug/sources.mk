@@ -23,8 +23,6 @@ C_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 Application/Humidity_Gauge \
-Devices/BME280 \
-Devices/GC9A01 \
 Driver/CAN \
 Driver/Console \
 Driver/DMA \

@@ -7,10 +7,36 @@
 
 #include <W25Qxx_Flash/W25Qxx_Flash.h>
 
+ enum Status_bits{
+	Status_Register_Protect_0 = 1 << 7,
+	Sector_Protector_Bit = 1 << 6,
+	Top_Bottom_Protect_Bit = 1 << 5,
+	Block_Protect_Bit_2 = 1 << 4,
+	Block_Protect_Bit_1 = 1 << 3,
+	Block_Protect_Bit_0 = 1 << 2,
+	Write_Enable_Latch = 1 << 1,
+	Erase_Write_In_Progress = 1 << 0,
+
+	Suspend_Status = 1 << 15,
+	Complement_Protect = 1 << 14,
+	Security_Register_Lock_Bit_3 = 1 << 13,
+	Security_Register_Lock_Bit_2 = 1 << 12,
+	Security_Register_Lock_Bit_1 = 1 << 11,
+	Quad_Enable = 1 << 9,
+	Status_Register_Protect_1 = 1 << 8,
+
+	Hold_Reset_Function = 1 << 23,
+	Output_Driver_Strength_1 = 1 << 22,
+	Output_Driver_Strength_0 = 1 << 21,
+	Write_Protect_Selection = 1 << 18,
+
+}Status_bits;
+
+
 
 static uint32_t Read_Status_Registers(W25Qxx_Config *_w25q_config_)
 {
-	uint8_t status[3];
+	uint32_t status[3];
 
 	SPI_NSS_Low(_w25q_config_->SPI_Port);
 	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x05);
@@ -31,6 +57,15 @@ static uint32_t Read_Status_Registers(W25Qxx_Config *_w25q_config_)
 	return (status[0] << 16) || (status[1] << 8) || (status[2] << 0);
 }
 
+static W25Qxx_Status Write_Enable(W25Qxx_Config *_w25q_config_)
+{
+	SPI_NSS_Low(_w25q_config_->SPI_Port);
+	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x06);
+	SPI_NSS_High(_w25q_config_->SPI_Port);
+
+	return (Read_Status_Registers(_w25q_config_) & Write_Enable_Latch);
+}
+
 W25Qxx_Status W25Qxx_Release_Power_Down(W25Qxx_Config *_w25q_config_)
 {
 	SPI_NSS_Low(_w25q_config_->SPI_Port);
@@ -42,7 +77,7 @@ W25Qxx_Status W25Qxx_Release_Power_Down(W25Qxx_Config *_w25q_config_)
 
 W25Qxx_Status W25Qxx_Init(W25Qxx_Config *_w25q_config_)
 {
-	uint32_t dummy = 0;
+
 	SPI_Init(_w25q_config_->SPI_Port);
 	SPI_Enable(_w25q_config_->SPI_Port);
 
@@ -51,7 +86,7 @@ W25Qxx_Status W25Qxx_Init(W25Qxx_Config *_w25q_config_)
 
 	W25Qxx_Read_ID(_w25q_config_);
 
-	dummy = Read_Status_Registers(_w25q_config_);
+
 
 	return Completed;
 
@@ -90,20 +125,52 @@ W25Qxx_Status W25Qxx_Read_ID(W25Qxx_Config *_w25q_config_)
 
 W25Qxx_Status W25Qxx_Chip_Erase(W25Qxx_Config *_w25q_config_)
 {
+	Write_Enable(_w25q_config_);
+
 	SPI_NSS_Low(_w25q_config_->SPI_Port);
-	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x9F);
-	_w25q_config_->Maufacturer_ID = SPI_TRX_Byte(_w25q_config_->SPI_Port, 0xAA);
-	_w25q_config_->Memory_Type = SPI_TRX_Byte(_w25q_config_->SPI_Port, 0xAA);
-	_w25q_config_->Capacity = SPI_TRX_Byte(_w25q_config_->SPI_Port, 0xAA);
+	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0xC7);
 	SPI_NSS_High(_w25q_config_->SPI_Port);
+
+	while(Read_Status_Registers(_w25q_config_) & Erase_Write_In_Progress){}
+	return Completed;
 }
-W25Qxx_Status W25Qxx_Power_Down(W25Qxx_Config *_w25q_config_);
-W25Qxx_Status W25Qxx_Suspend(W25Qxx_Config *_w25q_config_);
-W25Qxx_Status W25Qxx_Resume(W25Qxx_Config *_w25q_config_);
-W25Qxx_Status W25Qxx_Reset_Device(W25Qxx_Config *_w25q_config_);
-W25Qxx_Status W25Qxx_Page_Program(W25Qxx_Config *_w25q_config_,uint32_t address, uint8_t *buffer, size_t size);
+
+
+W25Qxx_Status W25Qxx_Power_Down(W25Qxx_Config *_w25q_config_)
+{
+	SPI_NSS_Low(_w25q_config_->SPI_Port);
+	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0xB9);
+	SPI_NSS_High(_w25q_config_->SPI_Port);
+	return Completed;
+}
+
+
+
+W25Qxx_Status W25Qxx_Page_Program(W25Qxx_Config *_w25q_config_,uint32_t address, uint8_t *buffer, size_t size)
+{
+	if(Write_Enable(_w25q_config_))
+	{
+		SPI_NSS_Low(_w25q_config_->SPI_Port);
+		SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x02);
+		SPI_TRX_Byte(_w25q_config_->SPI_Port, address >> 16);
+		SPI_TRX_Byte(_w25q_config_->SPI_Port, address >> 8);
+		SPI_TRX_Byte(_w25q_config_->SPI_Port, address & 0x0000FF);
+		SPI_TRX_Buffer(_w25q_config_->SPI_Port, buffer, buffer, size, size);
+		SPI_NSS_High(_w25q_config_->SPI_Port);
+	}
+	else
+	{
+		return Error;
+	}
+
+}
+
 W25Qxx_Status W25Qxx_Sector_Erase(W25Qxx_Config *_w25q_config_,uint32_t address );
 W25Qxx_Status W25Qxx_Block_Erase_32KB(W25Qxx_Config *_w25q_config_,uint32_t address );
 W25Qxx_Status W25Qxx_Block_Erase_64KB(W25Qxx_Config *_w25q_config_,uint32_t address );
 W25Qxx_Status W25Qxx_Read_Data(W25Qxx_Config *_w25q_config_,uint32_t address, uint8_t *buffer, size_t size);
 W25Qxx_Status W25Qxx_Fast_Read_Data(W25Qxx_Config *_w25q_config_,uint32_t address, uint8_t *buffer, size_t size);
+
+W25Qxx_Status W25Qxx_Suspend_Operation(W25Qxx_Config *_w25q_config_);
+W25Qxx_Status W25Qxx_Resume_Operation(W25Qxx_Config *_w25q_config_);
+W25Qxx_Status W25Qxx_Reset_Device(W25Qxx_Config *_w25q_config_);
