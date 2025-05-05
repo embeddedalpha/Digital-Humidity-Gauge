@@ -661,71 +661,91 @@ void DMA2_Stream0_IRQHandler(void)
 
 	if(DMA_LISR & DMA_LISR_FEIF0)
 	{
-	    if (__DMA2_Stream0_Config__ -> ISR_Routines.FIFO_Error_ISR)
-	    {
-	    	__DMA2_Stream0_Config__ ->ISR_Routines.FIFO_Error_ISR();
-	    	DMA2 -> LIFCR |= DMA_LIFCR_CFEIF0;
-	    }
+		if(__DMA2_Stream0_Config__->interrupts & DMA_Configuration.DMA_Interrupts.Fifo_Error)
+		{
+		    if (__DMA2_Stream0_Config__ -> ISR_Routines.FIFO_Error_ISR)
+		    {
+		    	__DMA2_Stream0_Config__ ->ISR_Routines.FIFO_Error_ISR();
+		    	DMA2 -> LIFCR |= DMA_LIFCR_CFEIF0;
+		    }
+		}
+
 	}
 
 	if(DMA_LISR & DMA_LISR_DMEIF0)
 	{
-	    if (__DMA2_Stream0_Config__ -> ISR_Routines.Direct_Mode_Error_ISR)
-	    {
-	    	__DMA2_Stream0_Config__ ->ISR_Routines.Direct_Mode_Error_ISR();
-	    	DMA2 -> LIFCR |= DMA_LIFCR_CDMEIF0;
-	    }
+		if(__DMA2_Stream0_Config__->interrupts & DMA_Configuration.DMA_Interrupts.Direct_Mode_Error)
+		{
+		    if (__DMA2_Stream0_Config__ -> ISR_Routines.Direct_Mode_Error_ISR)
+		    {
+		    	__DMA2_Stream0_Config__ ->ISR_Routines.Direct_Mode_Error_ISR();
+		    	DMA2 -> LIFCR |= DMA_LIFCR_CDMEIF0;
+		    }
+		}
+
 	}
 
 	if(DMA_LISR & DMA_LISR_TEIF0)
 	{
-	    if (__DMA2_Stream0_Config__ -> ISR_Routines.Transfer_Error_ISR)
-	    {
-	    	__DMA2_Stream0_Config__ ->ISR_Routines.Transfer_Error_ISR();
-	    	DMA2 -> LIFCR |= DMA_LIFCR_CTEIF0;
-	    }
+		if(__DMA2_Stream0_Config__->interrupts & DMA_Configuration.DMA_Interrupts.Transfer_Error)
+		{
+		    if (__DMA2_Stream0_Config__ -> ISR_Routines.Transfer_Error_ISR)
+		    {
+		    	__DMA2_Stream0_Config__ ->ISR_Routines.Transfer_Error_ISR();
+		    	DMA2 -> LIFCR |= DMA_LIFCR_CTEIF0;
+		    }
+		}
+
 	}
 
 	if(DMA_LISR & DMA_LISR_HTIF0)
 	{
-	    if (__DMA2_Stream0_Config__ -> ISR_Routines.Half_Transfer_Complete_ISR)
-	    {
-	    	__DMA2_Stream0_Config__ ->ISR_Routines.Half_Transfer_Complete_ISR();
-	    	DMA2 -> LIFCR |= DMA_LIFCR_CHTIF0;
+		if(__DMA2_Stream0_Config__->interrupts & DMA_Configuration.DMA_Interrupts.Half_Transfer_Complete)
+		{
+		    if (__DMA2_Stream0_Config__ -> ISR_Routines.Half_Transfer_Complete_ISR)
+		    {
+		    	__DMA2_Stream0_Config__ ->ISR_Routines.Half_Transfer_Complete_ISR();
+		    	DMA2 -> LIFCR |= DMA_LIFCR_CHTIF0;
 
-	    	if(__DMA2_Stream0_Config__->double_buffer_mode == DMA_Configuration.Double_Buffer_Mode.Enable )
-	    	{
-	    		if((__DMA2_Stream0_Config__->Request.Stream->CR & DMA_SxCR_DBM_Msk) != 0)
-	    		{
-	    			__DMA2_Stream0_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_1_ISR();
-	    		}
-	    		else
-	    		{
-	    			__DMA2_Stream0_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_2_ISR();
-	    		}
-	    	}
-	    }
+		    	if(__DMA2_Stream0_Config__->double_buffer_mode == DMA_Configuration.Double_Buffer_Mode.Enable )
+		    	{
+		    		if((__DMA2_Stream0_Config__->Request.Stream->CR & DMA_SxCR_DBM_Msk) != 0)
+		    		{
+		    			__DMA2_Stream0_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_1_ISR();
+		    		}
+		    		else
+		    		{
+		    			__DMA2_Stream0_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_2_ISR();
+		    		}
+		    	}
+		    }
+		}
+
 	}
 
 	if(DMA_LISR & DMA_LISR_TCIF0)
 	{
-	    if (__DMA2_Stream0_Config__ -> ISR_Routines.Full_Transfer_Commplete_ISR)
-	    {
-	    	__DMA2_Stream0_Config__ ->ISR_Routines.Half_Transfer_Complete_ISR();
-	    	DMA2 -> LIFCR |= DMA_LIFCR_CTCIF0;
+		if(__DMA2_Stream0_Config__->interrupts & DMA_Configuration.DMA_Interrupts.Transfer_Complete)
+		{
+		    if (__DMA2_Stream0_Config__ -> ISR_Routines.Full_Transfer_Commplete_ISR)
+		    {
+		    	__DMA2_Stream0_Config__ ->ISR_Routines.Full_Transfer_Commplete_ISR();
+		    	DMA2 -> LIFCR |= DMA_LIFCR_CTCIF0;
 
-	    	if(__DMA2_Stream0_Config__->double_buffer_mode == DMA_Configuration.Double_Buffer_Mode.Enable )
-	    	{
-	    		if((__DMA2_Stream0_Config__->Request.Stream->CR & DMA_SxCR_DBM_Msk) != 0)
-	    		{
-	    			__DMA2_Stream0_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_1_ISR();
-	    		}
-	    		else
-	    		{
-	    			__DMA2_Stream0_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_2_ISR();
-	    		}
-	    	}
-	    }
+		    	if(__DMA2_Stream0_Config__->double_buffer_mode == DMA_Configuration.Double_Buffer_Mode.Enable )
+		    	{
+		    		if((__DMA2_Stream0_Config__->Request.Stream->CR & DMA_SxCR_DBM_Msk) != 0)
+		    		{
+		    			__DMA2_Stream0_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_1_ISR();
+		    		}
+		    		else
+		    		{
+		    			__DMA2_Stream0_Config__ -> ISR_Routines.Double_Buffer_Mode_Target_2_ISR();
+		    		}
+		    	}
+		    }
+		}
+
 	}
 }
 

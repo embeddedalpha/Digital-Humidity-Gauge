@@ -37,33 +37,44 @@
 static uint32_t Read_Status_Registers(W25Qxx_Config *_w25q_config_)
 {
 	uint32_t status[3];
+	status[0] = 0;
+	status[1] = 0;
+	status[2] = 0;
 
 	SPI_NSS_Low(_w25q_config_->SPI_Port);
-	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x05);
+	 SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x05);
 	status[0] = SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x00);
 	SPI_NSS_High(_w25q_config_->SPI_Port);
 
-	SPI_NSS_Low(_w25q_config_->SPI_Port);
-	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x35);
-	status[1] = SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x00);
-	SPI_NSS_High(_w25q_config_->SPI_Port);
+//	SPI_NSS_Low(_w25q_config_->SPI_Port);
+//	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x35);
+//	status[1] = SPI_TRX_Byte(_w25q_config_->SPI_Port, 0xff);
+//	SPI_NSS_High(_w25q_config_->SPI_Port);
+//
+//	SPI_NSS_Low(_w25q_config_->SPI_Port);
+//	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x15);
+//	status[2] = SPI_TRX_Byte(_w25q_config_->SPI_Port, 0xff);
+//	SPI_NSS_High(_w25q_config_->SPI_Port);
 
-	SPI_NSS_Low(_w25q_config_->SPI_Port);
-	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x15);
-	status[2] = SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x00);
-	SPI_NSS_High(_w25q_config_->SPI_Port);
-
-
-	return (status[0] << 16) || (status[1] << 8) || (status[2] << 0);
+	return ((status[2] << 16) | (status[1] << 8) | (status[0] << 0));
 }
 
-static W25Qxx_Status Write_Enable(W25Qxx_Config *_w25q_config_)
+static uint32_t Write_Enable(W25Qxx_Config *_w25q_config_)
 {
 	SPI_NSS_Low(_w25q_config_->SPI_Port);
 	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x06);
 	SPI_NSS_High(_w25q_config_->SPI_Port);
 
-	return (Read_Status_Registers(_w25q_config_) & Write_Enable_Latch);
+	return Read_Status_Registers(_w25q_config_) & Write_Enable_Latch;
+}
+
+static uint32_t Write_Disable(W25Qxx_Config *_w25q_config_)
+{
+	SPI_NSS_Low(_w25q_config_->SPI_Port);
+	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x04);
+	SPI_NSS_High(_w25q_config_->SPI_Port);
+
+	return Read_Status_Registers(_w25q_config_) & Write_Enable_Latch;
 }
 
 W25Qxx_Status W25Qxx_Release_Power_Down(W25Qxx_Config *_w25q_config_)
@@ -83,7 +94,7 @@ W25Qxx_Status W25Qxx_Init(W25Qxx_Config *_w25q_config_)
 
 
 	W25Qxx_Release_Power_Down(_w25q_config_);
-
+	Delay_milli(20);
 	W25Qxx_Read_ID(_w25q_config_);
 
 
@@ -119,6 +130,7 @@ W25Qxx_Status W25Qxx_Read_ID(W25Qxx_Config *_w25q_config_)
 
 	SPI_NSS_High(_w25q_config_->SPI_Port);
 
+
 	return Completed;
 }
 
@@ -128,10 +140,17 @@ W25Qxx_Status W25Qxx_Chip_Erase(W25Qxx_Config *_w25q_config_)
 	Write_Enable(_w25q_config_);
 
 	SPI_NSS_Low(_w25q_config_->SPI_Port);
-	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0xC7);
+	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x60);
 	SPI_NSS_High(_w25q_config_->SPI_Port);
 
-	while(Read_Status_Registers(_w25q_config_) & Erase_Write_In_Progress){}
+//	Write_Disable(_w25q_config_);
+
+	uint32_t temp = 0;
+	do {
+		temp = 0;
+		temp = Read_Status_Registers(_w25q_config_);
+	} while (temp != 0);
+
 	return Completed;
 }
 
@@ -148,14 +167,15 @@ W25Qxx_Status W25Qxx_Power_Down(W25Qxx_Config *_w25q_config_)
 
 W25Qxx_Status W25Qxx_Page_Program(W25Qxx_Config *_w25q_config_,uint32_t address, uint8_t *buffer, size_t size)
 {
-	if(Write_Enable(_w25q_config_))
+	uint32_t temp = Write_Enable(_w25q_config_);
+	if(temp == Write_Enable_Latch)
 	{
 		SPI_NSS_Low(_w25q_config_->SPI_Port);
 		SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x02);
 		SPI_TRX_Byte(_w25q_config_->SPI_Port, address >> 16);
 		SPI_TRX_Byte(_w25q_config_->SPI_Port, address >> 8);
 		SPI_TRX_Byte(_w25q_config_->SPI_Port, address & 0x0000FF);
-		SPI_TRX_Buffer(_w25q_config_->SPI_Port, buffer, buffer, size, size);
+		SPI_TRX_Buffer(_w25q_config_->SPI_Port, buffer, 0, size, 0);
 		SPI_NSS_High(_w25q_config_->SPI_Port);
 	}
 	else
@@ -163,6 +183,28 @@ W25Qxx_Status W25Qxx_Page_Program(W25Qxx_Config *_w25q_config_,uint32_t address,
 		return Error;
 	}
 
+
+
+return Completed;
+
+}
+
+W25Qxx_Status W25Qxx_Read_Data(W25Qxx_Config *_w25q_config_,uint32_t address, uint8_t *buffer, size_t size)
+{
+	uint8_t txbuffer[256];
+
+	for(int i = 0; i < 256; i++)
+	{
+		txbuffer[i] = 0;
+	}
+
+	SPI_NSS_Low(_w25q_config_->SPI_Port);
+	SPI_TRX_Byte(_w25q_config_->SPI_Port, 0x03);
+	SPI_TRX_Byte(_w25q_config_->SPI_Port, address >> 16);
+	SPI_TRX_Byte(_w25q_config_->SPI_Port, address >> 8);
+	SPI_TRX_Byte(_w25q_config_->SPI_Port, address & 0x0000FF);
+	SPI_TRX_Buffer(_w25q_config_->SPI_Port, txbuffer, buffer, size, size);
+	SPI_NSS_High(_w25q_config_->SPI_Port);
 }
 
 W25Qxx_Status W25Qxx_Sector_Erase(W25Qxx_Config *_w25q_config_,uint32_t address );

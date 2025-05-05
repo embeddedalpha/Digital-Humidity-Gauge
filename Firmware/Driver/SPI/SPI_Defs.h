@@ -336,10 +336,10 @@ static const struct SPI_Configurations
 		},
 
 		.DMA_Type = {
-				.TX_DMA_Enable  = 61,
-				.TX_DMA_Disable = 62,
-				.RX_DMA_Enable  = 63,
-				.RX_DMA_Disable = 64,
+				.TX_DMA_Enable  = 1<<1,
+				.TX_DMA_Disable = 1<<2,
+				.RX_DMA_Enable  = 1<<3,
+				.RX_DMA_Disable = 1<<4,
 		},
 
 		.Prescaler = {

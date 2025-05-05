@@ -10,6 +10,7 @@
 SPI_Config Flash;
 W25Qxx_Config Chip1;
 
+uint32_t starting_address = 0x000000;
 
 int main(void)
 {
@@ -24,8 +25,8 @@ int main(void)
 	Flash.miso_pin       = SPI_Configurations.Pin._SPI1_.MISO1.PA6;
 	Flash.mosi_pin       = SPI_Configurations.Pin._SPI1_.MOSI1.PA7;
 	Flash.Port           = SPI1;
-	Flash.clock_phase    = SPI_Configurations.Clock_Phase.High_1;
-	Flash.clock_polarity = SPI_Configurations.Clock_Polarity.High_1;
+	Flash.clock_phase    = SPI_Configurations.Clock_Phase.Low_0;
+	Flash.clock_polarity = SPI_Configurations.Clock_Polarity.Low_0;
 	Flash.type           = SPI_Configurations.Type.Master;
 	Flash.prescaler      = SPI_Configurations.Prescaler.CLK_div_16;
 	Flash.mode           = SPI_Configurations.Mode.Full_Duplex_Master;
@@ -41,6 +42,18 @@ int main(void)
 	Chip1.SPI_Port->NSS_Port = GPIOA;
 
 	W25Qxx_Init(&Chip1);
+
+	uint8_t buffer[256];
+	uint8_t rxbuffer[256] = {0};
+
+	for(int i = 0; i < 256; i++)
+	{
+		buffer[i] = i;
+	}
+
+	W25Qxx_Page_Program(&Chip1, starting_address, buffer, 256);
+	Delay_milli(1);
+	W25Qxx_Read_Data(&Chip1, starting_address, rxbuffer, 256);
 
 
 	for(;;)
