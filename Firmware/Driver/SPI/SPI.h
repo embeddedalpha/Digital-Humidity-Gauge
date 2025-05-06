@@ -178,7 +178,22 @@ uint16_t SPI_TRX_Byte(SPI_Config *config, uint16_t tx_data);
  * @param[in] rx_length Length of the receive buffer.
  * @return int8_t Returns 0 on success, -1 on failure.
  */
-int8_t SPI_TRX_Buffer(SPI_Config *config, uint16_t *tx_buffer, uint16_t *rx_buffer, uint16_t tx_length, uint16_t rx_length);
+int8_t SPI_TRX_Buffer_8Bit(SPI_Config *config, uint8_t *tx_buffer, uint8_t *rx_buffer, uint16_t tx_length, uint16_t rx_length);
+
+/**
+ * @brief Transmits and receives a buffer of data over SPI.
+ *
+ * This function transmits and receives a buffer of data over SPI.
+ *
+ * @param[in] config Pointer to the SPI configuration structure.
+ * @param[in] tx_buffer Pointer to the transmit buffer.
+ * @param[out] rx_buffer Pointer to the receive buffer.
+ * @param[in] tx_length Length of the transmit buffer.
+ * @param[in] rx_length Length of the receive buffer.
+ * @return int8_t Returns 0 on success, -1 on failure.
+ */
+int8_t SPI_TRX_Buffer_16Bit(SPI_Config *config, uint16_t *tx_buffer, uint16_t *rx_buffer, uint16_t tx_length, uint16_t rx_length);
+
 
 /**
  * @brief Sets the NSS pin high.

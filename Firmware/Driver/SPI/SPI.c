@@ -95,7 +95,7 @@ static void xDMA3_TX_Init()
 static void xDMA1_RX_Init()
 {
 	xDMA1_RX.Request = DMA_Configuration.Request.SPI1_RX;
-	xDMA1_RX.transfer_direction = DMA_Configuration.Transfer_Direction.Memory_to_peripheral;
+	xDMA1_RX.transfer_direction = DMA_Configuration.Transfer_Direction.Peripheral_to_memory;
 	xDMA1_RX.circular_mode = DMA_Configuration.Circular_Mode.Disable;
 	xDMA1_RX.flow_control = DMA_Configuration.Flow_Control.DMA_Control;
 	xDMA1_RX.interrupts = DMA_Configuration.DMA_Interrupts.Transfer_Complete;
@@ -516,22 +516,9 @@ uint16_t SPI_TRX_Byte(SPI_Config *config,uint16_t tx_data)
 	return temp;
 }
 
-
-/**
- * @brief Transmits and receives a buffer of data over SPI.
- *
- * This function transmits and receives a buffer of data over SPI. It supports both
- * regular and DMA-based transfer methods.
- *
- * @param[in] config Pointer to the SPI configuration structure.
- * @param[in] tx_buffer Pointer to the transmit buffer.
- * @param[out] rx_buffer Pointer to the receive buffer.
- * @param[in] tx_length Length of the transmit buffer.
- * @param[in] rx_length Length of the receive buffer.
- * @return int8_t Returns 1 on success, -1 on failure.
- */
-int8_t SPI_TRX_Buffer(SPI_Config *config, uint16_t *tx_buffer,uint16_t *rx_buffer, uint16_t tx_length, uint16_t rx_length)
+int8_t SPI_TRX_Buffer_16Bit(SPI_Config *config, uint16_t *tx_buffer,uint16_t *rx_buffer, uint16_t tx_length, uint16_t rx_length)
 {
+
 
 	if((config->dma & SPI_Configurations.DMA_Type.RX_DMA_Enable) || (config->dma & SPI_Configurations.DMA_Type.TX_DMA_Enable))
 	{
@@ -551,6 +538,159 @@ int8_t SPI_TRX_Buffer(SPI_Config *config, uint16_t *tx_buffer,uint16_t *rx_buffe
 			if(rx_buffer)
 			{
 				xDMA1_RX.memory_address = (uint32_t)rx_buffer[0];
+				if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA1_RX.memory_data_size = DMA_Configuration.Memory_Data_Size.byte;
+				else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA1_RX.memory_data_size = DMA_Configuration.Memory_Data_Size.half_word;
+				xDMA1_RX.peripheral_address = (uint32_t)&config->Port->DR;
+				if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA1_RX.peripheral_data_size = DMA_Configuration.Peripheral_Data_Size.byte;
+				else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA1_RX.peripheral_data_size = DMA_Configuration.Peripheral_Data_Size.half_word;
+				xDMA1_RX.buffer_length = rx_length;
+			}
+
+
+			DMA_Set_Target(&xDMA1_TX);
+			if(rx_buffer)
+			{
+				DMA_Set_Target(&xDMA1_RX);
+			}
+
+			DMA_Set_Trigger(&xDMA1_TX);
+			if(rx_buffer)
+			{
+				DMA_Set_Trigger(&xDMA1_RX);
+			}
+
+
+
+			config -> Port -> CR2 |=  SPI_CR2_TXDMAEN;
+
+			if(rx_buffer)
+			{
+				config -> Port -> CR2 |=  SPI_CR2_RXDMAEN;
+			}
+
+			while(!TX_Complete){}
+			if(rx_buffer)
+			{
+				while(!RX_Complete){}
+				__DSB();
+			}
+			TX_Complete = 0;
+			RX_Complete = 0;
+			Delay_us(1);
+
+		}
+		else if(config->Port == SPI2)
+		{
+			xDMA2_TX.memory_address = (uint32_t)&tx_buffer[0];
+			if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA2_TX.memory_data_size = DMA_Configuration.Memory_Data_Size.byte;
+			else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA2_TX.memory_data_size = DMA_Configuration.Peripheral_Data_Size.half_word;
+
+			xDMA2_TX.peripheral_address = (uint32_t)&config->Port->DR;
+			if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA2_TX.peripheral_data_size = DMA_Configuration.Memory_Data_Size.byte;
+			else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA2_TX.peripheral_data_size = DMA_Configuration.Peripheral_Data_Size.half_word;
+			xDMA2_RX.buffer_length = tx_length + 2;
+
+			xDMA2_RX.memory_address = (uint32_t)&rx_buffer[0];
+			if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA2_TX.memory_data_size = DMA_Configuration.Memory_Data_Size.byte;
+			else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA2_TX.memory_data_size = DMA_Configuration.Peripheral_Data_Size.half_word;
+
+			xDMA2_RX.peripheral_address = (uint32_t)&config->Port->DR;
+			if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA2_TX.peripheral_data_size = DMA_Configuration.Memory_Data_Size.byte;
+			else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA2_TX.peripheral_data_size = DMA_Configuration.Peripheral_Data_Size.half_word;
+			xDMA2_RX.buffer_length = rx_length;
+
+			DMA_Set_Target(&xDMA2_TX);
+//			DMA_Set_Target(&xDMA2_RX);
+			DMA_Set_Trigger(&xDMA2_TX);
+//			DMA_Set_Trigger(&xDMA2_RX);
+
+//			while((SPI2_TX_DMA_Flag.Transfer_Complete_Flag == false)){}
+//			SPI2_TX_DMA_Flag.Transfer_Complete_Flag = false;
+
+		}
+		else if(config->Port == SPI3)
+		{
+			xDMA3_TX.memory_address = (uint32_t)&tx_buffer[0];
+			if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA3_TX.memory_data_size = DMA_Configuration.Memory_Data_Size.byte;
+			else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA3_TX.memory_data_size = DMA_Configuration.Peripheral_Data_Size.half_word;
+
+			xDMA3_TX.peripheral_address = (uint32_t)&config->Port->DR;
+			if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA3_TX.peripheral_data_size = DMA_Configuration.Memory_Data_Size.byte;
+			else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA3_TX.peripheral_data_size = DMA_Configuration.Peripheral_Data_Size.half_word;
+			xDMA3_RX.buffer_length = tx_length;
+
+			xDMA3_RX.memory_address = (uint32_t)&rx_buffer[0];
+			if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA3_TX.memory_data_size = DMA_Configuration.Memory_Data_Size.byte;
+			else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA3_TX.memory_data_size = DMA_Configuration.Peripheral_Data_Size.half_word;
+
+			xDMA3_RX.peripheral_address = (uint32_t)&config->Port->DR;
+			if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA3_TX.peripheral_data_size = DMA_Configuration.Memory_Data_Size.byte;
+			else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA3_TX.peripheral_data_size = DMA_Configuration.Peripheral_Data_Size.half_word;
+			xDMA3_RX.buffer_length = rx_length;
+
+			DMA_Set_Target(&xDMA3_TX);
+//			DMA_Set_Target(&xDMA3_RX);
+			DMA_Set_Trigger(&xDMA3_TX);
+//			DMA_Set_Trigger(&xDMA3_RX);
+
+
+
+//			while((SPI3_TX_DMA_Flag.Transfer_Complete_Flag == false)){}
+//			SPI3_TX_DMA_Flag.Transfer_Complete_Flag = false;
+
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	else
+	{
+		for(uint16_t i = 0; i < tx_length; i++)
+		{
+			rx_buffer[i] = SPI_TRX_Byte(config,tx_buffer[i]);
+		}
+	}
+
+	return 1;
+
+}
+
+
+/**
+ * @brief Transmits and receives a buffer of data over SPI.
+ *
+ * This function transmits and receives a buffer of data over SPI. It supports both
+ * regular and DMA-based transfer methods.
+ *
+ * @param[in] config Pointer to the SPI configuration structure.
+ * @param[in] tx_buffer Pointer to the transmit buffer.
+ * @param[out] rx_buffer Pointer to the receive buffer.
+ * @param[in] tx_length Length of the transmit buffer.
+ * @param[in] rx_length Length of the receive buffer.
+ * @return int8_t Returns 1 on success, -1 on failure.
+ */
+int8_t SPI_TRX_Buffer_8Bit(SPI_Config *config, uint8_t *tx_buffer,uint8_t *rx_buffer, uint16_t tx_length, uint16_t rx_length)
+{
+
+	if((config->dma & SPI_Configurations.DMA_Type.RX_DMA_Enable) || (config->dma & SPI_Configurations.DMA_Type.TX_DMA_Enable))
+	{
+		if(config->Port == SPI1)
+		{
+			xDMA1_TX.memory_address = (uint32_t)&tx_buffer[0];
+			if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA1_TX.memory_data_size = DMA_Configuration.Memory_Data_Size.byte;
+			else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA1_TX.memory_data_size = DMA_Configuration.Memory_Data_Size.half_word;
+
+			xDMA1_TX.peripheral_address = (uint32_t)&config->Port->DR;
+			if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA1_TX.peripheral_data_size = DMA_Configuration.Peripheral_Data_Size.byte;
+			else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA1_TX.peripheral_data_size = DMA_Configuration.Peripheral_Data_Size.half_word;
+			xDMA1_TX.buffer_length = tx_length;
+			xDMA1_TX.memory_pointer_increment = DMA_Configuration.Memory_Pointer_Increment.Enable;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			if(rx_buffer)
+			{
+				xDMA1_RX.memory_address = (uint32_t)&rx_buffer[0];
 				if(config->data_format == SPI_Configurations.Data_Format.Bit8) xDMA1_RX.memory_data_size = DMA_Configuration.Memory_Data_Size.byte;
 				else if(config->data_format == SPI_Configurations.Data_Format.Bit16) xDMA1_RX.memory_data_size = DMA_Configuration.Memory_Data_Size.half_word;
 				xDMA1_RX.peripheral_address = (uint32_t)&config->Port->DR;

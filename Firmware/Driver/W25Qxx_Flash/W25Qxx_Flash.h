@@ -39,19 +39,22 @@ typedef enum{
 
 
 W25Qxx_Status W25Qxx_Init(W25Qxx_Config *_w25q_config_);
-W25Qxx_Status W25Qxx_Read_ID(W25Qxx_Config *_w25q_config_);
-W25Qxx_Status W25Qxx_Chip_Erase(W25Qxx_Config *_w25q_config_);
+W25Qxx_Status W25Qxx_Reset_Device(W25Qxx_Config *_w25q_config_);
 W25Qxx_Status W25Qxx_Power_Down(W25Qxx_Config *_w25q_config_);
 W25Qxx_Status W25Qxx_Release_Power_Down(W25Qxx_Config *_w25q_config_);
+
+W25Qxx_Status W25Qxx_Read_ID(W25Qxx_Config *_w25q_config_);
+
 W25Qxx_Status W25Qxx_Suspend_Operation(W25Qxx_Config *_w25q_config_);
 W25Qxx_Status W25Qxx_Resume_Operation(W25Qxx_Config *_w25q_config_);
-W25Qxx_Status W25Qxx_Reset_Device(W25Qxx_Config *_w25q_config_);
+
 W25Qxx_Status W25Qxx_Page_Program(W25Qxx_Config *_w25q_config_,uint32_t address, uint8_t *buffer, size_t size);
-W25Qxx_Status W25Qxx_Sector_Erase(W25Qxx_Config *_w25q_config_,uint32_t address );
-W25Qxx_Status W25Qxx_Block_Erase_32KB(W25Qxx_Config *_w25q_config_,uint32_t address );
-W25Qxx_Status W25Qxx_Block_Erase_64KB(W25Qxx_Config *_w25q_config_,uint32_t address );
 W25Qxx_Status W25Qxx_Read_Data(W25Qxx_Config *_w25q_config_,uint32_t address, uint8_t *buffer, size_t size);
 W25Qxx_Status W25Qxx_Fast_Read_Data(W25Qxx_Config *_w25q_config_,uint32_t address, uint8_t *buffer, size_t size);
 
+W25Qxx_Status W25Qxx_Chip_Erase(W25Qxx_Config *_w25q_config_);
+W25Qxx_Status W25Qxx_Sector_Erase(W25Qxx_Config *_w25q_config_,uint32_t address );
+W25Qxx_Status W25Qxx_Block_Erase_32KB(W25Qxx_Config *_w25q_config_,uint32_t address );
+W25Qxx_Status W25Qxx_Block_Erase_64KB(W25Qxx_Config *_w25q_config_,uint32_t address );
 
 #endif /* W25QXX_FLASH_W25QXX_FLASH_H_ */
