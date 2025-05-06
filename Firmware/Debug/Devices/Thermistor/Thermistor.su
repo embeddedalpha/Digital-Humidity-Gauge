@@ -1,0 +1,3 @@
+../Devices/Thermistor/Thermistor.c:42:14:calculate_thermistor_resistance	32	static
+../Devices/Thermistor/Thermistor.c:57:14:interpolate_temperature	40	static
+../Devices/Thermistor/Thermistor.c:84:7:Get_Temperature	24	static

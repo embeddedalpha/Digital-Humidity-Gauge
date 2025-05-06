@@ -22,17 +22,16 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-Application/Humidity_Gauge \
-Driver/CAN \
+Board_Support_Package/Analog_Input \
+Devices/Seven_Segement_Display \
+Devices/Thermistor \
+Driver/ADC \
 Driver/Console \
 Driver/DMA \
 Driver/GPIO \
-Driver/I2C \
 Driver/Logs \
-Driver/SPI \
 Driver/Timer \
 Driver/USART \
-Driver/W25Qxx_Flash \
 Src \
 Startup \
 
