@@ -18,7 +18,8 @@ D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/GPIO/GPIO.h:121:23:GPIO_Pin_
 ../Driver/SPI/SPI.c:479:6:SPI_Disable	16	static
 ../Driver/SPI/SPI.c:491:6:SPI_DeInit	16	static
 ../Driver/SPI/SPI.c:507:10:SPI_TRX_Byte	24	static
-../Driver/SPI/SPI.c:533:8:SPI_TRX_Buffer	40	static,ignoring_inline_asm
-../Driver/SPI/SPI.c:678:6:SPI_NSS_High	16	static
-../Driver/SPI/SPI.c:690:6:SPI_Data_Format_Update	16	static
-../Driver/SPI/SPI.c:705:6:SPI_NSS_Low	16	static
+../Driver/SPI/SPI.c:519:8:SPI_TRX_Buffer_16Bit	40	static,ignoring_inline_asm
+../Driver/SPI/SPI.c:673:8:SPI_TRX_Buffer_8Bit	32	static,ignoring_inline_asm
+../Driver/SPI/SPI.c:818:6:SPI_NSS_High	16	static
+../Driver/SPI/SPI.c:830:6:SPI_Data_Format_Update	16	static
+../Driver/SPI/SPI.c:845:6:SPI_NSS_Low	16	static
