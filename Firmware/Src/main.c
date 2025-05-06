@@ -17,7 +17,7 @@ int main(void)
 	MCU_Clock_Setup();
 	Delay_Config();
 
-	Delay_s(1);
+	Delay_ms(1);
 
 
 
@@ -28,7 +28,7 @@ int main(void)
 	Flash.clock_phase    = SPI_Configurations.Clock_Phase.Low_0;
 	Flash.clock_polarity = SPI_Configurations.Clock_Polarity.Low_0;
 	Flash.type           = SPI_Configurations.Type.Master;
-	Flash.prescaler      = SPI_Configurations.Prescaler.CLK_div_16;
+	Flash.prescaler      = SPI_Configurations.Prescaler.CLK_div_8;
 	Flash.mode           = SPI_Configurations.Mode.Full_Duplex_Master;
 	Flash.frame_format   = SPI_Configurations.Frame_Format.MSB_First;
 	Flash.dma            = SPI_Configurations.DMA_Type.TX_DMA_Enable | SPI_Configurations.DMA_Type.RX_DMA_Enable;
@@ -51,9 +51,17 @@ int main(void)
 		buffer[i] = i;
 	}
 
+	W25Qxx_Sector_Erase(&Chip1, starting_address);
+	Delay_us(10);
+	W25Qxx_Read_Data(&Chip1, starting_address, rxbuffer, 256);
+	Delay_milli(1);
 	W25Qxx_Page_Program(&Chip1, starting_address, buffer, 256);
 	Delay_milli(1);
 	W25Qxx_Read_Data(&Chip1, starting_address, rxbuffer, 256);
+
+
+
+
 
 
 	for(;;)
