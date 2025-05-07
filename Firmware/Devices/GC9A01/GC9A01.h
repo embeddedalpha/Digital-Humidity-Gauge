@@ -45,6 +45,17 @@ void GC9A01_Fill       (GC9A01_Config *config, uint16_t rgb);
 void GC9A01_DrawImage  (GC9A01_Config *config, uint16_t x, uint16_t y,
                         uint16_t w, uint16_t h, const uint16_t *img);
 
+void GC9A01_EraseChar(GC9A01_Config *lcd,
+                      uint16_t x, uint16_t y,
+                      uint16_t bg);
+void GC9A01_DrawChar(GC9A01_Config *lcd,
+                     uint16_t x, uint16_t y,
+                     char c,
+                     uint16_t fg, uint16_t bg);
+void GC9A01_PrintNumber(GC9A01_Config *lcd,
+                              uint16_t x, uint16_t y,
+                              int value,
+                              uint16_t fg, uint16_t bg);
 
 #ifdef __cplusplus
 }

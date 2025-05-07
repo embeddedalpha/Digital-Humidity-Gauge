@@ -1,4 +1,7 @@
+"./Application/Application.o"
 "./Application/Humidity_Gauge/Humidity_Gauge.o"
+"./Devices/BME280/BME280.o"
+"./Devices/GC9A01/GC9A01.o"
 "./Devices/W25Qxx_Flash/W25Qxx_Flash.o"
 "./Driver/CAN/CAN.o"
 "./Driver/Console/Console.o"

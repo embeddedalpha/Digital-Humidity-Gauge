@@ -5,23 +5,23 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Driver/GPIO/GPIO.c 
+../Application/Application.c 
 
 OBJS += \
-./Driver/GPIO/GPIO.o 
+./Application/Application.o 
 
 C_DEPS += \
-./Driver/GPIO/GPIO.d 
+./Application/Application.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-Driver/GPIO/%.o Driver/GPIO/%.su Driver/GPIO/%.cyclo: ../Driver/GPIO/%.c Driver/GPIO/subdir.mk
+Application/%.o Application/%.su Application/%.cyclo: ../Application/%.c Application/subdir.mk
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver" -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Devices/BME280" -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Application" -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Devices" -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Middleware" -Os -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 
-clean: clean-Driver-2f-GPIO
+clean: clean-Application
 
-clean-Driver-2f-GPIO:
-	-$(RM) ./Driver/GPIO/GPIO.cyclo ./Driver/GPIO/GPIO.d ./Driver/GPIO/GPIO.o ./Driver/GPIO/GPIO.su
+clean-Application:
+	-$(RM) ./Application/Application.cyclo ./Application/Application.d ./Application/Application.o ./Application/Application.su
 
-.PHONY: clean-Driver-2f-GPIO
+.PHONY: clean-Application
 

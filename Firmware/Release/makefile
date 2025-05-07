@@ -22,7 +22,10 @@ RM := rm -rf
 -include Driver/Console/subdir.mk
 -include Driver/CAN/subdir.mk
 -include Devices/W25Qxx_Flash/subdir.mk
+-include Devices/GC9A01/subdir.mk
+-include Devices/BME280/subdir.mk
 -include Application/Humidity_Gauge/subdir.mk
+-include Application/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
