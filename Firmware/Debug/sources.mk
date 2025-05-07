@@ -22,7 +22,11 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+Application \
 Application/Humidity_Gauge \
+Devices/BME280 \
+Devices/GC9A01 \
+Devices/W25Qxx_Flash \
 Driver/CAN \
 Driver/Console \
 Driver/DMA \
@@ -32,7 +36,6 @@ Driver/Logs \
 Driver/SPI \
 Driver/Timer \
 Driver/USART \
-Driver/W25Qxx_Flash \
 Middleware/Filesystem \
 Src \
 Startup \

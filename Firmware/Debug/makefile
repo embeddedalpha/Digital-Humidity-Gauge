@@ -12,7 +12,6 @@ RM := rm -rf
 -include Startup/subdir.mk
 -include Src/subdir.mk
 -include Middleware/Filesystem/subdir.mk
--include Driver/W25Qxx_Flash/subdir.mk
 -include Driver/USART/subdir.mk
 -include Driver/Timer/subdir.mk
 -include Driver/SPI/subdir.mk
@@ -22,7 +21,11 @@ RM := rm -rf
 -include Driver/DMA/subdir.mk
 -include Driver/Console/subdir.mk
 -include Driver/CAN/subdir.mk
+-include Devices/W25Qxx_Flash/subdir.mk
+-include Devices/GC9A01/subdir.mk
+-include Devices/BME280/subdir.mk
 -include Application/Humidity_Gauge/subdir.mk
+-include Application/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

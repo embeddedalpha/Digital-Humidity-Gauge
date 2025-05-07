@@ -1,0 +1,17 @@
+../Inc/main.h:140:26:Delay_ms	2
+../Inc/main.h:151:26:Delay_milli	2
+D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/GPIO/GPIO.h:71:23:GPIO_Pin_Low	1
+D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/GPIO/GPIO.h:121:23:GPIO_Pin_High	1
+../Devices/GC9A01/GC9A01.c:73:14:DC_C	1
+../Devices/GC9A01/GC9A01.c:74:14:DC_D	1
+../Devices/GC9A01/GC9A01.c:76:14:RST_L	1
+../Devices/GC9A01/GC9A01.c:77:14:RST_H	1
+../Devices/GC9A01/GC9A01.c:79:13:GC9A01_Write_CMD	1
+../Devices/GC9A01/GC9A01.c:87:13:GC9A01_Write_Data	2
+../Devices/GC9A01/GC9A01.c:98:13:GC9A01_Drite_Data16_Repeat	2
+../Devices/GC9A01/GC9A01.c:110:6:GC9A01_Init	4
+../Devices/GC9A01/GC9A01.c:145:6:GC9A01_SetAddressWindow	1
+../Devices/GC9A01/GC9A01.c:164:6:GC9A01_PushColor	1
+../Devices/GC9A01/GC9A01.c:173:6:GC9A01_DrawPixel	3
+../Devices/GC9A01/GC9A01.c:180:6:GC9A01_Fill	1
+../Devices/GC9A01/GC9A01.c:186:6:GC9A01_DrawImage	6

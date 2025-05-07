@@ -1,0 +1,80 @@
+#include "main.h"
+#include "Console/Console.h"
+#include "GPIO/GPIO.h"
+#include "SPI/SPI.h"
+#include "../Devices/BME280/BME280.h"
+#include "../Devices/W25Qxx_Flash/W25Qxx_Flash.h"
+#include "../Middleware/Filesystem/Filesystem.h"
+
+
+FileSystem_Typedef nn;
+
+SPI_Config Flash;
+W25Qxx_Config Chip1;
+
+uint32_t starting_address = 0x000000;
+
+int main(void)
+{
+	MCU_Clock_Setup();
+	Delay_Config();
+
+	Delay_ms(1);
+
+
+
+
+
+	Flash.clock_pin      = SPI_Configurations.Pin._SPI1_.CLK1.PA5;
+	Flash.miso_pin       = SPI_Configurations.Pin._SPI1_.MISO1.PA6;
+	Flash.mosi_pin       = SPI_Configurations.Pin._SPI1_.MOSI1.PA7;
+	Flash.Port           = SPI1;
+	Flash.clock_phase    = SPI_Configurations.Clock_Phase.Low_0;
+	Flash.clock_polarity = SPI_Configurations.Clock_Polarity.Low_0;
+	Flash.type           = SPI_Configurations.Type.Master;
+	Flash.prescaler      = SPI_Configurations.Prescaler.CLK_div_8;
+	Flash.mode           = SPI_Configurations.Mode.Full_Duplex_Master;
+	Flash.frame_format   = SPI_Configurations.Frame_Format.MSB_First;
+	Flash.dma            = SPI_Configurations.DMA_Type.TX_DMA_Enable | SPI_Configurations.DMA_Type.RX_DMA_Enable;
+	Flash.data_format    = SPI_Configurations.Data_Format.Bit8;
+	Flash.crc            = SPI_Configurations.CRC_Enable.Disable;
+	Flash.interrupt      = SPI_Configurations.Interrupts.Disable;
+
+
+	Chip1.SPI_Port = &Flash;
+	Chip1.SPI_Port->NSS_Pin = 3;
+	Chip1.SPI_Port->NSS_Port = GPIOA;
+
+	W25Qxx_Init(&Chip1);
+
+	uint8_t buffer[256];
+	uint8_t rxbuffer[256] = {0};
+
+	for(int i = 0; i < 256; i++)
+	{
+		buffer[i] = i;
+	}
+
+	W25Qxx_Sector_Erase(&Chip1, starting_address);
+	Delay_us(10);
+	W25Qxx_Read_Data(&Chip1, starting_address, rxbuffer, 256);
+	Delay_milli(1);
+	W25Qxx_Page_Program(&Chip1, starting_address, buffer, 256);
+	Delay_milli(1);
+	W25Qxx_Read_Data(&Chip1, starting_address, rxbuffer, 256);
+
+
+
+
+
+
+	for(;;)
+	{
+
+
+
+
+	}
+}
+
+
