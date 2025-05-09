@@ -30,6 +30,8 @@ void DrawCircleStroke(GC9A01_Config *config,uint16_t xc, uint16_t yc,
 
 void CountDemo(GC9A01_Config *lcd);
 
+void Draw_Checks(GC9A01_Config *config, uint16_t color1, uint16_t color2);
+
 int main(void)
 {
 	MCU_Clock_Setup();
@@ -66,18 +68,7 @@ int main(void)
 
 	GC9A01_Init(&Display);
 
-//	uint16_t color = 0;
-//	for (int x = 0; x < 240; x++)
-//	{
-//		for (int y = 0; y < 240; y++) {
-//			if ((x / 10) % 2 ==  (y / 10) % 2) {
-//				color = 0x9be9;
-//			} else {
-//				color = 0x41a6;
-//			}
-//			GC9A01_DrawPixel(&Display,x,  y, color);;
-//		}
-//	}
+
 //
 //
 //
@@ -87,12 +78,13 @@ int main(void)
 
 //	GC9A01_DrawImage(&Display, 0, 0, 240, 240, moon);
 
+//	GC9A01_DrawImage(&Display, 0, 0, 240, 240, image_data_240x240x16);
+//	Delay_s(1);
 
 	for(;;)
 	{
 
-		GC9A01_DrawImage(&Display, 0, 0, 240, 240, sky);
-		Delay_s(1);
+
 
 
 
@@ -100,6 +92,21 @@ int main(void)
 }
 
 
+void Draw_Checks(GC9A01_Config *config, uint16_t color1, uint16_t color2)
+{
+	uint16_t color = 0;
+	for (int x = 0; x < 240; x++)
+	{
+		for (int y = 0; y < 240; y++) {
+			if ((x / 10) % 2 ==  (y / 10) % 2) {
+				color = color1;
+			} else {
+				color = color2;
+			}
+			GC9A01_DrawPixel(&Display,x,  y, color);;
+		}
+	}
+}
 
 void DrawCircle(GC9A01_Config *config,uint16_t xc, uint16_t yc,
 		uint16_t r,  uint16_t color)
