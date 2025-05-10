@@ -7,78 +7,8 @@
 
 #include "GC9A01.h"
 
-static const uint8_t gc9a01_init_seq[] = {
-		0xEF, 0 ,                                      // Inter register enable 2
-		0xEB, 1 , 0x14,
-		0xFE, 0 ,
-		0xEF, 0 ,
-		0xEB, 1 , 0x14,
-		0x84, 1 , 0x40,
-		0x85, 1 , 0xFF,
-		0x86, 1 , 0xFF,
-		0x87, 1 , 0xFF,
-		0x88, 1 , 0x0A,
-		0x89, 1 , 0x21,
-		0x8A, 1 , 0x00,
-		0x8B, 1 , 0x80,
-		0x8C, 1 , 0x01,
-		0x8D, 1 , 0x01,
-		0x8E, 1 , 0xFF,
-		0x8F, 1 , 0xFF,
-		0xB6, 2 , 0x00, 0x20,
-		0x36, 1 , 0x08,          // Memory Access Control (RGB/BGR & rotation)
-		0x3A, 1 , 0x05,          // Interface Pixel Format = 16‑bit
-		0x90, 4 , 0x08,0x08,0x08,0x08,
-		0xBD, 1 , 0x06,
-		0xBC, 1 , 0x00,
-		0xFF, 3 , 0x60,0x01,0x04,
-		0xC3, 1 , 0x13,
-		0xC4, 1 , 0x13,
-		0xC9, 1 , 0x22,
-		0xBE, 1 , 0x11,
-		0xE1, 2 , 0x10,0x0E,
-		0xDF, 3 , 0x21,0x0C,0x02,
-		0xF0, 6 , 0x45,0x09,0x08,0x08,0x26,0x2A,
-		0xF1, 6 , 0x43,0x70,0x72,0x36,0x37,0x6F,
-		0xF2, 6 , 0x45,0x09,0x08,0x08,0x26,0x2A,
-		0xF3, 6 , 0x43,0x70,0x72,0x36,0x37,0x6F,
-		0xED, 2 , 0x1B,0x0B,
-		0xAE, 1 , 0x77,
-		0xCD, 1 , 0x63,
-		0x70, 7 , 0x07,0x07,0x04,0x0E,0x0F,0x09,0x07,
-		0xE8, 1 , 0x34,
-		0x62,12 , 0x18,0x0D,0x71,0xED,0x70,0x70,0x18,0x0F,0x71,0xEF,0x70,0x70,
-		0x63,12 , 0x18,0x11,0x71,0xF1,0x70,0x70,0x18,0x13,0x71,0xF3,0x70,0x70,
-		0x64, 7 , 0x28,0x29,0xF1,0x01,0xF1,0x00,0x07,
-		0x66,27 , 0x3C,0x00,0xCD,0x67,0x45,0x45,0x10,0x00,0x00,0x00,0x00,
-		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-		0x00,0x00,0x00,0x00,0x00,
-		0x67,10 , 0x00,0x3C,0x00,0x00,0x00,0x01,0x54,0x10,0x32,0x98,
-		0x74, 7 , 0x10,0x85,0x80,0x00,0x00,0x4E,0x00,
-		0x98, 2 , 0x3E,0x07,
-		0x35, 1 , 0x00,
-		0x21, 0 ,                                      // Inversion ON
-		0x11, 0x80,                                     // Sleep out + delay
-		0x29, 0x80,                                     // Display ON + delay
-		0x00                                             // End marker
-};
-
-
-
-
-//static  void CS_L(GC9A01_Config *config) { GPIO_Pin_Low(config->cs_port, config->cs_pin); }
-//static  void CS_H(GC9A01_Config *config) { GPIO_Pin_High(config->cs_port, config->cs_pin); }
-
-
-
-
-//void GC9A01_write_command(uint8_t cmd) {
-//    GC9A01_set_data_command(OFF);
-//    GC9A01_set_chip_select(OFF);
-//    GC9A01_spi_tx(&cmd, sizeof(cmd));
-//    GC9A01_set_chip_select(ON);
-//}
-
+static  void CS_L(GC9A01_Config *config) { GPIO_Pin_Low(config->cs_port, config->cs_pin); }
+static  void CS_H(GC9A01_Config *config) { GPIO_Pin_High(config->cs_port, config->cs_pin); }
 
 static  void DC_C(GC9A01_Config *config) { GPIO_Pin_Low(config->dc_port, config->dc_pin); }
 static  void DC_D(GC9A01_Config *config) { GPIO_Pin_High(config->dc_port, config->dc_pin); }
@@ -87,76 +17,80 @@ static  void RST_L(GC9A01_Config *config) { GPIO_Pin_Low(config->rst_port, confi
 static  void RST_H(GC9A01_Config *config) { GPIO_Pin_High(config->rst_port, config->rst_pin); }
 
 
-
-
 static void write_command(GC9A01_Config *config, uint8_t cmd)
 {
 	DC_C(config);
-	SPI_NSS_Low(config->SPI_Port);
+	CS_L(config);
+	CS_L(config);
 	SPI_TRX_Byte(config->SPI_Port, cmd);
-	SPI_NSS_High(config->SPI_Port);
+	CS_H(config);
 }
 
 static void write_data(GC9A01_Config *config, uint8_t *data, size_t len)
 {
 	DC_D(config);
-	SPI_NSS_Low(config->SPI_Port);
+	CS_L(config);
 	for(int i = 0; i < len; i++) SPI_TRX_Byte(config->SPI_Port, *data++);
-	SPI_NSS_High(config->SPI_Port);
+	CS_H(config);
 }
 
 static inline void GC9A01_write_byte(GC9A01_Config *config,uint8_t val) {
 	write_data(config,&val, sizeof(val));
 }
-//
-//
-//static void GC9A01_Write_CMD(GC9A01_Config *config, uint8_t cmd)
-//{
-//	DC_C(config);
-//	SPI_NSS_Low(config->SPI_Port);
-//	SPI_TRX_Byte(config->SPI_Port, cmd);
-//	SPI_NSS_High(config->SPI_Port);
-//}
+
 
 static void GC9A01_Write_Data(GC9A01_Config *config, uint8_t *data, uint32_t len)
 {
 	DC_D(config);
-	SPI_NSS_Low(config->SPI_Port);
+	CS_L(config);
 
 	while(len--)
 	{
 		SPI_TRX_Byte(config->SPI_Port, *data++);
 	}
-	SPI_NSS_High(config->SPI_Port);
+	CS_H(config);
 }
 
 static void GC9A01_Drite_Data16_Repeat(GC9A01_Config *config, uint16_t color, uint32_t count)
 {
 	DC_D(config);
-	SPI_NSS_Low(config->SPI_Port);
+	CS_L(config);
 
 	while(count--) {
 		SPI_TRX_Byte(config->SPI_Port, color >> 8);
 		SPI_TRX_Byte(config->SPI_Port, color & 0xFF);
 	}
-	SPI_NSS_High(config->SPI_Port);
+	CS_H(config);
+}
+
+static inline void GC9A01_DrawPixelSafe(GC9A01_Config *cfg,
+                                        int16_t x, int16_t y,
+                                        uint16_t color)
+{
+    if ((uint16_t)x < GC9A01_WIDTH &&     /* same as 0 ≤ x < width  */
+        (uint16_t)y < GC9A01_HEIGHT)      /*      0 ≤ y < height   */
+    {
+        GC9A01_DrawPixel(cfg, (uint16_t)x, (uint16_t)y, color);
+    }
 }
 
 /** Initialise GPIO, reset display, execute vendor init sequence */
 void GC9A01_Init(GC9A01_Config *config)
 {
+	GPIO_Pin_Init(config->cs_port, config->cs_pin, GPIO_Configuration.Mode.General_Purpose_Output, GPIO_Configuration.Output_Type.Push_Pull, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.Pull_Up, GPIO_Configuration.Alternate_Functions.None);
 
 	GPIO_Pin_Init(config->rst_port, config->rst_pin, GPIO_Configuration.Mode.General_Purpose_Output, GPIO_Configuration.Output_Type.Push_Pull, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.Pull_Up, GPIO_Configuration.Alternate_Functions.None);
 
 	GPIO_Pin_Init(config->dc_port, config->dc_pin, GPIO_Configuration.Mode.General_Purpose_Output, GPIO_Configuration.Output_Type.Push_Pull, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.Pull_Up, GPIO_Configuration.Alternate_Functions.None);
 
+	CS_H(config);
 
 
 	SPI_Init(config->SPI_Port);
 	SPI_Enable(config->SPI_Port);
 
 
-	SPI_NSS_High(config->SPI_Port);
+	CS_H(config);
 	Delay_milli(150);
 	RST_L(config);
 	Delay_milli(150);
@@ -453,14 +387,14 @@ void GC9A01_DrawImage  (GC9A01_Config *config, uint16_t x, uint16_t y,
 
 	GC9A01_SetAddressWindow(config, x, y, x + w - 1, y + h - 1);
 
-	SPI_NSS_Low(config->SPI_Port);
+	CS_L(config);
 	DC_D(config);
 	for(uint32_t i = 0, size = (uint32_t)w * h; i < size; ++i) {
 		uint16_t c = img[i];
 		SPI_TRX_Byte(config->SPI_Port, c >> 8);
 		SPI_TRX_Byte(config->SPI_Port, c & 0xFF);
 	}
-	SPI_NSS_High(config->SPI_Port);
+	CS_H(config);
 }
 
 static const uint8_t gc9a01_font5x7[95][5] = {
@@ -520,3 +454,146 @@ void GC9A01_EraseChar(GC9A01_Config *lcd,
         GC9A01_EraseChar(lcd, x + (i+1)*6, y, bg);
     }
 }
+
+ void GC9A01_Draw_Checks(GC9A01_Config *config, uint16_t color1, uint16_t color2)
+ {
+ 	uint16_t color = 0;
+ 	for (int x = 0; x < 240; x++)
+ 	{
+ 		for (int y = 0; y < 240; y++) {
+ 			if ((x / 10) % 2 ==  (y / 10) % 2) {
+ 				color = color1;
+ 			} else {
+ 				color = color2;
+ 			}
+ 			GC9A01_DrawPixel(config,x,  y, color);;
+ 		}
+ 	}
+ }
+
+ void GC9A01_DrawCircle(GC9A01_Config *cfg,
+                        int16_t xc, int16_t yc,
+                        int16_t r,  uint16_t color)
+ {
+     if (r <= 0) return;
+
+     int32_t d = 1 - r;          /* error term                 */
+     int16_t x = 0;
+     int16_t y = r;
+
+     while (x <= y)
+     {
+         /* 8‑way symmetry points */
+         GC9A01_DrawPixelSafe(cfg, xc + x, yc + y, color);
+         GC9A01_DrawPixelSafe(cfg, xc - x, yc + y, color);
+         GC9A01_DrawPixelSafe(cfg, xc + x, yc - y, color);
+         GC9A01_DrawPixelSafe(cfg, xc - x, yc - y, color);
+         GC9A01_DrawPixelSafe(cfg, xc + y, yc + x, color);
+         GC9A01_DrawPixelSafe(cfg, xc - y, yc + x, color);
+         GC9A01_DrawPixelSafe(cfg, xc + y, yc - x, color);
+         GC9A01_DrawPixelSafe(cfg, xc - y, yc - x, color);
+
+         /* update error term */
+         if (d < 0) {
+             d += (x << 1) + 3;           /* choose E            */
+         } else {
+             d += ((x - y) << 1) + 5;     /* choose SE, y‑‑      */
+             --y;
+         }
+         ++x;
+     }
+ }
+
+ void GC9A01_DrawCircleStroke(GC9A01_Config *cfg,
+                              int16_t xc, int16_t yc,
+                              int16_t r, int16_t thickness,
+                              uint16_t color)
+ {
+     if (thickness <= 0 || r <= 0) return;
+     if (thickness > r) thickness = r;
+
+     for (int16_t t = 0; t < thickness; ++t)
+         GC9A01_DrawCircle(cfg, xc, yc, r - t, color);
+ }
+
+ void GC9A01_DrawLine(GC9A01_Config *config,uint16_t x0,
+                      uint16_t y0,
+                      uint16_t x1,
+                      uint16_t y1,
+                      uint16_t colour)
+ {
+     /*-------------  Clip against display bounds (optional)  ----------*/
+     if (x0 >= 240 || y0 >= 240 || x1 >= 240 || y1 >= 240) return;
+
+     /*-------------  Classic integer Bresenham                         */
+     int16_t dx  = (int16_t)abs((int16_t)x1 - (int16_t)x0);
+     int16_t sx  = (x0 < x1) ? 1 : -1;
+     int16_t dy  = -(int16_t)abs((int16_t)y1 - (int16_t)y0);
+     int16_t sy  = (y0 < y1) ? 1 : -1;
+     int16_t err = dx + dy;               /* error value         */
+
+     while (1)
+     {
+         GC9A01_DrawPixel(config,x0, y0, colour);/* single‑pixel write  */
+         if (x0 == x1 && y0 == y1) break; /* reached the end     */
+
+         int16_t e2 = (err << 1);         /* 2×err for speed     */
+         if (e2 >= dy) { err += dy; x0 += sx; }  /* step in x dir  */
+         if (e2 <= dx) { err += dx; y0 += sy; }  /* step in y dir  */
+     }
+ }
+
+ static const int16_t sin_q15_025deg[361] = {
+       0,   143,   286,   429,   572,   715,   858,  1001,  1144,  1287,
+    1430,  1573,  1716,  1859,  2002,  2145, /* … keep full list … */
+ };
+
+ /* Quarter‑wave symmetry helpers (angle in "deg×4", i.e. 0.25° units) */
+ static inline int16_t sin_deg_q15(uint16_t deg_q4)
+ {
+     deg_q4 &= 0x3FF;                       /* 0‑1023 => 0‑359.75° */
+     if (deg_q4 <= 256)      return  sin_q15_025deg[deg_q4];
+     else if (deg_q4 <= 512) return  sin_q15_025deg[512 - deg_q4];
+     else if (deg_q4 <= 768) return -sin_q15_025deg[deg_q4 - 512];
+     else                    return -sin_q15_025deg[1024 - deg_q4];
+ }
+ static inline int16_t cos_deg_q15(uint16_t deg_q4)
+ {
+     return sin_deg_q15((deg_q4 + 256) & 0x3FF);   /* cos θ = sin(θ+90°) */
+ }
+
+
+ void GC9A01_DrawArcStroke(GC9A01_Config *cfg,
+	                          int16_t xc, int16_t yc, int16_t r,
+	                          uint16_t start_deg, uint16_t end_deg,
+	                          int16_t thickness, uint16_t color)
+	 {
+	     if (r <= 0 || thickness <= 0) return;
+	     if (thickness > r) thickness = r;
+
+	     float step = 0.5f;                               /* 0.5° resolution */
+	     for (float a = start_deg; ; a += step)
+	     {
+	         if (a >= 360.0f) a -= 360.0f;
+	         if (((int)(a*2+0.5f)) == (int)(end_deg*2+0.5f)) break; /* stop at end */
+
+	         float rad = a * (float)M_PI / 180.0f;
+	         float s = sinf(rad), c = cosf(rad);
+
+	         for (int16_t t = 0; t < thickness; ++t)
+	             GC9A01_DrawPixelSafe(cfg,
+	                 xc + (int16_t)((r - t) * c + 0.5f),
+	                 yc + (int16_t)((r - t) * s + 0.5f),
+	                 color);
+	     }
+	 }
+
+
+ /* Optional 1‑pixel wrapper */
+void GC9A01_DrawArc(GC9A01_Config *cfg,
+                                   int16_t xc, int16_t yc, int16_t r,
+                                   uint16_t start_deg, uint16_t end_deg,
+                                   uint16_t color)
+ {
+     GC9A01_DrawArcStroke(cfg, xc, yc, r, start_deg, end_deg, 1, color);
+ }

@@ -21,6 +21,9 @@ typedef struct W25Qxx_Config
 	uint8_t Capacity;
 	uint64_t Unique_ID;
 	uint32_t Memory_Size;
+
+	GPIO_TypeDef *CS_Port;
+	uint8_t CS_Pin;
 	GPIO_TypeDef *WP_Port;
 	uint8_t WP_Pin;
 	GPIO_TypeDef *HOLD_Reset_Port;

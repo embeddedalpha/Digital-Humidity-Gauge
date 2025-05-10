@@ -20,17 +20,6 @@ BME280_Typedef Sensor1;
 W25Qxx_Config Chip;
 GC9A01_Config Display;
 
-void DrawCircle(GC9A01_Config *config,uint16_t xc, uint16_t yc,
-		uint16_t r,  uint16_t color);
-
-void DrawCircleStroke(GC9A01_Config *config,uint16_t xc, uint16_t yc,
-		uint16_t r,
-		uint16_t thickness,
-		uint16_t color);
-
-void CountDemo(GC9A01_Config *lcd);
-
-void Draw_Checks(GC9A01_Config *config, uint16_t color1, uint16_t color2);
 
 int main(void)
 {
@@ -62,113 +51,54 @@ int main(void)
 	Display.dc_port = GPIOA;
 	Display.rst_pin = 0;
 	Display.rst_port = GPIOA;
-	Display.SPI_Port->NSS_Pin = 1;
-	Display.SPI_Port->NSS_Port = GPIOA;
+	Display.cs_pin = 1;
+	Display.cs_port = GPIOA;
 
 
 	GC9A01_Init(&Display);
 
+	GC9A01_Fill(&Display, 0x0000);
 
-//
-//
-//
-//
-//	DrawCircleStroke(&Display,120, 120, 50, 10, 0x0000);
+	GC9A01_DrawCircleStroke(&Display, 120, 120, 120, 5, 0xf382);
 
+	GC9A01_DrawArcStroke(&Display, 120, 120, 110,
+	                     110, 80, 10, 0xf620);
 
-//	GC9A01_DrawImage(&Display, 0, 0, 240, 240, moon);
+	GC9A01_DrawArcStroke(&Display, 80, 80, 30,
+	                     110, 80, 10, 0x0fe0);
 
-//	GC9A01_DrawImage(&Display, 0, 0, 240, 240, image_data_240x240x16);
-//	Delay_s(1);
+	GC9A01_DrawArcStroke(&Display, 160, 80, 30,
+	                     0, 240, 10, 0x0fe0);
+
+	GC9A01_DrawArcStroke(&Display, 120, 150, 30,
+	                     0, 240, 10, 0x0fe0);
 
 	for(;;)
 	{
 
 
 
+//		for(int i = 0; i < 360; i++)
+//		{
+//			GC9A01_DrawArcStroke(&Display, 120, 120, 100,
+//			                     0, i /* 0‑359 */, 10, 0x0000);
+//			Delay_milli(16.67);
+//		}
+
+
+//		GC9A01_DrawCircleStroke(&Display, 120, 120, 80, 10, 0xFFFF);
+//		Delay_milli(1000);
+//		GC9A01_DrawCircleStroke(&Display, 120, 120, 80, 10, 0x0000);
+//		Delay_milli(1000);
+//
+//		GC9A01_DrawCircleStroke(&Display, 120, 120, 40, 10, 0xFFFF);
+//		Delay_milli(1000);
+//		GC9A01_DrawCircleStroke(&Display, 120, 120, 40, 10, 0x0000);
+//		Delay_milli(1000);
+
 
 
 	}
 }
 
 
-void Draw_Checks(GC9A01_Config *config, uint16_t color1, uint16_t color2)
-{
-	uint16_t color = 0;
-	for (int x = 0; x < 240; x++)
-	{
-		for (int y = 0; y < 240; y++) {
-			if ((x / 10) % 2 ==  (y / 10) % 2) {
-				color = color1;
-			} else {
-				color = color2;
-			}
-			GC9A01_DrawPixel(&Display,x,  y, color);;
-		}
-	}
-}
-
-void DrawCircle(GC9A01_Config *config,uint16_t xc, uint16_t yc,
-		uint16_t r,  uint16_t color)
-{
-	/* Decision variable (d) starts at 1‑r */
-			int16_t  d   = 1 - (int16_t)r;
-	uint16_t x   = 0;
-	uint16_t y   = r;
-
-	while (x <= y)
-	{
-		/* 1st octant -> replicate to all 8 symmetric points */
-		GC9A01_DrawPixel(config,xc + x, yc + y, color);
-
-		GC9A01_DrawPixel(config,xc - x, yc + y, color);   // ( -x, +y)
-		GC9A01_DrawPixel(config,xc + x, yc - y, color);   // ( +x, -y)
-		GC9A01_DrawPixel(config,xc - x, yc - y, color);   // ( -x, -y)
-		GC9A01_DrawPixel(config,xc + y, yc + x, color);   // ( +y, +x)
-		GC9A01_DrawPixel(config,xc - y, yc + x, color);   // ( -y, +x)
-		GC9A01_DrawPixel(config,xc + y, yc - x, color);   // ( +y, -x)
-		GC9A01_DrawPixel(config,xc - y, yc - x, color);   // ( -y, -x)
-
-		/* Update decision variable & step */
-		if (d < 0)
-		{
-			/* Mid‑point is inside the circle – choose E pixel */
-			d += (x << 1) + 3;   // d += 2x + 3
-		}
-		else
-		{
-			/* Mid‑point is outside/on circle – choose SE pixel */
-			d += ((x - y) << 1) + 5; // d += 2(x‑y) + 5
-			y--;
-		}
-		x++;
-	}
-}
-
-void DrawCircleStroke(GC9A01_Config *config,uint16_t xc, uint16_t yc,
-		uint16_t r,
-		uint16_t thickness,
-		uint16_t color)
-{
-	if (thickness == 0 || r == 0) return;
-	if (thickness > r) thickness = r;
-
-	/* The simplest, portable way on small MCUs:
-       draw concentric circles moving inward.   */
-	for (uint16_t t = 0; t < thickness; t++)
-	{
-		DrawCircle(config, xc, yc, r - t, color);
-	}
-}
-
-void CountDemo(GC9A01_Config *lcd)
-{
-	const uint16_t FG = 0xFFFF;   /* white */
-	const uint16_t BG = 0x8000;   /* black */
-	GC9A01_Fill(lcd, BG);
-
-	for(int i = 0; i <= 100; ++i) {
-		GC9A01_PrintNumber(lcd, 120, 120, i, FG, BG);  /* centre of 240×240 */
-		Delay_ms(200);
-	}
-}

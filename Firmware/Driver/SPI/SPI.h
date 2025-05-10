@@ -61,9 +61,6 @@ typedef struct SPI_Config
     uint8_t mosi_pin;          /**< MOSI pin number. */
     uint8_t miso_pin;          /**< MISO pin number. */
 
-    GPIO_TypeDef *NSS_Port;    /**< Pointer to the GPIO port for NSS. */
-    uint8_t NSS_Pin;           /**< NSS pin number. */
-
     uint16_t mode;             /**< SPI mode (Master/Slave). */
     uint16_t crc;              /**< CRC polynomial value. */
     uint16_t data_format;      /**< Data format (8-bit, 16-bit). */
@@ -195,22 +192,6 @@ int8_t SPI_TRX_Buffer_8Bit(SPI_Config *config, uint8_t *tx_buffer, uint8_t *rx_b
 int8_t SPI_TRX_Buffer_16Bit(SPI_Config *config, uint16_t *tx_buffer, uint16_t *rx_buffer, uint16_t tx_length, uint16_t rx_length);
 
 
-/**
- * @brief Sets the NSS pin high.
- *
- * This function sets the NSS pin to a high level, indicating the end of SPI communication.
- *
- * @param[in] config Pointer to the SPI configuration structure.
- */
-void SPI_NSS_High(SPI_Config *config);
 
-/**
- * @brief Sets the NSS pin low.
- *
- * This function sets the NSS pin to a low level, indicating the start of SPI communication.
- *
- * @param[in] config Pointer to the SPI configuration structure.
- */
-void SPI_NSS_Low(SPI_Config *config);
 
 #endif /* SPI_H_ */

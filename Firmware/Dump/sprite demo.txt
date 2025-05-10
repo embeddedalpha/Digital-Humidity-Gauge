@@ -1,0 +1,176 @@
+#include "main.h"
+#include "Console/Console.h"
+#include "GPIO/GPIO.h"
+#include "SPI/SPI.h"
+#include "../Devices/BME280/BME280.h"
+#include "../Devices/W25Qxx_Flash/W25Qxx_Flash.h"
+#include "../Middleware/Filesystem/Filesystem.h"
+#include "../Devices/GC9A01/GC9A01.h"
+#include "../GC9A01/GC9A01_Image.h"
+
+#define frame_delay 5
+FileSystem_Typedef nn;
+
+#include "BME280.h"
+
+I2C_Config BME280_I2C;
+SPI_Config Global_SPI;
+
+BME280_Typedef Sensor1;
+W25Qxx_Config Chip;
+GC9A01_Config Display;
+
+#define R_OUT        110   /* outer radius of the ring                */
+#define THICKNESS    18    /* ring width in pixels                    */
+#define XC           120   /* display centre X (240/2)                */
+#define YC           120   /* display centre Y (240/2)                */
+#define R_IN         (R_OUT - THICKNESS)  /* inner (mask) radius      */
+#define COL_RING     0xFDA0 /* ◉ Orange  – RGB565 (255,173, 79)       */
+#define COL_BG       0x0000 /* ◉ black – background / “erase” colour  */
+
+static int16_t sin_tbl[360];
+static int16_t cos_tbl[360];
+
+/* Call once at start‑up (takes <1 ms) */
+static void PR_InitTrigLUT(void)
+{
+	for (uint16_t d = 0; d < 360; ++d)
+	{
+		float rad = (float)d * (float)M_PI / 180.0f;
+		sin_tbl[d] = (int16_t)(sinf(rad) * 32767);
+		cos_tbl[d] = (int16_t)(cosf(rad) * 32767);
+	}
+}
+
+static void PR_DrawArc(GC9A01_Config *config,uint16_t start_deg,
+		uint16_t end_deg,
+		uint16_t col)
+{
+	/* normalise & wrap */
+	start_deg %= 360;
+	end_deg   %= 360;
+
+	/* handle wrap‑around by splitting into two passes */
+	if (end_deg <= start_deg)
+	{
+		PR_DrawArc(config,start_deg, 360, col);
+		PR_DrawArc(config,0, end_deg,   col);
+		return;
+	}
+
+	/* step 2 ° for outer edge, that’s plenty smooth for 240 px */
+	for (uint16_t d = start_deg; d < end_deg; d += 2)
+	{
+		int32_t sx = cos_tbl[d];  /* scaled ±32767 */
+		int32_t sy = sin_tbl[d];
+
+		/* outer point */
+		int16_t xo = XC + (int16_t)((sx * R_OUT) >> 15);
+		int16_t yo = YC - (int16_t)((sy * R_OUT) >> 15);
+
+		/* inner point */
+		int16_t xi = XC + (int16_t)((sx * R_IN) >> 15);
+		int16_t yi = YC - (int16_t)((sy * R_IN) >> 15);
+
+		/* draw radial line to give the ring constant thickness */
+		GC9A01_DrawLine(config,xi, yi, xo, yo, col);
+	}
+}
+
+void PR_SetPercent(GC9A01_Config *config,uint8_t percent)
+{
+	static uint8_t prev = 0;                 /* remember last state   */
+	if (percent > 100) percent = 100;
+
+	uint16_t new_end   = (uint16_t)((percent * 360UL) / 100UL);
+	uint16_t prev_end  = (uint16_t)((prev    * 360UL) / 100UL);
+
+	if (new_end == prev_end) return;         /* nothing to do         */
+
+	if (new_end > prev_end)
+	{   /*   █████  GROW  */
+		PR_DrawArc(config,prev_end, new_end, COL_RING);
+	}
+	else
+	{   /*   ░░░░░  SHRINK – erase excess with background colour */
+		PR_DrawArc(config,new_end, prev_end, COL_BG);
+	}
+
+	prev = percent;
+}
+
+int main(void)
+{
+	MCU_Clock_Setup();
+	Delay_Config();
+
+	Delay_s(1);
+
+
+	Global_SPI.clock_pin      = SPI_Configurations.Pin._SPI1_.CLK1.PA5;
+	Global_SPI.miso_pin       = SPI_Configurations.Pin._SPI1_.MISO1.PA6;
+	Global_SPI.mosi_pin       = SPI_Configurations.Pin._SPI1_.MOSI1.PA7;
+	Global_SPI.Port           = SPI1;
+	Global_SPI.clock_phase    = SPI_Configurations.Clock_Phase.High_1;
+	Global_SPI.clock_polarity = SPI_Configurations.Clock_Polarity.High_1;
+	Global_SPI.type           = SPI_Configurations.Type.Master;
+	Global_SPI.prescaler      = SPI_Configurations.Prescaler.CLK_div_2;
+	Global_SPI.mode           = SPI_Configurations.Mode.Full_Duplex_Master;
+	Global_SPI.frame_format   = SPI_Configurations.Frame_Format.MSB_First;
+	Global_SPI.dma            = SPI_Configurations.DMA_Type.TX_DMA_Enable | SPI_Configurations.DMA_Type.RX_DMA_Enable;
+	Global_SPI.data_format    = SPI_Configurations.Data_Format.Bit8;
+	Global_SPI.crc            = SPI_Configurations.CRC_Enable.Disable;
+	Global_SPI.interrupt      = SPI_Configurations.Interrupts.Disable;
+
+
+
+	Display.SPI_Port = &Global_SPI;
+	Display.dc_pin = 2;
+	Display.dc_port = GPIOA;
+	Display.rst_pin = 0;
+	Display.rst_port = GPIOA;
+	Display.cs_pin = 1;
+	Display.cs_port = GPIOA;
+
+
+	GC9A01_Init(&Display);
+
+	GC9A01_Fill(&Display, 0x0000);
+
+	PR_InitTrigLUT();
+
+
+	//
+	//
+	//
+	//
+	//	DrawCircleStroke(&Display,120, 120, 50, 10, 0x0000);
+
+
+	//	GC9A01_DrawImage(&Display, 0, 0, 240, 240, moon);
+
+//	GC9A01_DrawImage(&Display, 0, 0, 240, 240, image_data_240x240x16);
+	//	Delay_s(1);
+
+	//	BME280_I2C.Port = I2C1;
+	//	BME280_I2C.SCL_Pin = I2C_Configuration.Pin.__I2C1__.SCL.PB6;
+	//	BME280_I2C.SDA_Pin = I2C_Configuration.Pin.__I2C1__.SDA.PB7;
+	//	BME280_I2C.Speed_Mode = I2C_Configuration.Speed_Mode.FM_Mode;
+	//	BME280_I2C.Mode = I2C_Configuration.Mode.Master;
+	//	BME280_I2C.DMA_Control = I2C_Configuration.DMA_Control.Disable;
+	//	BME280_I2C.Interrupts_Enable = I2C_Configuration.Interrupts_Enable.Disable;
+	//	I2C_Init(&BME280_I2C);
+
+	for(;;)
+	{
+
+		for (uint8_t p =   0; p <= 100; ++p) { PR_SetPercent(&Display,p);  Delay_milli(1000); }
+
+		for (uint8_t p = 100; p >    0; --p) { PR_SetPercent(&Display,p);  Delay_milli(1000); }
+
+
+
+	}
+}
+
+

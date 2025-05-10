@@ -12,10 +12,18 @@
 #include "I2C/I2C.h"
 #include "SPI/SPI.h"
 
+#define Device_Address_1 0x76
+#define Device_Address_2 0x77
+
 typedef struct BME280_Typedef{
 
 	I2C_Config *I2C_Port;
 	SPI_Config *SPI_Port;
+
+	uint8_t device_Address;
+
+	GPIO_TypeDef *CSS_Port;
+	uint8_t CSS_Pin;
 
 
 	uint32_t Temperature;

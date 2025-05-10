@@ -29,8 +29,7 @@ void Flash_Init()
 
 
 	Chip1.SPI_Port = &Flash;
-	Chip1.SPI_Port->NSS_Pin = 3;
-	Chip1.SPI_Port->NSS_Port = GPIOA;
+
 
 	W25Qxx_Init(&Chip1);
 

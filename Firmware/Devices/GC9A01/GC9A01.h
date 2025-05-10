@@ -57,6 +57,33 @@ void GC9A01_PrintNumber(GC9A01_Config *lcd,
                               int value,
                               uint16_t fg, uint16_t bg);
 
+void GC9A01_DrawCircle(GC9A01_Config *cfg,
+                       int16_t xc, int16_t yc,
+                       int16_t r,  uint16_t color);
+
+void GC9A01_DrawCircleStroke(GC9A01_Config *cfg,
+                             int16_t xc, int16_t yc,
+                             int16_t r, int16_t thickness,
+                             uint16_t color);
+
+void GC9A01_Draw_Checks(GC9A01_Config *config, uint16_t color1, uint16_t color2);
+
+void GC9A01_DrawLine(GC9A01_Config *config,uint16_t x0,
+                     uint16_t y0,
+                     uint16_t x1,
+                     uint16_t y1,
+                     uint16_t colour);
+
+void GC9A01_DrawArcStroke(GC9A01_Config *cfg,
+                          int16_t  xc, int16_t  yc,
+                          int16_t  r,
+                          uint16_t start_deg, uint16_t end_deg,
+                          int16_t  thickness,
+                          uint16_t color);
+void GC9A01_DrawArc(GC9A01_Config *cfg,
+                                   int16_t xc, int16_t yc, int16_t r,
+                                   uint16_t start_deg, uint16_t end_deg,
+                                   uint16_t color);
 #ifdef __cplusplus
 }
 #endif

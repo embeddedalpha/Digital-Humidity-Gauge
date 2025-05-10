@@ -9,6 +9,10 @@
 #include "BME280.h"
 
 
+static  void CS_L(BME280_Typedef *_bme280_config_) { GPIO_Pin_Low(_bme280_config_->CSS_Port, _bme280_config_->CSS_Pin); }
+static  void CS_H(BME280_Typedef *_bme280_config_) { GPIO_Pin_High(_bme280_config_->CSS_Port, _bme280_config_->CSS_Pin); }
+
+
 static const struct Memory_Map{
 	uint8_t hum_lsb;
 	uint8_t hum_msb;
@@ -53,6 +57,10 @@ uint8_t BME280_Init(BME280_Typedef *_bme280_config_)
 {
 	if(_bme280_config_->SPI_Port)
 	{
+		GPIO_Pin_Init(_bme280_config_->CSS_Port, _bme280_config_->CSS_Pin, GPIO_Configuration.Mode.General_Purpose_Output, GPIO_Configuration.Output_Type.Push_Pull,
+				                                                           GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.Pull_Up, GPIO_Configuration.Alternate_Functions.None);
+
+		CS_H(_bme280_config_);
 		SPI_Init(_bme280_config_->SPI_Port);
 		SPI_Enable(_bme280_config_->SPI_Port);
 
@@ -68,6 +76,15 @@ uint8_t BME280_Init(BME280_Typedef *_bme280_config_)
 	{
 		I2C_Init(_bme280_config_->I2C_Port);
 
+		Delay_ms(1);
+
+		uint8_t temp = 0;
+		temp = I2C_Read_Register(_bme280_config_->I2C_Port, _bme280_config_->device_Address, Memory_Map.id);
+		if(temp != 0x60) return 0;
+
+
+
+
 
 		return 1;
 
@@ -80,5 +97,38 @@ uint8_t BME280_Init(BME280_Typedef *_bme280_config_)
 
 void BME280_Get_Data(BME280_Typedef *_bme280_config_)
 {
+	uint8_t byte_array[8];
+	uint8_t temp = 0;
+
+	 uint32_t adc_T = 0;
+	 uint32_t adc_H = 0;
+	 uint32_t adc_P = 0;
+
+	if(_bme280_config_->SPI_Port)
+	{
+
+	}
+	if(_bme280_config_->I2C_Port)
+	{
+		do {
+			temp = I2C_Read_Register(_bme280_config_->I2C_Port, _bme280_config_->device_Address, Memory_Map.id);
+		} while (!(temp & 0b00001000));
+
+
+		I2C_Master_Read_Registers_Bulk(_bme280_config_->I2C_Port, _bme280_config_->device_Address, Memory_Map.press_msb, byte_array, 8);
+
+		adc_P = ((uint32_t)byte_array[0] << 12) | ((uint32_t)byte_array[1] << 4) | ((byte_array[2] & 0x0F) << 0);
+		adc_T = ((uint32_t)byte_array[3] << 12) | ((uint32_t)byte_array[4] << 4) | ((byte_array[5] & 0x0F) << 0);
+		adc_H = ((uint32_t)byte_array[0] << 8) | ((byte_array[0]) << 0);
+
+
+
+	}
+
+
+
+
+
+
 
 }

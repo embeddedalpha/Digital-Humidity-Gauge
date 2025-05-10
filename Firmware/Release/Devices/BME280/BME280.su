@@ -1,2 +1,2 @@
-../Devices/BME280/BME280.c:52:9:BME280_Init	8	static
-../Devices/BME280/BME280.c:81:6:BME280_Get_Data	0	static
+../Devices/BME280/BME280.c:56:9:BME280_Init	32	static
+../Devices/BME280/BME280.c:98:6:BME280_Get_Data	24	static

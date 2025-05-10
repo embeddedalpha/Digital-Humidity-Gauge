@@ -191,8 +191,6 @@ int8_t SPI_Config_Reset(SPI_Config *config)
 	else
 		retval = -1;
 
-	config->NSS_Port = GPIOA;
-	config->NSS_Pin = 4;
 	config->clock_phase = SPI_Configurations.Clock_Phase.High_1;
 	config->clock_polarity = SPI_Configurations.Clock_Polarity.High_1;
 	config->mode = SPI_Configurations.Mode.Full_Duplex_Master;
@@ -343,17 +341,17 @@ static void SPI_Pin_Init(SPI_Config *config)
  */
 int8_t SPI_Init(SPI_Config *config)
 {
-	if(config->type == SPI_Configurations.Type.Master){
-		GPIO_Pin_Init(config->NSS_Port, config->NSS_Pin, GPIO_Configuration.Mode.General_Purpose_Output, GPIO_Configuration.Output_Type.Push_Pull, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.Pull_Up, GPIO_Configuration.Alternate_Functions.None);
-	}
-	else if(config->type == SPI_Configurations.Type.Slave){
-		GPIO_Pin_Init(config->NSS_Port, config->NSS_Pin, GPIO_Configuration.Mode.Input, GPIO_Configuration.Output_Type.Push_Pull, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.Pull_Up, GPIO_Configuration.Alternate_Functions.None);
-	}
+//	if(config->type == SPI_Configurations.Type.Master){
+//		GPIO_Pin_Init(config->NSS_Port, config->NSS_Pin, GPIO_Configuration.Mode.General_Purpose_Output, GPIO_Configuration.Output_Type.Push_Pull, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.Pull_Up, GPIO_Configuration.Alternate_Functions.None);
+//	}
+//	else if(config->type == SPI_Configurations.Type.Slave){
+//		GPIO_Pin_Init(config->NSS_Port, config->NSS_Pin, GPIO_Configuration.Mode.Input, GPIO_Configuration.Output_Type.Push_Pull, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.Pull_Up, GPIO_Configuration.Alternate_Functions.None);
+//	}
 
 	SPI_Clock_Enable(config);
 	SPI_Pin_Init(config);
 
-	SPI_NSS_High(config);
+//	SPI_NSS_High(config);
 
 	config -> Port -> CR1 &= ~SPI_CR1_SPE;
 
@@ -808,17 +806,7 @@ int8_t SPI_TRX_Buffer_8Bit(SPI_Config *config, uint8_t *tx_buffer,uint8_t *rx_bu
 	return 1;
 }
 
-/**
- * @brief Sets the NSS pin high.
- *
- * This function sets the NSS pin to a high level, indicating the end of SPI communication.
- *
- * @param[in] config Pointer to the SPI configuration structure.
- */
-void SPI_NSS_High(SPI_Config *config)
-{
-	GPIO_Pin_High(config->NSS_Port, config->NSS_Pin);
-}
+
 
 /**
  * @brief Updates the SPI data format.
@@ -835,14 +823,3 @@ void SPI_Data_Format_Update(SPI_Config *config)
 	SPI_Enable(config);
 }
 
-/**
- * @brief Sets the NSS pin low.
- *
- * This function sets the NSS pin to a low level, indicating the start of SPI communication.
- *
- * @param[in] config Pointer to the SPI configuration structure.
- */
-void SPI_NSS_Low(SPI_Config *config)
-{
-	GPIO_Pin_Low(config->NSS_Port, config->NSS_Pin);
-}

@@ -4,8 +4,4 @@
 ../Inc/main.h:115:26:Delay_Config	4	static
 ../Inc/main.h:140:26:Delay_ms	24	static
 ../Inc/main.h:161:26:Delay_s	16	static
-../Src/main.c:35:5:main	8	static
-../Src/main.c:95:6:Draw_Checks	32	static
-../Src/main.c:111:6:DrawCircle	32	static
-../Src/main.c:148:6:DrawCircleStroke	40	static
-../Src/main.c:164:6:CountDemo	32	static
+../Src/main.c:24:5:main	24	static
