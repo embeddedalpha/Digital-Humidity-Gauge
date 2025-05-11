@@ -17,7 +17,7 @@ typedef struct FileSystem_Typedef
 	uint8_t ID;
 	char *Name;
 	uint8_t Size;
-	uint8_t Starting_Address;
+	uint32_t Starting_Address;
 
 }FileSystem_Typedef;
 

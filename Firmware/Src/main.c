@@ -59,42 +59,16 @@ int main(void)
 
 	GC9A01_Fill(&Display, 0x0000);
 
-	GC9A01_DrawCircleStroke(&Display, 120, 120, 120, 5, 0xf382);
 
-	GC9A01_DrawArcStroke(&Display, 120, 120, 110,
-	                     110, 80, 10, 0xf620);
 
-	GC9A01_DrawArcStroke(&Display, 80, 80, 30,
-	                     110, 80, 10, 0x0fe0);
 
-	GC9A01_DrawArcStroke(&Display, 160, 80, 30,
-	                     0, 240, 10, 0x0fe0);
 
-	GC9A01_DrawArcStroke(&Display, 120, 150, 30,
-	                     0, 240, 10, 0x0fe0);
 
 	for(;;)
 	{
 
 
 
-//		for(int i = 0; i < 360; i++)
-//		{
-//			GC9A01_DrawArcStroke(&Display, 120, 120, 100,
-//			                     0, i /* 0‑359 */, 10, 0x0000);
-//			Delay_milli(16.67);
-//		}
-
-
-//		GC9A01_DrawCircleStroke(&Display, 120, 120, 80, 10, 0xFFFF);
-//		Delay_milli(1000);
-//		GC9A01_DrawCircleStroke(&Display, 120, 120, 80, 10, 0x0000);
-//		Delay_milli(1000);
-//
-//		GC9A01_DrawCircleStroke(&Display, 120, 120, 40, 10, 0xFFFF);
-//		Delay_milli(1000);
-//		GC9A01_DrawCircleStroke(&Display, 120, 120, 40, 10, 0x0000);
-//		Delay_milli(1000);
 
 
 
