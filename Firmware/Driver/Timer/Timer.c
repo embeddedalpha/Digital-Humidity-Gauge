@@ -26,488 +26,494 @@ Timer_Config *__timer_14_config__;
 
 
 void TIM1_BRK_TIM9_IRQHandler(void) {
-    if (__timer_1_config__ ->ISR_Routines.Break_ISR) {
-    	__timer_1_config__ ->ISR_Routines.Break_ISR();
-    	TIM1->SR &= ~TIM_SR_BIF;  // Clear the Break interrupt flag
-    }
+	if (__timer_1_config__ ->ISR_Routines.Break_ISR) {
+		TIM1->SR &= ~TIM_SR_BIF;  // Clear the Break interrupt flag
+		__timer_1_config__ ->ISR_Routines.Break_ISR();
 
-    if (__timer_9_config__ ->ISR_Routines.Capture_Compare_1_ISR){
-    	__timer_9_config__ ->ISR_Routines.Capture_Compare_1_ISR();
-    	TIM9->SR &= ~TIM_SR_CC1IF;  // Clear the Break interrupt flag
-    }
+	}
 
-    if (__timer_9_config__ ->ISR_Routines.Capture_Compare_2_ISR){
-    	__timer_9_config__ ->ISR_Routines.Capture_Compare_2_ISR();
-    	TIM9->SR &= ~TIM_SR_CC2IF;  // Clear the Break interrupt flag
-    }
+	if (__timer_9_config__ ->ISR_Routines.Capture_Compare_1_ISR){
+		TIM9->SR &= ~TIM_SR_CC1IF;  // Clear the Break interrupt flag
+		__timer_9_config__ ->ISR_Routines.Capture_Compare_1_ISR();
 
-    if (__timer_9_config__ ->ISR_Routines.Update_ISR){
-    	__timer_9_config__ ->ISR_Routines.Update_ISR();
-    	TIM9->SR &= ~TIM_SR_UIF;  // Clear the Break interrupt flag
-    }
+	}
 
-    if (__timer_9_config__ ->ISR_Routines.Trigger_ISR){
-    	__timer_9_config__ ->ISR_Routines.Trigger_ISR();
-    	TIM9->SR &= ~TIM_SR_TIF;  // Clear the Break interrupt flag
-    }
+	if (__timer_9_config__ ->ISR_Routines.Capture_Compare_2_ISR){
+		TIM9->SR &= ~TIM_SR_CC2IF;  // Clear the Break interrupt flag
+		__timer_9_config__ ->ISR_Routines.Capture_Compare_2_ISR();
+
+	}
+
+	if (__timer_9_config__ ->ISR_Routines.Update_ISR){
+		__timer_9_config__ ->ISR_Routines.Update_ISR();
+		TIM9->SR &= ~TIM_SR_UIF;  // Clear the Break interrupt flag
+	}
+
+	if (__timer_9_config__ ->ISR_Routines.Trigger_ISR){
+		TIM9->SR &= ~TIM_SR_TIF;  // Clear the Break interrupt flag
+		__timer_9_config__ ->ISR_Routines.Trigger_ISR();
+	}
 
 }
 
 void TIM1_UP_TIM10_IRQHandler(void) {
-    if (__timer_1_config__ ->ISR_Routines.Update_ISR) {
-    	__timer_1_config__ ->ISR_Routines.Update_ISR();
-    	TIM1->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
-    }
+	if (__timer_1_config__ ->ISR_Routines.Update_ISR) {
+		__timer_1_config__ ->ISR_Routines.Update_ISR();
+		TIM1->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
+	}
 
-    if (__timer_10_config__ ->ISR_Routines.Update_ISR) {
-    	__timer_10_config__ ->ISR_Routines.Update_ISR();
-    	TIM10->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
-    }
+	if (__timer_10_config__ ->ISR_Routines.Update_ISR) {
+		__timer_10_config__ ->ISR_Routines.Update_ISR();
+		TIM10->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
+	}
 
-    if (__timer_10_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
-    	__timer_10_config__ ->ISR_Routines.Capture_Compare_1_ISR();
-    	TIM10->SR &= ~TIM_SR_CC1IF;  // Clear the Update interrupt flag
-    }
+	if (__timer_10_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
+		__timer_10_config__ ->ISR_Routines.Capture_Compare_1_ISR();
+		TIM10->SR &= ~TIM_SR_CC1IF;  // Clear the Update interrupt flag
+	}
 
 }
 
 void TIM1_TRG_COM_TIM11_IRQHandler(void) {
-    if (__timer_1_config__ ->ISR_Routines.Trigger_ISR) {
-    	__timer_1_config__ ->ISR_Routines.Trigger_ISR();
+	if (__timer_1_config__ ->ISR_Routines.Trigger_ISR) {
+		TIM1->SR &= ~TIM_SR_TIF;  // Clear the Trigger interrupt flag
+		__timer_1_config__ ->ISR_Routines.Trigger_ISR();
 
-    	TIM1->SR &= ~TIM_SR_TIF;  // Clear the Trigger interrupt flag
-    }
+	}
 
-    if (__timer_1_config__ ->ISR_Routines.Commutation_ISR) {
-    	__timer_1_config__ ->ISR_Routines.Commutation_ISR();
+	if (__timer_1_config__ ->ISR_Routines.Commutation_ISR) {
+		TIM1->SR &= ~TIM_SR_COMIF;  // Clear the Trigger interrupt flag
+		__timer_1_config__ ->ISR_Routines.Commutation_ISR();
 
-    	TIM1->SR &= ~TIM_SR_COMIF;  // Clear the Trigger interrupt flag
-    }
+	}
 
-    if (__timer_11_config__ ->ISR_Routines.Update_ISR) {
-    	__timer_11_config__ ->ISR_Routines.Update_ISR();
-    	TIM11->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
-    }
+	if (__timer_11_config__ ->ISR_Routines.Update_ISR) {
+		TIM11->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
+		__timer_11_config__ ->ISR_Routines.Update_ISR();
+	}
 
-    if (__timer_11_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
-    	__timer_11_config__ ->ISR_Routines.Capture_Compare_1_ISR();
-    	TIM11->SR &= ~TIM_SR_CC1IF;  // Clear the Update interrupt flag
-    }
+	if (__timer_11_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
+		TIM11->SR &= ~TIM_SR_CC1IF;  // Clear the Update interrupt flag
+		__timer_11_config__ ->ISR_Routines.Capture_Compare_1_ISR();
+	}
 
 }
 
 void TIM1_CC_IRQHandler(void) {
-    if (__timer_1_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
-    	__timer_1_config__ ->ISR_Routines.Capture_Compare_1_ISR();
+	if (__timer_1_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
+		TIM1->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
+		__timer_1_config__ ->ISR_Routines.Capture_Compare_1_ISR();
 
-    	TIM1->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
-    }
+	}
 
-    if (__timer_1_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
-    	__timer_1_config__ ->ISR_Routines.Capture_Compare_2_ISR();
+	if (__timer_1_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
+		TIM1->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
+		__timer_1_config__ ->ISR_Routines.Capture_Compare_2_ISR();
 
-    	TIM1->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
-    }
+	}
 
-    if (__timer_1_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
-    	__timer_1_config__ ->ISR_Routines.Capture_Compare_3_ISR();
+	if (__timer_1_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
 
-    	TIM1->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
-    }
+		TIM1->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
+		__timer_1_config__ ->ISR_Routines.Capture_Compare_3_ISR();
 
-    if (__timer_1_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
-    	__timer_1_config__ ->ISR_Routines.Capture_Compare_4_ISR();
+	}
 
-    	TIM1->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
-    }
+	if (__timer_1_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
+
+		TIM1->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
+		__timer_1_config__ ->ISR_Routines.Capture_Compare_4_ISR();
+
+	}
 }
 
 
 void TIM2_IRQHandler(void)
 {
-    if (__timer_2_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
-    	__timer_2_config__ ->ISR_Routines.Capture_Compare_1_ISR();
+	if (__timer_2_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
+		__timer_2_config__ ->ISR_Routines.Capture_Compare_1_ISR();
 
-    	TIM2->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_2_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
-    	__timer_2_config__ ->ISR_Routines.Capture_Compare_2_ISR();
+		TIM2->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
+	}
+	if (__timer_2_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
+		TIM2->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
+		__timer_2_config__ ->ISR_Routines.Capture_Compare_2_ISR();
 
-    	TIM2->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_2_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
-    	__timer_2_config__ ->ISR_Routines.Capture_Compare_3_ISR();
+	}
+	if (__timer_2_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
 
-    	TIM2->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_2_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
-    	__timer_2_config__ ->ISR_Routines.Capture_Compare_4_ISR();
+		TIM2->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
+		__timer_2_config__ ->ISR_Routines.Capture_Compare_3_ISR();
 
-    	TIM2->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_2_config__ ->ISR_Routines.Update_ISR) {
-    	__timer_2_config__ ->ISR_Routines.Update_ISR();
+	}
+	if (__timer_2_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
 
-    	TIM2->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_2_config__ ->ISR_Routines.Trigger_ISR) {
-    	__timer_2_config__ ->ISR_Routines.Trigger_ISR();
+		TIM2->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
+		__timer_2_config__ ->ISR_Routines.Capture_Compare_4_ISR();
 
-    	TIM2->SR &= ~TIM_SR_TIF;  // Clear the Capture Compare interrupt flag
-    }
+	}
+	if (__timer_2_config__ ->ISR_Routines.Update_ISR) {
+
+		TIM2->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
+		__timer_2_config__ ->ISR_Routines.Update_ISR();
+
+	}
+	if (__timer_2_config__ ->ISR_Routines.Trigger_ISR) {
+
+		TIM2->SR &= ~TIM_SR_TIF;  // Clear the Capture Compare interrupt flag
+		__timer_2_config__ ->ISR_Routines.Trigger_ISR();
+
+	}
 }
 
 void TIM3_IRQHandler(void)
 {
-    if (__timer_3_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
-    	__timer_3_config__ ->ISR_Routines.Capture_Compare_1_ISR();
+	if (__timer_3_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
 
-    	TIM3->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_3_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
-    	__timer_3_config__ ->ISR_Routines.Capture_Compare_2_ISR();
+		TIM3->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
+		__timer_3_config__ ->ISR_Routines.Capture_Compare_1_ISR();
 
-    	TIM3->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_3_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
-    	__timer_3_config__ ->ISR_Routines.Capture_Compare_3_ISR();
+	}
+	if (__timer_3_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
 
-    	TIM3->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_3_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
-    	__timer_3_config__ ->ISR_Routines.Capture_Compare_4_ISR();
+		TIM3->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
+		__timer_3_config__ ->ISR_Routines.Capture_Compare_2_ISR();
 
-    	TIM3->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_3_config__ ->ISR_Routines.Update_ISR) {
-    	__timer_3_config__ ->ISR_Routines.Update_ISR();
+	}
+	if (__timer_3_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
 
-    	TIM3->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_3_config__ ->ISR_Routines.Trigger_ISR) {
-    	__timer_3_config__ ->ISR_Routines.Trigger_ISR();
+		TIM3->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
+		__timer_3_config__ ->ISR_Routines.Capture_Compare_3_ISR();
 
-    	TIM3->SR &= ~TIM_SR_TIF;  // Clear the Capture Compare interrupt flag
-    }
+	}
+	if (__timer_3_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
+
+		TIM3->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
+		__timer_3_config__ ->ISR_Routines.Capture_Compare_4_ISR();
+
+	}
+	if (__timer_3_config__ ->ISR_Routines.Update_ISR) {
+
+		TIM3->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
+		__timer_3_config__ ->ISR_Routines.Update_ISR();
+
+	}
+	if (__timer_3_config__ ->ISR_Routines.Trigger_ISR) {
+
+		TIM3->SR &= ~TIM_SR_TIF;  // Clear the Capture Compare interrupt flag
+		__timer_3_config__ ->ISR_Routines.Trigger_ISR();
+
+	}
 }
 
 void TIM4_IRQHandler(void)
 {
-    if (__timer_4_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
-    	__timer_4_config__ ->ISR_Routines.Capture_Compare_1_ISR();
+	if (__timer_4_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
 
-    	TIM4->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_4_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
-    	__timer_4_config__ ->ISR_Routines.Capture_Compare_2_ISR();
+		TIM4->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
+		__timer_4_config__ ->ISR_Routines.Capture_Compare_1_ISR();
 
-    	TIM4->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_4_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
-    	__timer_4_config__ ->ISR_Routines.Capture_Compare_3_ISR();
+	}
+	if (__timer_4_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
 
-    	TIM4->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_4_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
-    	__timer_4_config__ ->ISR_Routines.Capture_Compare_4_ISR();
+		TIM4->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
+		__timer_4_config__ ->ISR_Routines.Capture_Compare_2_ISR();
 
-    	TIM4->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_4_config__ ->ISR_Routines.Update_ISR) {
-    	__timer_4_config__ ->ISR_Routines.Update_ISR();
+	}
+	if (__timer_4_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
 
-    	TIM4->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_4_config__ ->ISR_Routines.Trigger_ISR) {
-    	__timer_4_config__ ->ISR_Routines.Trigger_ISR();
+		TIM4->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
+		__timer_4_config__ ->ISR_Routines.Capture_Compare_3_ISR();
 
-    	TIM4->SR &= ~TIM_SR_TIF;  // Clear the Capture Compare interrupt flag
-    }
+	}
+	if (__timer_4_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
+
+		TIM4->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
+		__timer_4_config__ ->ISR_Routines.Capture_Compare_4_ISR();
+
+	}
+	if (__timer_4_config__ ->ISR_Routines.Update_ISR) {
+
+		TIM4->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
+		__timer_4_config__ ->ISR_Routines.Update_ISR();
+
+	}
+	if (__timer_4_config__ ->ISR_Routines.Trigger_ISR) {
+
+		TIM4->SR &= ~TIM_SR_TIF;  // Clear the Capture Compare interrupt flag
+		__timer_4_config__ ->ISR_Routines.Trigger_ISR();
+
+	}
 }
 
 void TIM5_IRQHandler(void)
 {
-    if (__timer_5_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
-    	__timer_5_config__ ->ISR_Routines.Capture_Compare_1_ISR();
+	if (__timer_5_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
 
-    	TIM5->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_5_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
-    	__timer_5_config__ ->ISR_Routines.Capture_Compare_2_ISR();
+		TIM5->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
+		__timer_5_config__ ->ISR_Routines.Capture_Compare_1_ISR();
 
-    	TIM5->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_5_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
-    	__timer_5_config__ ->ISR_Routines.Capture_Compare_3_ISR();
+	}
+	if (__timer_5_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
 
-    	TIM5->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_5_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
-    	__timer_5_config__ ->ISR_Routines.Capture_Compare_4_ISR();
+		TIM5->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
+		__timer_5_config__ ->ISR_Routines.Capture_Compare_2_ISR();
 
-    	TIM5->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_5_config__ ->ISR_Routines.Update_ISR) {
-    	__timer_5_config__ ->ISR_Routines.Update_ISR();
+	}
+	if (__timer_5_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
 
-    	TIM5->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
-    }
-    if (__timer_5_config__ ->ISR_Routines.Trigger_ISR) {
-    	__timer_5_config__ ->ISR_Routines.Trigger_ISR();
+		TIM5->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
+		__timer_5_config__ ->ISR_Routines.Capture_Compare_3_ISR();
 
-    	TIM5->SR &= ~TIM_SR_TIF;  // Clear the Capture Compare interrupt flag
-    }
+	}
+	if (__timer_5_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
+
+		TIM5->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
+		__timer_5_config__ ->ISR_Routines.Capture_Compare_4_ISR();
+
+	}
+	if (__timer_5_config__ ->ISR_Routines.Update_ISR) {
+
+		TIM5->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
+		__timer_5_config__ ->ISR_Routines.Update_ISR();
+
+	}
+	if (__timer_5_config__ ->ISR_Routines.Trigger_ISR) {
+
+		TIM5->SR &= ~TIM_SR_TIF;  // Clear the Capture Compare interrupt flag
+		__timer_5_config__ ->ISR_Routines.Trigger_ISR();
+
+	}
 }
 
 void TIM6_DAC_IRQHandler(void)
 {
-    if (__timer_6_config__->ISR_Routines.Update_ISR) {
-    	__timer_6_config__->ISR_Routines.Update_ISR();
-    	  TIM6->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
-
-    }
-
+	if (__timer_6_config__->ISR_Routines.Update_ISR) {
+		TIM6->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
+		__timer_6_config__->ISR_Routines.Update_ISR();
+	}
 }
 
 void TIM7_IRQHandler(void)
 {
-    if (__timer_7_config__->ISR_Routines.Update_ISR) {
-    	__timer_7_config__->ISR_Routines.Update_ISR();
-
-    	TIM7->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
-    }
+	if (__timer_7_config__->ISR_Routines.Update_ISR) {
+		TIM7->SR &= ~TIM_SR_UIF;  // Clear the Capture Compare interrupt flag
+		__timer_7_config__->ISR_Routines.Update_ISR();
+	}
 }
 
-//if(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Break_Interrupt)
-//{
-//	NVIC_EnableIRQ(TIM8_BRK_TIM12_IRQn);
-//}
-//else if(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.COM_Interrupt)
-//{
-//	NVIC_EnableIRQ(TIM8_TRG_COM_TIM14_IRQn);
-//}
-//else if(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
-//{
-//	NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
-//}
-//else if((config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-//		(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_2) ||
-//		(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_3) ||
-//		(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_4))
-//{
-//	NVIC_EnableIRQ(TIM8_CC_IRQn);
-//}
+
 
 void TIM8_BRK_TIM12_IRQHandler(void) {
-    if (__timer_8_config__ ->ISR_Routines.Break_ISR) {
-    	__timer_8_config__ ->ISR_Routines.Break_ISR();
-    	TIM1->SR &= ~TIM_SR_BIF;  // Clear the Break interrupt flag
-    }
+	if (__timer_8_config__ ->ISR_Routines.Break_ISR) {
+		__timer_8_config__ ->ISR_Routines.Break_ISR();
+		TIM1->SR &= ~TIM_SR_BIF;  // Clear the Break interrupt flag
+	}
 
-    if (__timer_12_config__ ->ISR_Routines.Capture_Compare_1_ISR){
-    	__timer_12_config__ ->ISR_Routines.Capture_Compare_1_ISR();
-    	TIM9->SR &= ~TIM_SR_CC1IF;  // Clear the Break interrupt flag
-    }
+	if (__timer_12_config__ ->ISR_Routines.Capture_Compare_1_ISR){
+		__timer_12_config__ ->ISR_Routines.Capture_Compare_1_ISR();
+		TIM9->SR &= ~TIM_SR_CC1IF;  // Clear the Break interrupt flag
+	}
 
-    if (__timer_12_config__ ->ISR_Routines.Capture_Compare_2_ISR){
-    	__timer_12_config__ ->ISR_Routines.Capture_Compare_2_ISR();
-    	TIM9->SR &= ~TIM_SR_CC2IF;  // Clear the Break interrupt flag
-    }
+	if (__timer_12_config__ ->ISR_Routines.Capture_Compare_2_ISR){
+		__timer_12_config__ ->ISR_Routines.Capture_Compare_2_ISR();
+		TIM9->SR &= ~TIM_SR_CC2IF;  // Clear the Break interrupt flag
+	}
 
-    if (__timer_12_config__ ->ISR_Routines.Update_ISR){
-    	__timer_12_config__ ->ISR_Routines.Update_ISR();
-    	TIM9->SR &= ~TIM_SR_UIF;  // Clear the Break interrupt flag
-    }
+	if (__timer_12_config__ ->ISR_Routines.Update_ISR){
+		__timer_12_config__ ->ISR_Routines.Update_ISR();
+		TIM9->SR &= ~TIM_SR_UIF;  // Clear the Break interrupt flag
+	}
 
-    if (__timer_12_config__ ->ISR_Routines.Trigger_ISR){
-    	__timer_12_config__ ->ISR_Routines.Trigger_ISR();
-    	TIM9->SR &= ~TIM_SR_TIF;  // Clear the Break interrupt flag
-    }
+	if (__timer_12_config__ ->ISR_Routines.Trigger_ISR){
+		__timer_12_config__ ->ISR_Routines.Trigger_ISR();
+		TIM9->SR &= ~TIM_SR_TIF;  // Clear the Break interrupt flag
+	}
 
 }
 
 void TIM8_UP_TIM13_IRQHandler(void) {
-    if (__timer_1_config__ ->ISR_Routines.Update_ISR) {
-    	__timer_1_config__ ->ISR_Routines.Update_ISR();
-    	TIM1->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
-    }
+	if (__timer_1_config__ ->ISR_Routines.Update_ISR) {
+		__timer_1_config__ ->ISR_Routines.Update_ISR();
+		TIM1->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
+	}
 
-    if (__timer_13_config__ ->ISR_Routines.Update_ISR) {
-    	__timer_13_config__ ->ISR_Routines.Update_ISR();
-    	TIM13->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
-    }
+	if (__timer_13_config__ ->ISR_Routines.Update_ISR) {
+		__timer_13_config__ ->ISR_Routines.Update_ISR();
+		TIM13->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
+	}
 
-    if (__timer_13_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
-    	__timer_13_config__ ->ISR_Routines.Capture_Compare_1_ISR();
-    	TIM13->SR &= ~TIM_SR_CC1IF;  // Clear the Update interrupt flag
-    }
+	if (__timer_13_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
+		__timer_13_config__ ->ISR_Routines.Capture_Compare_1_ISR();
+		TIM13->SR &= ~TIM_SR_CC1IF;  // Clear the Update interrupt flag
+	}
 
 }
 
 void TIM8_TRG_COM_TIM14_IRQHandler(void) {
-    if (__timer_8_config__ ->ISR_Routines.Trigger_ISR) {
-    	__timer_8_config__ ->ISR_Routines.Trigger_ISR();
+	if (__timer_8_config__ ->ISR_Routines.Trigger_ISR) {
+		__timer_8_config__ ->ISR_Routines.Trigger_ISR();
 
-    	TIM8->SR &= ~TIM_SR_TIF;  // Clear the Trigger interrupt flag
-    }
+		TIM8->SR &= ~TIM_SR_TIF;  // Clear the Trigger interrupt flag
+	}
 
-    if (__timer_8_config__ ->ISR_Routines.Commutation_ISR) {
-    	__timer_8_config__ ->ISR_Routines.Commutation_ISR();
+	if (__timer_8_config__ ->ISR_Routines.Commutation_ISR) {
+		__timer_8_config__ ->ISR_Routines.Commutation_ISR();
 
-    	TIM8->SR &= ~TIM_SR_COMIF;  // Clear the Trigger interrupt flag
-    }
+		TIM8->SR &= ~TIM_SR_COMIF;  // Clear the Trigger interrupt flag
+	}
 
-    if (__timer_14_config__ ->ISR_Routines.Update_ISR) {
-    	__timer_14_config__ ->ISR_Routines.Update_ISR();
-    	TIM14->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
-    }
+	if (__timer_14_config__ ->ISR_Routines.Update_ISR) {
+		__timer_14_config__ ->ISR_Routines.Update_ISR();
+		TIM14->SR &= ~TIM_SR_UIF;  // Clear the Update interrupt flag
+	}
 
-    if (__timer_14_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
-    	__timer_14_config__ ->ISR_Routines.Capture_Compare_1_ISR();
-    	TIM14->SR &= ~TIM_SR_CC1IF;  // Clear the Update interrupt flag
-    }
+	if (__timer_14_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
+		__timer_14_config__ ->ISR_Routines.Capture_Compare_1_ISR();
+		TIM14->SR &= ~TIM_SR_CC1IF;  // Clear the Update interrupt flag
+	}
 
 }
 
 void TIM8_CC_IRQHandler(void) {
-    if (__timer_8_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
-    	__timer_8_config__ ->ISR_Routines.Capture_Compare_1_ISR();
+	if (__timer_8_config__ ->ISR_Routines.Capture_Compare_1_ISR) {
+		__timer_8_config__ ->ISR_Routines.Capture_Compare_1_ISR();
 
-    	TIM8->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
-    }
+		TIM8->SR &= ~TIM_SR_CC1IF;  // Clear the Capture Compare interrupt flag
+	}
 
-    if (__timer_8_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
-    	__timer_8_config__ ->ISR_Routines.Capture_Compare_2_ISR();
+	if (__timer_8_config__ ->ISR_Routines.Capture_Compare_2_ISR) {
+		__timer_8_config__ ->ISR_Routines.Capture_Compare_2_ISR();
 
-    	TIM8->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
-    }
+		TIM8->SR &= ~TIM_SR_CC2IF;  // Clear the Capture Compare interrupt flag
+	}
 
-    if (__timer_8_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
-    	__timer_8_config__ ->ISR_Routines.Capture_Compare_3_ISR();
+	if (__timer_8_config__ ->ISR_Routines.Capture_Compare_3_ISR) {
+		__timer_8_config__ ->ISR_Routines.Capture_Compare_3_ISR();
 
-    	TIM8->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
-    }
+		TIM8->SR &= ~TIM_SR_CC3IF;  // Clear the Capture Compare interrupt flag
+	}
 
-    if (__timer_8_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
-    	__timer_8_config__ ->ISR_Routines.Capture_Compare_4_ISR();
+	if (__timer_8_config__ ->ISR_Routines.Capture_Compare_4_ISR) {
+		__timer_8_config__ ->ISR_Routines.Capture_Compare_4_ISR();
 
-    	TIM8->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
-    }
+		TIM8->SR &= ~TIM_SR_CC4IF;  // Clear the Capture Compare interrupt flag
+	}
 }
 
 
 static void Timer_1_Pin_Init(Timer_Config *config)
 {
 
-		RCC -> APB2ENR |= RCC_APB2ENR_TIM1EN;
+	RCC -> APB2ENR |= RCC_APB2ENR_TIM1EN;
 
 
-		if(config -> Channel_1.Enable ==  true)
-		{
-			if(config -> Channel_1.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH1_PA8)
-				GPIO_Pin_Init(GPIOA, 8, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
-			else if(config -> Channel_1.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH1_PE9)
-				GPIO_Pin_Init(GPIOE, 9, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
-		}
+	if(config -> Channel_1.Enable ==  true)
+	{
+		if(config -> Channel_1.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH1_PA8)
+			GPIO_Pin_Init(GPIOA, 8, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
+		else if(config -> Channel_1.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH1_PE9)
+			GPIO_Pin_Init(GPIOE, 9, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
+	}
 
-		if(config -> Channel_2.Enable ==  true)
-		{
-			if(config -> Channel_2.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH2_PA9)
-				GPIO_Pin_Init(GPIOA, 9, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
-			else if(config -> Channel_2.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH2_PE11)
-				GPIO_Pin_Init(GPIOE, 11, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
-		}
+	if(config -> Channel_2.Enable ==  true)
+	{
+		if(config -> Channel_2.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH2_PA9)
+			GPIO_Pin_Init(GPIOA, 9, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
+		else if(config -> Channel_2.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH2_PE11)
+			GPIO_Pin_Init(GPIOE, 11, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
+	}
 
-		if(config -> Channel_3.Enable ==  true)
-		{
-			if(config -> Channel_3.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH3_PA10)
-				GPIO_Pin_Init(GPIOA, 10, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
-			else if(config -> Channel_3.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH3_PE13)
-				GPIO_Pin_Init(GPIOE, 13, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
-		}
+	if(config -> Channel_3.Enable ==  true)
+	{
+		if(config -> Channel_3.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH3_PA10)
+			GPIO_Pin_Init(GPIOA, 10, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
+		else if(config -> Channel_3.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH3_PE13)
+			GPIO_Pin_Init(GPIOE, 13, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
+	}
 
-		if(config -> Channel_4.Enable ==  true)
-		{
-			if(config -> Channel_4.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH4_PA11)
-				GPIO_Pin_Init(GPIOA, 11, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
-			else if(config -> Channel_4.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH4_PE14)
-				GPIO_Pin_Init(GPIOE, 14, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
-		}
+	if(config -> Channel_4.Enable ==  true)
+	{
+		if(config -> Channel_4.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH4_PA11)
+			GPIO_Pin_Init(GPIOA, 11, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
+		else if(config -> Channel_4.Pin == Timer_Configurations.Channel.Pin.Timer_1.CH4_PE14)
+			GPIO_Pin_Init(GPIOE, 14, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_1);
+	}
 
 
-		if(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Break_Interrupt)
-		{
-			NVIC_EnableIRQ(TIM1_BRK_TIM9_IRQn);
-		}
-		else if(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.COM_Interrupt)
-		{
-			NVIC_EnableIRQ(TIM1_TRG_COM_TIM11_IRQn);
-		}
-		else if(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
-		{
-			NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);
-		}
-		else if((config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-				(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_2) ||
-				(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_3) ||
-				(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_4))
-		{
-			NVIC_EnableIRQ(TIM1_CC_IRQn);
-		}
+	if(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Break_Interrupt)
+	{
+		NVIC_EnableIRQ(TIM1_BRK_TIM9_IRQn);
+	}
+	else if(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.COM_Interrupt)
+	{
+		NVIC_EnableIRQ(TIM1_TRG_COM_TIM11_IRQn);
+	}
+	else if(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
+	{
+		NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);
+	}
+	else if((config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_2) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_3) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_4))
+	{
+		NVIC_EnableIRQ(TIM1_CC_IRQn);
+	}
 }
 
 static void Timer_2_Pin_Init(Timer_Config *config)
 {
 
-		RCC -> APB1ENR |= RCC_APB1ENR_TIM2EN;
+	RCC -> APB1ENR |= RCC_APB1ENR_TIM2EN;
 
-		__timer_2_config__ = config;
+	__timer_2_config__ = config;
 
-		if(config -> Channel_1.Enable ==  true)
-		{
-			if(config -> Channel_1.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH1_PA0)
-				GPIO_Pin_Init(GPIOA, 0, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.Push_Pull, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
-			else if(config -> Channel_1.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH1_PA15)
-				GPIO_Pin_Init(GPIOA, 15, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
-			else if(config -> Channel_1.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH1_PA5)
-				GPIO_Pin_Init(GPIOA, 5, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
-		}
+	if(config -> Channel_1.Enable ==  true)
+	{
+		if(config -> Channel_1.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH1_PA0)
+			GPIO_Pin_Init(GPIOA, 0, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.Push_Pull, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
+		else if(config -> Channel_1.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH1_PA15)
+			GPIO_Pin_Init(GPIOA, 15, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
+		else if(config -> Channel_1.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH1_PA5)
+			GPIO_Pin_Init(GPIOA, 5, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
+	}
 
-		if(config -> Channel_2.Enable ==  true)
-		{
-			if(config -> Channel_2.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH2_PA1)
-				GPIO_Pin_Init(GPIOA, 1, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.Push_Pull, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
-			else if(config -> Channel_2.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH2_PB3)
-				GPIO_Pin_Init(GPIOB,3, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
-		}
+	if(config -> Channel_2.Enable ==  true)
+	{
+		if(config -> Channel_2.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH2_PA1)
+			GPIO_Pin_Init(GPIOA, 1, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.Push_Pull, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
+		else if(config -> Channel_2.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH2_PB3)
+			GPIO_Pin_Init(GPIOB,3, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
+	}
 
-		if(config -> Channel_3.Enable ==  true)
-		{
-			if(config -> Channel_3.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH3_PA2)
-				GPIO_Pin_Init(GPIOA, 2, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
-			else if(config -> Channel_3.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH3_PB10)
-				GPIO_Pin_Init(GPIOB, 10, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
-		}
+	if(config -> Channel_3.Enable ==  true)
+	{
+		if(config -> Channel_3.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH3_PA2)
+			GPIO_Pin_Init(GPIOA, 2, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
+		else if(config -> Channel_3.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH3_PB10)
+			GPIO_Pin_Init(GPIOB, 10, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
+	}
 
-		if(config -> Channel_4.Enable ==  true)
-		{
-			if(config -> Channel_4.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH4_PA3)
-				GPIO_Pin_Init(GPIOA, 3, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
-			else if(config -> Channel_4.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH4_PB11)
-				GPIO_Pin_Init(GPIOB, 11, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
-		}
+	if(config -> Channel_4.Enable ==  true)
+	{
+		if(config -> Channel_4.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH4_PA3)
+			GPIO_Pin_Init(GPIOA, 3, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
+		else if(config -> Channel_4.Pin == Timer_Configurations.Channel.Pin.Timer_2.CH4_PB11)
+			GPIO_Pin_Init(GPIOB, 11, GPIO_Configuration.Mode.Alternate_Function, GPIO_Configuration.Output_Type.None, GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.None, GPIO_Configuration.Alternate_Functions.TIM_2);
+	}
 
-		if(
-		   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-		   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_2) ||
-		   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_3) ||
-		   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_4) ||
-		   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Trigger_Interrupt) ||
-		   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
-		)
-		{
-			NVIC_EnableIRQ(TIM2_IRQn);
-		}
+	if(
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_2) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_3) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_4) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Trigger_Interrupt) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
+	)
+	{
+		NVIC_EnableIRQ(TIM2_IRQn);
+	}
 
 }
 
@@ -552,12 +558,12 @@ static void Timer_3_Pin_Init(Timer_Config *config)
 	}
 
 	if(
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_2) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_3) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_4) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Trigger_Interrupt) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_2) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_3) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_4) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Trigger_Interrupt) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
 	)
 	{
 		NVIC_EnableIRQ(TIM3_IRQn);
@@ -600,12 +606,12 @@ static void Timer_4_Pin_Init(Timer_Config *config)
 	}
 
 	if(
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_2) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_3) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_4) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Trigger_Interrupt) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_2) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_3) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_4) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Trigger_Interrupt) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
 	)
 	{
 		NVIC_EnableIRQ(TIM4_IRQn);
@@ -640,12 +646,12 @@ static void Timer_5_Pin_Init(Timer_Config *config)
 	}
 
 	if(
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_2) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_3) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_4) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Trigger_Interrupt) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_2) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_3) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_4) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Trigger_Interrupt) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
 	)
 	{
 		NVIC_EnableIRQ(TIM5_IRQn);
@@ -730,8 +736,8 @@ static void Timer_9_Pin_Init(Timer_Config *config)
 	}
 
 	if(
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
 	)
 	{
 		NVIC_EnableIRQ(TIM1_BRK_TIM9_IRQn);
@@ -749,8 +755,8 @@ static void Timer_10_Pin_Init(Timer_Config *config)
 	}
 
 	if(
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
 	)
 	{
 		NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);
@@ -768,8 +774,8 @@ static void Timer_11_Pin_Init(Timer_Config *config)
 	}
 
 	if(
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
 	)
 	{
 		NVIC_EnableIRQ(TIM1_TRG_COM_TIM11_IRQn);
@@ -793,8 +799,8 @@ static void Timer_12_Pin_Init(Timer_Config *config)
 	}
 
 	if(
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
 	)
 	{
 		NVIC_EnableIRQ(TIM8_BRK_TIM12_IRQn);
@@ -812,8 +818,8 @@ static void Timer_13_Pin_Init(Timer_Config *config)
 	}
 
 	if(
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-	   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
+			(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
 	)
 	{
 		NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
@@ -832,8 +838,8 @@ static void Timer_14_Pin_Init(Timer_Config *config)
 
 	if(!config->Interrupt_Request)
 		if(
-		   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
-		   (config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
+				(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Capture_Compare_Interrupt_1) ||
+				(config->Interrupt_Request == Timer_Configurations.Interrupt_Request.Update_Interrupt)
 		)
 		{
 			NVIC_EnableIRQ(TIM8_TRG_COM_TIM14_IRQn);
@@ -954,16 +960,16 @@ static void PWM_Input_Mode_Setup(Timer_Config *config)
 
 static void Encoder_Mode_Setup(Timer_Config *config)
 {
-//	config -> Port -> CCMR1 |= TIM_CCMR1_CC1S_0 | TIM_CCMR1_CC2S_0;
-//	config -> Port -> CCER &= ~(TIM_CCER_CC1P | TIM_CCER_CC2P  );
-//	config -> Port -> SMCR |= TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1; // Set SMS bits to 011 (Encoder mode 3)
-//	config -> Port -> SMCR &= ~(TIM_SMCR_SMS); // Clear SMS bits
-//	config -> Port -> SMCR |= TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1; // Set SMS bits to 011 (Encoder mode 3)
-//	config -> Port -> CCMR1 &= ~(TIM_CCMR1_IC1F | TIM_CCMR1_IC2F); // Clear IC1F and IC2F bits
-////	config -> Port -> CCMR1 |= (TIM_CCMR1_IC1F_3 | TIM_CCMR1_IC2F_3); // Set filter to 8 samples, N=8
-//	config -> Port -> CCMR1 &= ~(TIM_CCMR1_IC1PSC | TIM_CCMR1_IC2PSC); // Clear IC1PSC and IC2PSC bits
-//	config -> Port -> CCER &= ~(TIM_CCER_CC1P | TIM_CCER_CC2P); // Clear CC1P and CC2P bits (rising edge)
-//
+	//	config -> Port -> CCMR1 |= TIM_CCMR1_CC1S_0 | TIM_CCMR1_CC2S_0;
+	//	config -> Port -> CCER &= ~(TIM_CCER_CC1P | TIM_CCER_CC2P  );
+	//	config -> Port -> SMCR |= TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1; // Set SMS bits to 011 (Encoder mode 3)
+	//	config -> Port -> SMCR &= ~(TIM_SMCR_SMS); // Clear SMS bits
+	//	config -> Port -> SMCR |= TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1; // Set SMS bits to 011 (Encoder mode 3)
+	//	config -> Port -> CCMR1 &= ~(TIM_CCMR1_IC1F | TIM_CCMR1_IC2F); // Clear IC1F and IC2F bits
+	////	config -> Port -> CCMR1 |= (TIM_CCMR1_IC1F_3 | TIM_CCMR1_IC2F_3); // Set filter to 8 samples, N=8
+	//	config -> Port -> CCMR1 &= ~(TIM_CCMR1_IC1PSC | TIM_CCMR1_IC2PSC); // Clear IC1PSC and IC2PSC bits
+	//	config -> Port -> CCER &= ~(TIM_CCER_CC1P | TIM_CCER_CC2P); // Clear CC1P and CC2P bits (rising edge)
+	//
 	config -> Port -> SMCR = 0x0000;
 	config -> Port -> CR2 = 0x0000;
 	config -> Port->CCMR1 = 0x0000;
@@ -1172,15 +1178,15 @@ uint16_t Encoder_Read_Counts(Timer_Config *config)
 
 uint8_t Encoder_Get_Direction(Timer_Config *config)
 {
-	 if (config->Port->CR1 & TIM_CR1_DIR)
-	 {
-		 return 1;
-	 }
-	 else
-	 {
-		 return 0;
-	 }
-	 return -1;
+	if (config->Port->CR1 & TIM_CR1_DIR)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+	return -1;
 }
 /********************* Input PWM Channel ************************/
 
