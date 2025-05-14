@@ -31,41 +31,12 @@ struct Calibration_Data{
 	uint16_t dig_h4;
 	uint16_t dig_h5;
 	uint16_t dig_h6;
+	uint16_t t_fine;
 
 
 
 }Calibration_Data;
 
-static double compensate_temperature(const struct bme280_uncomp_data *uncomp_data, struct bme280_calib_data *calib_data)
-{
-    double var1;
-    double var2;
-    double temperature;
-    double temperature_min = -40;
-    double temperature_max = 85;
-
-    var1 = (((double)uncomp_data->temperature) / 16384.0 - ((double)calib_data->dig_t1) / 1024.0);
-    var1 = var1 * ((double)calib_data->dig_t2);
-    var2 = (((double)uncomp_data->temperature) / 131072.0 - ((double)calib_data->dig_t1) / 8192.0);
-    var2 = (var2 * var2) * ((double)calib_data->dig_t3);
-    calib_data->t_fine = (int32_t)(var1 + var2);
-    temperature = (var1 + var2) / 5120.0;
-
-    if (temperature < temperature_min)
-    {
-        temperature = temperature_min;
-    }
-    else if (temperature > temperature_max)
-    {
-        temperature = temperature_max;
-    }
-
-    return temperature;
-}
-
-
-static  void CS_L(BME280_Typedef *_bme280_config_) { GPIO_Pin_Low(_bme280_config_->CSS_Port, _bme280_config_->CSS_Pin); }
-static  void CS_H(BME280_Typedef *_bme280_config_) { GPIO_Pin_High(_bme280_config_->CSS_Port, _bme280_config_->CSS_Pin); }
 
 
 static const struct Memory_Map{
@@ -110,23 +81,6 @@ static const struct Memory_Map{
 
 uint8_t BME280_Init(BME280_Typedef *_bme280_config_)
 {
-	if(_bme280_config_->SPI_Port)
-	{
-		GPIO_Pin_Init(_bme280_config_->CSS_Port, _bme280_config_->CSS_Pin, GPIO_Configuration.Mode.General_Purpose_Output, GPIO_Configuration.Output_Type.Push_Pull,
-				                                                           GPIO_Configuration.Speed.Very_High_Speed, GPIO_Configuration.Pull.Pull_Up, GPIO_Configuration.Alternate_Functions.None);
-
-		CS_H(_bme280_config_);
-		SPI_Init(_bme280_config_->SPI_Port);
-		SPI_Enable(_bme280_config_->SPI_Port);
-
-
-
-
-
-		return 1;
-
-	}
-
 	if(_bme280_config_->I2C_Port)
 	{
 		I2C_Init(_bme280_config_->I2C_Port);
@@ -137,29 +91,30 @@ uint8_t BME280_Init(BME280_Typedef *_bme280_config_)
 		temp = I2C_Read_Register(_bme280_config_->I2C_Port, _bme280_config_->device_Address, Memory_Map.id);
 		if(temp != 0x60) return 0;
 
-		uint8_t byte_array[30] = {0};
+		uint8_t byte_array[50] = {0};
 		I2C_Master_Read_Registers_Bulk(_bme280_config_->I2C_Port, _bme280_config_->device_Address, Memory_Map.calib00, byte_array, 8);
 
-		Calibration_Data.dig_t1 = (byte_array[1] << 7) |  byte_array[0];
-		Calibration_Data.dig_t2 = (byte_array[3] << 7) |  byte_array[2];
-		Calibration_Data.dig_t3 = (byte_array[5] << 7) |  byte_array[4];
 
-		Calibration_Data.dig_p1 = (byte_array[7] << 7) |  byte_array[6];
-		Calibration_Data.dig_p2 = (byte_array[9] << 7) |  byte_array[8];
-		Calibration_Data.dig_p3 = (byte_array[11] << 7) |  byte_array[10];
-		Calibration_Data.dig_p4 = (byte_array[13] << 7) |  byte_array[12];
-		Calibration_Data.dig_p5 = (byte_array[15] << 7) |  byte_array[14];
-		Calibration_Data.dig_p6 = (byte_array[17] << 7) |  byte_array[16];
-		Calibration_Data.dig_p7 = (byte_array[19] << 7) |  byte_array[18];
-		Calibration_Data.dig_p8 = (byte_array[21] << 7) |  byte_array[20];
-		Calibration_Data.dig_p9 = (byte_array[23] << 7) |  byte_array[22];
+		Calibration_Data.dig_t1 = ((uint32_t)byte_array[1] << 7) |  byte_array[0];
+		Calibration_Data.dig_t2 = ((uint32_t)byte_array[3] << 7) |  byte_array[2];
+		Calibration_Data.dig_t3 = ((uint32_t)byte_array[5] << 7) |  byte_array[4];
 
-		Calibration_Data.dig_h1 = (byte_array[25] << 7) |  byte_array[24];
-		Calibration_Data.dig_h2 = (byte_array[27] << 7) |  byte_array[26];
-		Calibration_Data.dig_h3 = (byte_array[29] << 7) |  byte_array[28];
-		Calibration_Data.dig_h4 = (byte_array[31] << 7) |  byte_array[30];
-		Calibration_Data.dig_h5 = (byte_array[33] << 7) |  byte_array[32];
-		Calibration_Data.dig_h6 = (byte_array[35] << 7) |  byte_array[34];
+		Calibration_Data.dig_p1 = ((uint32_t)byte_array[7] << 7) |  byte_array[6];
+		Calibration_Data.dig_p2 = ((uint32_t)byte_array[9] << 7) |  byte_array[8];
+		Calibration_Data.dig_p3 = ((uint32_t)byte_array[11] << 7) |  byte_array[10];
+		Calibration_Data.dig_p4 = ((uint32_t)byte_array[13] << 7) |  byte_array[12];
+		Calibration_Data.dig_p5 = ((uint32_t)byte_array[15] << 7) |  byte_array[14];
+		Calibration_Data.dig_p6 = ((uint32_t)byte_array[17] << 7) |  byte_array[16];
+		Calibration_Data.dig_p7 = ((uint32_t)byte_array[19] << 7) |  byte_array[18];
+		Calibration_Data.dig_p8 = ((uint32_t)byte_array[21] << 7) |  byte_array[20];
+		Calibration_Data.dig_p9 = ((uint32_t)byte_array[23] << 7) |  byte_array[22];
+
+		Calibration_Data.dig_h1 = ((uint32_t)byte_array[25] << 7) |  byte_array[24];
+		Calibration_Data.dig_h2 = ((uint32_t)byte_array[27] << 7) |  byte_array[26];
+		Calibration_Data.dig_h3 = ((uint32_t)byte_array[29] << 7) |  byte_array[28];
+		Calibration_Data.dig_h4 = ((uint32_t)byte_array[31] << 7) |  byte_array[30];
+		Calibration_Data.dig_h5 = ((uint32_t)byte_array[33] << 7) |  byte_array[32];
+		Calibration_Data.dig_h6 = ((uint32_t)byte_array[35] << 7) |  byte_array[34];
 
 
 
@@ -178,14 +133,16 @@ void BME280_Get_Data(BME280_Typedef *_bme280_config_)
 	uint8_t byte_array[8];
 	uint8_t temp = 0;
 
-	 uint32_t adc_T = 0;
-	 uint32_t adc_H = 0;
-	 uint32_t adc_P = 0;
+	uint32_t adc_T = 0;
+	uint32_t adc_H = 0;
+	uint32_t adc_P = 0;
 
-	if(_bme280_config_->SPI_Port)
-	{
+	double var1;
+	double var2;
 
-	}
+	double temperature_min = -40;
+	double temperature_max = 85;
+
 	if(_bme280_config_->I2C_Port)
 	{
 		do {
@@ -202,12 +159,41 @@ void BME280_Get_Data(BME280_Typedef *_bme280_config_)
 
 
 
+		var1 = (((double)adc_T) / 16384.0 - ((double)Calibration_Data.dig_t1) / 1024.0);
+		var1 = var1 * ((double)Calibration_Data.dig_t2);
+		var2 = (((double)adc_T) / 131072.0 - ((double)Calibration_Data.dig_t1) / 8192.0);
+		var2 = (var2 * var2) * ((double)Calibration_Data.dig_t3);
+		Calibration_Data.t_fine = (int32_t)(var1 + var2);
+		_bme280_config_->Temperature = (var1 + var2) / 5120.0;
+
+		if (_bme280_config_->Temperature  < temperature_min)
+		{
+			_bme280_config_->Temperature  = temperature_min;
+		}
+		else if (_bme280_config_->Temperature  > temperature_max)
+		{
+			_bme280_config_->Temperature  = temperature_max;
+		}
+
+
+
+
 	}
 
 
+}
 
 
+uint8_t BME280_Soft_Reset(BME280_Typedef *_bme280_config_)
+{
+	uint8_t result;
 
+	I2C_Master_Write_Register(_bme280_config_->I2C_Port, _bme280_config_->device_Address, Memory_Map.reset, 0xB6);
 
+	do {
 
+		result = I2C_Read_Register(_bme280_config_->I2C_Port, _bme280_config_->device_Address, Memory_Map.status);
+		Delay_us(1);
+
+	} while (result & 0x01);
 }
