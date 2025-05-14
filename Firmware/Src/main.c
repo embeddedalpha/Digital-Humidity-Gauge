@@ -61,6 +61,8 @@ int main(void)
 
 
 
+	Sensor1.I2C_Port = &BME280_I2C;
+	Sensor1.device_Address = BME280_Configurations.Device_Address.Ox76;
 
 
 
