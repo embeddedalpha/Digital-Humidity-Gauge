@@ -113,89 +113,6 @@
 #include "main.h"
 #include "DMA_Defs.h"
 
-/** @addtogroup DMA_Flags
- * @{
- */
-extern volatile  DMA_Flags_Typedef I2S2_RX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef I2S2_TX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef I2S3_RX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef I2S3_TX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef I2C1_RX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef I2C1_TX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef I2C2_RX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef I2C2_TX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef I2C3_RX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef I2C3_TX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef SPI1_RX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef SPI2_RX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef SPI3_RX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef SPI1_TX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef SPI2_TX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef SPI3_TX_DMA_Flag;
-
-extern volatile  DMA_Flags_Typedef TIM1_UP_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM1_CH1_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM1_CH2_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM1_CH3_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM1_CH4_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM1_TRIG_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM1_COM_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM8_UP_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM8_CH1_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM8_CH2_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM8_CH3_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM8_CH4_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM8_TRIG_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM8_COM_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM2_UP_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM2_CH1_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM2_CH2_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM2_CH3_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM2_CH4_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM3_CH1_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM3_CH2_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM3_CH3_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM3_CH4_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM3_UP_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM3_TRIG_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM4_CH1_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM4_CH2_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM4_CH3_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM4_UP_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM5_CH1_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM5_CH2_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM5_CH3_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM5_CH4_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM5_UP_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM5_TRIG_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM6_UP_DMA_Flag;
-extern volatile  DMA_Flags_Typedef TIM7_UP_DMA_Flag;
-extern volatile  DMA_Flags_Typedef DAC1_DMA_Flag;
-extern volatile  DMA_Flags_Typedef DAC2_DMA_Flag;
-extern volatile  DMA_Flags_Typedef SDIO_RXTX_DMA_Flag;
-extern volatile  DMA_Flags_Typedef DCMI_DMA_Flag;
-extern volatile  DMA_Flags_Typedef ADC1_DMA_Flag;
-extern volatile  DMA_Flags_Typedef ADC2_DMA_Flag;
-extern volatile  DMA_Flags_Typedef ADC3_DMA_Flag;
-
-extern volatile  DMA_Flags_Typedef DMA1_Stream0_Flag;
-extern volatile  DMA_Flags_Typedef DMA1_Stream1_Flag;
-extern volatile  DMA_Flags_Typedef DMA1_Stream2_Flag;
-extern volatile  DMA_Flags_Typedef DMA1_Stream3_Flag;
-extern volatile  DMA_Flags_Typedef DMA1_Stream4_Flag;
-extern volatile  DMA_Flags_Typedef DMA1_Stream5_Flag;
-extern volatile  DMA_Flags_Typedef DMA1_Stream6_Flag;
-extern volatile  DMA_Flags_Typedef DMA1_Stream7_Flag;
-
-extern volatile  DMA_Flags_Typedef DMA2_Stream0_Flag;
-extern volatile  DMA_Flags_Typedef DMA2_Stream1_Flag;
-extern volatile  DMA_Flags_Typedef DMA2_Stream2_Flag;
-extern volatile  DMA_Flags_Typedef DMA2_Stream3_Flag;
-extern volatile  DMA_Flags_Typedef DMA2_Stream4_Flag;
-extern volatile  DMA_Flags_Typedef DMA2_Stream5_Flag;
-extern volatile  DMA_Flags_Typedef DMA2_Stream6_Flag;
-extern volatile  DMA_Flags_Typedef DMA2_Stream7_Flag;
-/** @} */
 
 /**
  * @brief DMA configuration structure.
@@ -254,13 +171,6 @@ void DMA_Clock_Disable(DMA_Config *config);
  * @param[in] config Pointer to the DMA_Config structure containing the DMA controller settings.
  */
 void DMA_Reset(DMA_Config *config);
-
-/**
- * @brief Resets all DMA flags in the provided DMA_Flags_Typedef structure.
- *
- * @param flag The DMA_Flags_Typedef structure whose flags are to be reset.
- */
-void DMA_Reset_Flags(volatile DMA_Flags_Typedef *flag);
 
 /**
  * @brief Initializes the DMA with the specified configuration.

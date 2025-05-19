@@ -1341,24 +1341,7 @@ void DMA2_Stream7_IRQHandler(void)
 	}
 }
 
-/**
- * @brief Resets all DMA flags in the provided DMA_Flags_Typedef structure.
- *
- * This function sets all the flags in the provided `DMA_Flags_Typedef` structure
- * to `false`, effectively resetting the state of the flags that monitor DMA events
- * such as direct mode error, FIFO error, half transfer complete, transfer complete,
- * and transfer error.
- *
- * @param flag The `DMA_Flags_Typedef` structure whose flags are to be reset.
- */
-void DMA_Reset_Flags(volatile DMA_Flags_Typedef *flag)
-{
-	flag->Direct_Mode_Error_Flag = false;
-	flag->Fifo_Error_Flag = false;
-	flag->Half_Transfer_Complete_Flag = false;
-	flag->Transfer_Complete_Flag = false;
-	flag->Transfer_Error_Flag = false;
-}
+
 
 /**
  * @brief Enables the clock for the specified DMA controller.

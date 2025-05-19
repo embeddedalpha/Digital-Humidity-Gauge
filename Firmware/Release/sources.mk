@@ -33,6 +33,7 @@ Driver/DMA \
 Driver/GPIO \
 Driver/I2C \
 Driver/Logs \
+Driver/RTC \
 Driver/SPI \
 Driver/Timer \
 Driver/USART \

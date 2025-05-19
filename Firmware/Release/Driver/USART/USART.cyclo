@@ -5,8 +5,8 @@
 ../Driver/USART/USART.c:198:8:USART_Clock_Enable	7
 ../Driver/USART/USART.c:232:8:USART_Clock_Disable	7
 ../Driver/USART/USART.c:479:8:USART_Init	114
-../Driver/USART/USART.c:698:8:USART_TX_Buffer	20
-../Driver/USART/USART.c:786:8:USART_RX_Buffer	20
-../Driver/USART/USART.c:874:6:USART_TX_Single_Byte	2
-../Driver/USART/USART.c:880:10:USART_RX_Single_Byte	2
-../Driver/USART/USART.c:888:6:USART_Clear_Status_Regs	1
+../Driver/USART/USART.c:698:8:USART_TX_Buffer	1
+../Driver/USART/USART.c:785:8:USART_RX_Buffer	1
+../Driver/USART/USART.c:872:6:USART_TX_Single_Byte	2
+../Driver/USART/USART.c:878:10:USART_RX_Single_Byte	2
+../Driver/USART/USART.c:886:6:USART_Clear_Status_Regs	1

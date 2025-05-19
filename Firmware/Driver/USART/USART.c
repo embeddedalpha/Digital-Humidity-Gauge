@@ -9,22 +9,22 @@
 #include "main.h"
 #include "USART.h"
 
- volatile  DMA_Flags_Typedef USART1_RX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART1_TX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART2_RX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART2_TX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART3_RX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART3_TX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART4_RX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART4_TX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART5_RX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART5_TX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART6_RX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART6_TX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART7_RX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART7_TX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART8_RX_DMA_Flag;
- volatile  DMA_Flags_Typedef USART8_TX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART1_RX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART1_TX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART2_RX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART2_TX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART3_RX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART3_TX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART4_RX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART4_TX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART5_RX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART5_TX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART6_RX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART6_TX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART7_RX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART7_TX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART8_RX_DMA_Flag;
+// volatile  DMA_Flags_Typedef USART8_TX_DMA_Flag;
 
 
 DMA_Config xUSART_RX[6];
@@ -697,87 +697,86 @@ int8_t USART_Init(USART_Config *config)
 
 int8_t USART_TX_Buffer(USART_Config *config, uint8_t *tx_buffer, uint16_t length)
 {
-	if(config->dma_enable |= USART_Configuration.DMA_Enable.TX_Enable)
-	{
-		config -> Port -> SR &= ~USART_SR_TC;
-		xUSART_TX[usart_dma_instance_number].memory_address = (uint32_t)tx_buffer;
-		xUSART_TX[usart_dma_instance_number].peripheral_address = (uint32_t)&config->Port->DR;
-		xUSART_TX[usart_dma_instance_number].buffer_length = length;
-		DMA_Set_Target(&xUSART_TX[usart_dma_instance_number]);
-		DMA_Set_Trigger(&xUSART_TX[usart_dma_instance_number]);
-
-
-		if(config->Port == USART1)
-		{
-			if(USART1_TX_DMA_Flag.Triggered != 1)
-			{
-				USART1_TX_DMA_Flag.Transfer_Complete_Flag = (xUSART_TX[usart_dma_instance_number].Request.Controller -> HISR & DMA_HISR_TCIF7_Msk) >> DMA_HISR_TCIF7_Pos;
-				USART1_TX_DMA_Flag.Transfer_Complete_Flag = (xUSART_TX[usart_dma_instance_number].Request.Controller -> HISR & DMA_HISR_HTIF7_Msk) >> DMA_HISR_HTIF7_Pos;
-			}
-
-			while((USART1_TX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART1_TX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
-			}
-			USART1_TX_DMA_Flag.Transfer_Complete_Flag = false;
-			DMA_Reset_Flags(&USART1_TX_DMA_Flag);
-		}
-		else if(config->Port == USART2)
-		{
-			while((USART2_TX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART2_TX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
-			}
-			USART2_TX_DMA_Flag.Transfer_Complete_Flag = false;
-			DMA_Reset_Flags(&USART2_TX_DMA_Flag);
-		}
-		else if(config->Port == USART3)
-		{
-			while((USART3_TX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART3_TX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
-			}
-			USART3_TX_DMA_Flag.Transfer_Complete_Flag = false;
-			DMA_Reset_Flags(&USART3_TX_DMA_Flag);
-		}
-		else if(config->Port == UART4)
-		{
-			while((USART4_TX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART4_TX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
-			}
-			USART4_TX_DMA_Flag.Transfer_Complete_Flag = false;
-			DMA_Reset_Flags(&USART4_TX_DMA_Flag);
-		}
-		else if(config->Port == UART5)
-		{
-			while((USART5_TX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART5_TX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
-			}
-			USART5_TX_DMA_Flag.Transfer_Complete_Flag = false;
-			DMA_Reset_Flags(&USART5_TX_DMA_Flag);
-		}
-		else if(config->Port == USART6)
-		{
-			while((USART6_TX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART6_TX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
-			}
-			USART6_TX_DMA_Flag.Transfer_Complete_Flag = false;
-			DMA_Reset_Flags(&USART6_TX_DMA_Flag);
-		}
-
-
-	}
-	else
-	{ //Will Take more time
-		for(int i = 0; i <= length; i++)
-		{
-			config->Port->DR = tx_buffer[i];
-			while(!(config->Port->SR & USART_SR_TXE));
-		}
-	}
+//	if(config->dma_enable |= USART_Configuration.DMA_Enable.TX_Enable){
+//		config -> Port -> SR &= ~USART_SR_TC;
+//		xUSART_TX[usart_dma_instance_number].memory_address = (uint32_t)tx_buffer;
+//		xUSART_TX[usart_dma_instance_number].peripheral_address = (uint32_t)&config->Port->DR;
+//		xUSART_TX[usart_dma_instance_number].buffer_length = length;
+//		DMA_Set_Target(&xUSART_TX[usart_dma_instance_number]);
+//		DMA_Set_Trigger(&xUSART_TX[usart_dma_instance_number]);
+//
+//
+//		if(config->Port == USART1)
+//		{
+//			if(USART1_TX_DMA_Flag.Triggered != 1)
+//			{
+//				USART1_TX_DMA_Flag.Transfer_Complete_Flag = (xUSART_TX[usart_dma_instance_number].Request.Controller -> HISR & DMA_HISR_TCIF7_Msk) >> DMA_HISR_TCIF7_Pos;
+//				USART1_TX_DMA_Flag.Transfer_Complete_Flag = (xUSART_TX[usart_dma_instance_number].Request.Controller -> HISR & DMA_HISR_HTIF7_Msk) >> DMA_HISR_HTIF7_Pos;
+//			}
+//
+//			while((USART1_TX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART1_TX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
+//			}
+//			USART1_TX_DMA_Flag.Transfer_Complete_Flag = false;
+//			DMA_Reset_Flags(&USART1_TX_DMA_Flag);
+//		}
+//		else if(config->Port == USART2)
+//		{
+//			while((USART2_TX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART2_TX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
+//			}
+//			USART2_TX_DMA_Flag.Transfer_Complete_Flag = false;
+//			DMA_Reset_Flags(&USART2_TX_DMA_Flag);
+//		}
+//		else if(config->Port == USART3)
+//		{
+//			while((USART3_TX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART3_TX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
+//			}
+//			USART3_TX_DMA_Flag.Transfer_Complete_Flag = false;
+//			DMA_Reset_Flags(&USART3_TX_DMA_Flag);
+//		}
+//		else if(config->Port == UART4)
+//		{
+//			while((USART4_TX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART4_TX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
+//			}
+//			USART4_TX_DMA_Flag.Transfer_Complete_Flag = false;
+//			DMA_Reset_Flags(&USART4_TX_DMA_Flag);
+//		}
+//		else if(config->Port == UART5)
+//		{
+//			while((USART5_TX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART5_TX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
+//			}
+//			USART5_TX_DMA_Flag.Transfer_Complete_Flag = false;
+//			DMA_Reset_Flags(&USART5_TX_DMA_Flag);
+//		}
+//		else if(config->Port == USART6)
+//		{
+//			while((USART6_TX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART6_TX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
+//			}
+//			USART6_TX_DMA_Flag.Transfer_Complete_Flag = false;
+//			DMA_Reset_Flags(&USART6_TX_DMA_Flag);
+//		}
+//
+//
+//	}
+//	else
+//	{ //Will Take more time
+//		for(int i = 0; i <= length; i++)
+//		{
+//			config->Port->DR = tx_buffer[i];
+//			while(!(config->Port->SR & USART_SR_TXE));
+//		}
+//	}
 
 	return 1;
 
@@ -803,59 +802,58 @@ int8_t USART_RX_Buffer(USART_Config *config, uint8_t *rx_buffer, uint16_t length
 		DMA_Set_Trigger(&xUSART_RX[usart_dma_instance_number]);
 
 
-		if(circular_buffer_enable == 1)
-		{
-
-		if(config->Port == USART1)
-		{
-			while((USART1_RX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART1_RX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
-			}
-			USART1_RX_DMA_Flag.Transfer_Complete_Flag = false;
-		}
-		else if(config->Port == USART2)
-		{
-			while((USART2_RX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART2_RX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
-			}
-			USART2_RX_DMA_Flag.Transfer_Complete_Flag = false;
-		}
-		else if(config->Port == USART3)
-		{
-			while((USART3_RX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART3_RX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
-			}
-			USART3_RX_DMA_Flag.Transfer_Complete_Flag = false;
-		}
-		else if(config->Port == UART4)
-		{
-			while((USART4_RX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART4_RX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
-			}
-			USART4_RX_DMA_Flag.Transfer_Complete_Flag = false;
-		}
-		else if(config->Port == UART5)
-		{
-			while((USART5_RX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART5_RX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
-			}
-			USART5_RX_DMA_Flag.Transfer_Complete_Flag = false;
-		}
-		else if(config->Port == USART6)
-		{
-			while((USART6_RX_DMA_Flag.Transfer_Complete_Flag == false))
-			{
-				if(USART6_RX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
-			}
-			USART6_RX_DMA_Flag.Transfer_Complete_Flag = false;
-		}
-
-		}
+//		if(circular_buffer_enable == 1){
+//
+//		if(config->Port == USART1)
+//		{
+//			while((USART1_RX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART1_RX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
+//			}
+//			USART1_RX_DMA_Flag.Transfer_Complete_Flag = false;
+//		}
+//		else if(config->Port == USART2)
+//		{
+//			while((USART2_RX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART2_RX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
+//			}
+//			USART2_RX_DMA_Flag.Transfer_Complete_Flag = false;
+//		}
+//		else if(config->Port == USART3)
+//		{
+//			while((USART3_RX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART3_RX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
+//			}
+//			USART3_RX_DMA_Flag.Transfer_Complete_Flag = false;
+//		}
+//		else if(config->Port == UART4)
+//		{
+//			while((USART4_RX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART4_RX_DMA_Flag.Transfer_Error_Flag == true)  {return -1;}
+//			}
+//			USART4_RX_DMA_Flag.Transfer_Complete_Flag = false;
+//		}
+//		else if(config->Port == UART5)
+//		{
+//			while((USART5_RX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART5_RX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
+//			}
+//			USART5_RX_DMA_Flag.Transfer_Complete_Flag = false;
+//		}
+//		else if(config->Port == USART6)
+//		{
+//			while((USART6_RX_DMA_Flag.Transfer_Complete_Flag == false))
+//			{
+//				if(USART6_RX_DMA_Flag.Transfer_Error_Flag == true) {return -1;}
+//			}
+//			USART6_RX_DMA_Flag.Transfer_Complete_Flag = false;
+//		}
+//
+//		}
 
 	}
 	else

@@ -20,6 +20,8 @@ Src/main.o: ../Src/main.c ../Inc/main.h ../Inc/stm32f407xx.h \
  ../Src/../Middleware/Filesystem/Filesystem.h \
  ../Src/../Devices/GC9A01/GC9A01.h \
  D:/STM32F407_Projects/Digital-Humidity-Gauge/Devices/BME280/../GC9A01/GC9A01_Image.h \
+ D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/RTC/RTC.h \
+ D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/RTC/RTC_Defs.h \
  D:/STM32F407_Projects/Digital-Humidity-Gauge/Devices/BME280/BME280.h
 ../Inc/main.h:
 ../Inc/stm32f407xx.h:
@@ -48,4 +50,6 @@ D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/I2C/I2C_Defs.h:
 ../Src/../Middleware/Filesystem/Filesystem.h:
 ../Src/../Devices/GC9A01/GC9A01.h:
 D:/STM32F407_Projects/Digital-Humidity-Gauge/Devices/BME280/../GC9A01/GC9A01_Image.h:
+D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/RTC/RTC.h:
+D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/RTC/RTC_Defs.h:
 D:/STM32F407_Projects/Digital-Humidity-Gauge/Devices/BME280/BME280.h:

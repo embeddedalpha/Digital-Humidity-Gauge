@@ -19,22 +19,7 @@
 
 #include "main.h"
 
-/**
- * @brief DMA Flags Structure
- *
- * This structure contains flags that indicate the status of a DMA transfer.
- * These flags are used to monitor and handle various states of the DMA transfer process.
- */
-typedef struct DMA_Flags_Typedef
-{
-	bool Triggered;
-    bool Transfer_Complete_Flag;       /**< Indicates if the transfer is complete */
-    bool Half_Transfer_Complete_Flag;  /**< Indicates if half of the transfer is complete */
-    bool Transfer_Error_Flag;          /**< Indicates if there was a transfer error */
-    bool Direct_Mode_Error_Flag;       /**< Indicates if there was a direct mode error */
-    bool Fifo_Error_Flag;              /**< Indicates if there was a FIFO error */
 
-}DMA_Flags_Typedef;
 
 /**
  * @brief DMA Request Structure

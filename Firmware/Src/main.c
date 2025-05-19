@@ -7,6 +7,7 @@
 #include "../Middleware/Filesystem/Filesystem.h"
 #include "../Devices/GC9A01/GC9A01.h"
 #include "../GC9A01/GC9A01_Image.h"
+#include "RTC/RTC.h"
 
 #define frame_delay 5
 FileSystem_Typedef nn;
@@ -20,6 +21,8 @@ BME280_Typedef Sensor1;
 W25Qxx_Config Chip;
 GC9A01_Config Display;
 
+
+RTC_Config rtc;
 
 int main(void)
 {
@@ -63,6 +66,10 @@ int main(void)
 
 	Sensor1.I2C_Port = &BME280_I2C;
 	Sensor1.device_Address = BME280_Configurations.Device_Address.Ox76;
+
+
+
+	rtc.Format = RTC_Configurations.Format.H12;
 
 
 
