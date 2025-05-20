@@ -17,13 +17,14 @@
 
 typedef struct RTC_Config
 {
+	RTC_DateTime Time_n_Date;
 
 	uint8_t Format;
 
 	uint8_t Interrupt_Type;
 
-	__RTC_Alarm_Config__ Alarm_A;
-	__RTC_Alarm_Config__ Alarm_B;
+	RTC_DateTime Alarm_A;
+	RTC_DateTime Alarm_B;
 
 	struct __RTC_Interrupt__
 	{
@@ -36,7 +37,7 @@ typedef struct RTC_Config
 
 }RTC_Config;
 
-
+volatile RTC_DateTime SystemTime;
 
 void RTC_Init(RTC_Config *config);
 void RTC_Set_Alarm_A(RTC_Config *config, void (*attach_Alarm_ISR));

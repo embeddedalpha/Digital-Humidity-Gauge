@@ -11,16 +11,18 @@
 #include "main.h"
 
 
-typedef struct __RTC_Alarm_Config__
+typedef struct RTC_DateTime
 {
+	uint8_t weekday;
 	uint8_t day;
-	uint8_t date;
+	uint8_t month;
+	uint16_t year;
 	uint8_t hour;
 	uint8_t mins;
 	uint8_t sec;
 	uint8_t AM_PM;
 
-}__RTC_Alarm_Config__;
+}RTC_DateTime;
 
 typedef struct __RTC_Time_Format__
 {
