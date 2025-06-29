@@ -3,7 +3,7 @@
 ../Driver/SPI/SPI.c:151:8:SPI_Clock_Enable	4
 ../Driver/SPI/SPI.c:168:8:SPI_Clock_Disable	4
 ../Driver/SPI/SPI.c:185:8:SPI_Config_Reset	4
-../Driver/SPI/SPI.c:342:8:SPI_Init	93
+../Driver/SPI/SPI.c:342:8:SPI_Init	89
 ../Driver/SPI/SPI.c:465:6:SPI_Enable	1
 ../Driver/SPI/SPI.c:477:6:SPI_Disable	1
 ../Driver/SPI/SPI.c:489:6:SPI_DeInit	4

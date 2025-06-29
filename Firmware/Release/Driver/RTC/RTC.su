@@ -1,1 +1,2 @@
-../Driver/RTC/RTC.c:20:6:RTC_Init	64	static
+../Driver/RTC/RTC.c:26:6:RTC_Alarm_IRQHandler	8	static
+../Driver/RTC/RTC.c:87:6:RTC_Init	56	static,ignoring_inline_asm

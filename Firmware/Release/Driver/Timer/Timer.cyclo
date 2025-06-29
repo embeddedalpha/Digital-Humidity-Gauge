@@ -13,7 +13,7 @@
 ../Driver/Timer/Timer.c:335:6:TIM8_UP_TIM13_IRQHandler	4
 ../Driver/Timer/Timer.c:353:6:TIM8_TRG_COM_TIM14_IRQHandler	5
 ../Driver/Timer/Timer.c:378:6:TIM8_CC_IRQHandler	5
-../Driver/Timer/Timer.c:1076:6:Timer_Init	180
+../Driver/Timer/Timer.c:1076:6:Timer_Init	175
 ../Driver/Timer/Timer.c:1142:6:PWM_Frequency_Update	15
 ../Driver/Timer/Timer.c:1155:6:PWM_Duty_Cycle_Update	5
 ../Driver/Timer/Timer.c:1167:6:Encoder_Start	1

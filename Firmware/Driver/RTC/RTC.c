@@ -7,30 +7,72 @@
 
 #include "RTC.h"
 
-void RTC_IRQHandler(void)
-{
-    if (RTC->ISR & RTC_ISR_SECIF) // Check second interrupt flag
+RTC_Config *__RTC_CONFIG__;
+
+/*
+ * \	if(DMA_LISR & DMA_LISR_DMEIF0)
+	{
+		if(__DMA1_Stream0_Config__->interrupts & DMA_Configuration.DMA_Interrupts.Direct_Mode_Error)
+		{
+			if (__DMA1_Stream0_Config__ -> ISR_Routines.Direct_Mode_Error_ISR)
+			{
+				__DMA1_Stream0_Config__ ->ISR_Routines.Direct_Mode_Error_ISR();
+				DMA1 -> LIFCR |= DMA_LIFCR_CDMEIF0;
+			}
+		}
+	}
+ */
+
+void RTC_Alarm_IRQHandler(void) {
+  if(RTC->ISR & RTC_ISR_ALRAF) {
+    RTC->ISR &= ~RTC_ISR_ALRAF;         // clear flag
+    if(__RTC_CONFIG__->Interrupt_ISR.Alarm_A_ISR)
     {
-        RTC->ISR &= ~RTC_ISR_SECIF; // Clear it
-
-        // Read time & date (in BCD)
-        uint32_t tr = RTC->TR;
-        uint32_t dr = RTC->DR;
-
-        RTC_DateTime local;
-
-        local.sec = ((tr >> 4) & 0x70) + (tr & 0x0F);
-        local.mins = ((tr >> 12) & 0x70) + ((tr >> 8) & 0x0F);
-        local.hour   = ((tr >> 20) & 0x30) + ((tr >> 16) & 0x0F);
-
-        local.day     = ((dr >> 4) & 0x30) + (dr & 0x0F);
-        local.month   = ((dr >> 12) & 0x10) + ((dr >> 8) & 0x0F);
-        local.year    = ((dr >> 20) & 0xF0) + ((dr >> 16) & 0x0F);
-        local.weekday = (dr >> 13) & 0x07;
-
-        SystemTime = local;  // Atomic write (no pointer used)
+    	EXTI->PR = EXTI_PR_PR17;            // clear pending
+    	__RTC_CONFIG__->Interrupt_ISR.Alarm_A_ISR();
     }
+  }
+
+  if(RTC->ISR & RTC_ISR_ALRBF) {
+    RTC->ISR &= ~RTC_ISR_ALRBF;         // clear flag
+    if(__RTC_CONFIG__->Interrupt_ISR.Alarm_A_ISR)
+    {
+    	EXTI->PR = EXTI_PR_PR17;            // clear pending
+    	__RTC_CONFIG__->Interrupt_ISR.Alarm_A_ISR();
+    }
+  }
 }
+
+
+//void RTC_IRQHandler(void)
+//{
+//
+//	if(RTC -> ISR & RTC_ISR_TSF){
+//
+//	}
+//
+////    if (RTC->ISR & RTC_ISR_SECIF) // Check second interrupt flag
+////    {
+//        RTC->ISR &= ~RTC_ISR_SECIF; // Clear it
+//
+//        // Read time & date (in BCD)
+//        uint32_t tr = RTC->TR;
+//        uint32_t dr = RTC->DR;
+//
+//        RTC_DateTime local;
+//
+//        local.sec = ((tr >> 4) & 0x70) + (tr & 0x0F);
+//        local.mins = ((tr >> 12) & 0x70) + ((tr >> 8) & 0x0F);
+//        local.hour   = ((tr >> 20) & 0x30) + ((tr >> 16) & 0x0F);
+//
+//        local.day     = ((dr >> 4) & 0x30) + (dr & 0x0F);
+//        local.month   = ((dr >> 12) & 0x10) + ((dr >> 8) & 0x0F);
+//        local.year    = ((dr >> 20) & 0xF0) + ((dr >> 16) & 0x0F);
+//        local.weekday = (dr >> 13) & 0x07;
+//
+//        SystemTime = local;  // Atomic write (no pointer used)
+////    }
+//}
 
 static uint8_t Calculate_Weekday(uint16_t y, uint8_t m, uint8_t d)
 {
@@ -99,8 +141,16 @@ void RTC_Init(RTC_Config *config)
 	while (!(RTC->ISR & RTC_ISR_RSF));  // Wait for register sync flag
 	RTC->WPR = 0xFF;
 
-	RTC->CR |= RTC_CR_SECIE;         // Enable second interrupt
-	NVIC_EnableIRQ(RTC_IRQn);        // Enable in NVIC
+//	RTC->CR |= RTC_CR_SECIE;         // Enable second interrupt
+	NVIC_EnableIRQ(RTC_Alarm_IRQn);        // Enable in NVIC
+
+
+	if(config->Interrupt_Type & RTC_Configurations.Interrupt_Type.Alarm_A_Interrupt)
+	{
+		__RTC_CONFIG__->Interrupt_ISR.Alarm_A_ISR = config->Interrupt_ISR.Alarm_A_ISR;
+		NVIC_EnableIRQ(RTC_Alarm_IRQn);
+	}
+
 
 	config->Time_n_Date.sec = ss;
 	config->Time_n_Date.mins = mm;

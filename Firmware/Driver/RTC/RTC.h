@@ -37,7 +37,7 @@ typedef struct RTC_Config
 
 }RTC_Config;
 
-volatile RTC_DateTime SystemTime;
+//volatile RTC_DateTime SystemTime;
 
 void RTC_Init(RTC_Config *config);
 void RTC_Set_Alarm_A(RTC_Config *config, void (*attach_Alarm_ISR));

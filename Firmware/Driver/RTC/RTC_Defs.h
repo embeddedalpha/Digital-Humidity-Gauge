@@ -30,16 +30,33 @@ typedef struct __RTC_Time_Format__
 	uint8_t H12;
 }__RTC_Time_Format__;
 
+typedef struct __RTC_Interrupt_Type__
+{
+	uint16_t Alarm_A_Interrupt;
+	uint16_t Alarm_B_Interrupt;
+	uint16_t Wakeup_Timer_Interrupt;
+	uint16_t Timestamp_Event_Interrupt;
+	uint16_t Tamper_Detection_Interrupt;
+}__RTC_Interrupt_Type__;
+
 
 static const struct RTC_Configurations
 {
 	__RTC_Time_Format__ Format;
+	__RTC_Interrupt_Type__ Interrupt_Type;
 
 }RTC_Configurations =
 		{
 				.Format = {
 						.H24 = 1,
 						.H12 = 2,
+				},
+
+				.Interrupt_Type = {
+						.Alarm_A_Interrupt = 1 << 12,
+						.Alarm_B_Interrupt = 1 << 13,
+						.Wakeup_Timer_Interrupt = 1 << 14,
+						.Timestamp_Event_Interrupt = 1 << 15,
 				},
 		};
 
