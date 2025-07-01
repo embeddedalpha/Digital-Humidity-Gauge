@@ -1,2 +1,2 @@
-../Driver/RTC/RTC.c:26:6:RTC_Alarm_IRQHandler	5
-../Driver/RTC/RTC.c:87:6:RTC_Init	7
+../Driver/RTC/RTC.c:28:6:RTC_Alarm_IRQHandler	5
+../Driver/RTC/RTC.c:90:6:RTC_Init	9

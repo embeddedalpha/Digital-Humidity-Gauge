@@ -7,6 +7,8 @@
 
 #include "RTC.h"
 
+#define RTC_TIMEOUT  (uint32_t)0x0001FFFF
+
 RTC_Config *__RTC_CONFIG__;
 
 /*
@@ -23,7 +25,8 @@ RTC_Config *__RTC_CONFIG__;
 	}
  */
 
-void RTC_Alarm_IRQHandler(void) {
+void RTC_Alarm_IRQHandler(void)
+{
   if(RTC->ISR & RTC_ISR_ALRAF) {
     RTC->ISR &= ~RTC_ISR_ALRAF;         // clear flag
     if(__RTC_CONFIG__->Interrupt_ISR.Alarm_A_ISR)
@@ -86,6 +89,7 @@ static uint8_t Calculate_Weekday(uint16_t y, uint8_t m, uint8_t d)
 
 void RTC_Init(RTC_Config *config)
 {
+	  uint32_t timeout = RTC_TIMEOUT;
 	// Parse compile time
 	int hh, mm, ss;
 	sscanf(__TIME__, "%2d:%2d:%2d", &hh, &mm, &ss);
@@ -104,14 +108,21 @@ void RTC_Init(RTC_Config *config)
 		}
 	}
 
+
+
+
 	RCC->APB1ENR |= RCC_APB1ENR_PWREN;     // Enable power interface clock
 	PWR->CR |= PWR_CR_DBP;                 // Enable access to RTC and backup registers
 
 	RCC->BDCR |= RCC_BDCR_LSEON;           // Enable LSE
-	while (!(RCC->BDCR & RCC_BDCR_LSERDY)); // Wait for it to stabilize
+    while (!(RCC->BDCR & RCC_BDCR_LSERDY) && --timeout) {
+        __NOP();  // small delay
+    }
 
 	RCC->CSR |= RCC_CSR_LSION;
-	while (!(RCC->CSR & RCC_CSR_LSIRDY));
+	while (!(RCC->CSR & RCC_CSR_LSIRDY)&& --timeout){
+		__NOP();  // small delay
+	}
 
 	RCC->BDCR &= ~RCC_BDCR_RTCSEL;         // Clear RTC clock source
 	RCC->BDCR |= RCC_BDCR_RTCSEL_0;        // 01: LSE selected

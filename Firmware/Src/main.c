@@ -31,7 +31,39 @@ int main(void)
 
 	Delay_s(1);
 
+	BME280_I2C.Port = I2C1;
+	BME280_I2C.Speed_Mode = I2C_Configuration.Speed_Mode.FM_Mode;
+	BME280_I2C.SDA_Pin = I2C_Configuration.Pin.__I2C1__.SDA.PB7;
+	BME280_I2C.SCL_Pin = I2C_Configuration.Pin.__I2C1__.SCL.PB6;
+	BME280_I2C.Mode = I2C_Configuration.Mode.Master;
+	BME280_I2C.DMA_Control = I2C_Configuration.DMA_Control.RX_DMA_Enable | I2C_Configuration.DMA_Control.TX_DMA_Enable;
 
+
+	Sensor1.I2C_Port = &BME280_I2C;
+	Sensor1.device_Address = BME280_Configurations.Device_Address.Ox76;
+//	Sensor1.Settings.Temperature_Oversampling = BME280_Configurations.
+
+
+
+	rtc.Format = RTC_Configurations.Format.H12;
+
+
+
+	for(;;)
+	{
+
+
+
+
+
+
+	}
+}
+
+
+
+void Display_Init(void)
+{
 	Global_SPI.clock_pin      = SPI_Configurations.Pin._SPI1_.CLK1.PA5;
 	Global_SPI.miso_pin       = SPI_Configurations.Pin._SPI1_.MISO1.PA6;
 	Global_SPI.mosi_pin       = SPI_Configurations.Pin._SPI1_.MOSI1.PA7;
@@ -61,27 +93,4 @@ int main(void)
 	GC9A01_Init(&Display);
 
 	GC9A01_Fill(&Display, 0x0000);
-
-
-
-	Sensor1.I2C_Port = &BME280_I2C;
-	Sensor1.device_Address = BME280_Configurations.Device_Address.Ox76;
-
-
-
-	rtc.Format = RTC_Configurations.Format.H12;
-
-
-
-	for(;;)
-	{
-
-
-
-
-
-
-	}
 }
-
-
