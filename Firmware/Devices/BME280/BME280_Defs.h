@@ -50,7 +50,17 @@ typedef struct __BME280_T_Mode__
 
 }__BME280_T_Mode__;
 
-static const struct BME280_Configurations{
+typedef struct __BME280_Filter_Coeff__
+{
+	uint8_t Off;
+	uint8_t Filter_2;
+	uint8_t Filter_4;
+	uint8_t Filter_8;
+	uint8_t Filter_16;
+
+}__BME280_Filter_Coeff__;
+
+static struct BME280_Configurations{
 
 	__BME280_Device_Address__ Device_Address;
 	__BME280_Oversampling__ Pressure_Oversampling;
@@ -58,6 +68,7 @@ static const struct BME280_Configurations{
 	__BME280_Oversampling__ Humidity_Oversampling;
 	__BME280_T_Standby_MS__ T_Standby_ms;
 	__BME280_T_Mode__       Mode;
+	__BME280_Filter_Coeff__ Filter_Coeff;
 
 
 

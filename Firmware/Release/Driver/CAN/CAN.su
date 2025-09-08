@@ -1,0 +1,2 @@
+../Driver/CAN/CAN.c:59:14:CAN_Init	24	static
+../Driver/CAN/CAN.c:69:14:CAN_Reset	0	static

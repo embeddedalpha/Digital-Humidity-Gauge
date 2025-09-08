@@ -41,8 +41,13 @@ int main(void)
 
 	Sensor1.I2C_Port = &BME280_I2C;
 	Sensor1.device_Address = BME280_Configurations.Device_Address.Ox76;
-//	Sensor1.Settings.Temperature_Oversampling = BME280_Configurations.
+	Sensor1.Settings.Temperature_Oversampling = BME280_Configurations.Temperature_Oversampling.Oversampling_X_1;
+	Sensor1.Settings.Filter_Coefficients = BME280_Configurations.Filter_Coeff.Off;
+	Sensor1.Settings.Humidity_Oversampling = BME280_Configurations.Humidity_Oversampling.Oversampling_X_1;
+	Sensor1.Settings.Pressure_Oversampling = BME280_Configurations.Pressure_Oversampling.Oversampling_X_1;
+	Sensor1.Settings.Standby_Time = BME280_Configurations.T_Standby_ms.t_standby_ms_0x5;
 
+	BME280_Init(&Sensor1);
 
 
 	rtc.Format = RTC_Configurations.Format.H12;
