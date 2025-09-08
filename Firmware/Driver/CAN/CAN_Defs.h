@@ -10,6 +10,16 @@
 
 #include "main.h"
 
+typedef enum _CAN_Status_T_{
+
+	CAN_OK,
+	CAN_Port_Error,
+	CAN_Pin_Error,
+	CAN_Reset_Error,
+
+
+}CAN_Status_T;
+
 
 
 static const struct CAN_Configuration
@@ -81,6 +91,10 @@ static const struct CAN_Configuration
 		uint16_t Fifo0_Overflow			;
 		uint16_t Fifo1_Overflow			;
 	} Interrupt;
+
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+
+
 
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 

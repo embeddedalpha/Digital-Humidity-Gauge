@@ -11,12 +11,16 @@
 #include "main.h"
 #include "GPIO/GPIO.h"
 #include "Timer/Timer.h"
+#include "CAN_Defs.h"
 
 typedef struct CAN_Config
 {
-	CAN_TypeDef *CAN_Port;
-	uint8_t RX_Pin;
-	uint8_t TX_Pin;
+	CAN_TypeDef *Port;
+
+	struct __CAN_Pins__{
+		uint8_t RX_Pin;
+		uint8_t TX_Pin;
+	}Pins;
 	uint32_t Baudrate;
 	int timestamp_enable;
 	int interrupt;
@@ -39,8 +43,8 @@ typedef struct CAN_Config
 }CAN_Config;
 
 
-void CAN_Init(CAN_Config *config);
-
+CAN_Status_T CAN_Init(CAN_Config *config);
+CAN_Status_T CAN_Reset(CAN_Config *config);
 
 
 
