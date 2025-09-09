@@ -299,7 +299,7 @@ Discarded input sections
  .data          0x00000000        0x0 ./Driver/CAN/CAN.o
  .bss           0x00000000        0x0 ./Driver/CAN/CAN.o
  .text.CAN_Init
-                0x00000000      0x140 ./Driver/CAN/CAN.o
+                0x00000000      0x1d4 ./Driver/CAN/CAN.o
  .text.CAN_Reset
                 0x00000000       0x18 ./Driver/CAN/CAN.o
  .comment       0x00000000       0x44 ./Driver/CAN/CAN.o

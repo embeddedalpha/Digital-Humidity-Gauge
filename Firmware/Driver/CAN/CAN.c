@@ -63,6 +63,24 @@ CAN_Status_T CAN_Init(CAN_Config *config)
 	retval = CAN_Pin_Init(config);
 	if(retval != CAN_OK)return retval;
 
+    config -> Port -> MCR |=   CAN_MCR_RESET | CAN_MCR_SLEEP;
+    while(!(config -> Port  -> MSR & CAN_MSR_SLAK)){}
+    config -> Port -> MCR &= ~CAN_MCR_SLEEP;
+    config -> Port -> MCR |= CAN_MCR_INRQ;
+	while((config -> Port -> MSR & CAN_MSR_SLAK)){}
+	while(!(config -> Port-> MSR & CAN_MSR_INAK)){}
+
+	config -> Port -> BTR = config -> Baudrate;
+
+	config -> Port -> FMR |= CAN_FMR_FINIT;
+	config -> Port -> FMR &= 0xFFFFC0FF;
+	config -> Port -> FMR |= 0x1C << 8;
+
+	config -> Port -> FMR &= ~CAN_FMR_FINIT;
+	config -> Port->MCR &= ~CAN_MCR_INRQ;
+	config -> Port->MCR &= ~CAN_MCR_INRQ;
+    while((config -> Port->MSR & CAN_MSR_INAK)){}
+
 	if(config -> timestamp_enable == ENABLE) config -> Port -> MCR |= CAN_MCR_TTCM;
 	else config -> Port -> MCR &= ~CAN_MCR_TTCM;
 
