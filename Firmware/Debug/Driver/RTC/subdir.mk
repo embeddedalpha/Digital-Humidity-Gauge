@@ -5,23 +5,23 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Driver/Timer/Timer.c 
+../Driver/RTC/RTC.c 
 
 OBJS += \
-./Driver/Timer/Timer.o 
+./Driver/RTC/RTC.o 
 
 C_DEPS += \
-./Driver/Timer/Timer.d 
+./Driver/RTC/RTC.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-Driver/Timer/%.o Driver/Timer/%.su Driver/Timer/%.cyclo: ../Driver/Timer/%.c Driver/Timer/subdir.mk
+Driver/RTC/%.o Driver/RTC/%.su Driver/RTC/%.cyclo: ../Driver/RTC/%.c Driver/RTC/subdir.mk
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver" -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Application" -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Devices" -I"D:/STM32F407_Projects/Digital-Humidity-Gauge/Middleware" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 
-clean: clean-Driver-2f-Timer
+clean: clean-Driver-2f-RTC
 
-clean-Driver-2f-Timer:
-	-$(RM) ./Driver/Timer/Timer.cyclo ./Driver/Timer/Timer.d ./Driver/Timer/Timer.o ./Driver/Timer/Timer.su
+clean-Driver-2f-RTC:
+	-$(RM) ./Driver/RTC/RTC.cyclo ./Driver/RTC/RTC.d ./Driver/RTC/RTC.o ./Driver/RTC/RTC.su
 
-.PHONY: clean-Driver-2f-Timer
+.PHONY: clean-Driver-2f-RTC
 

@@ -1,0 +1,4 @@
+../Inc/core_cm4.h:1684:22:__NVIC_EnableIRQ	16	static,ignoring_inline_asm
+../Driver/RTC/RTC.c:28:6:RTC_Alarm_IRQHandler	8	static
+../Driver/RTC/RTC.c:80:16:Calculate_Weekday	24	static
+../Driver/RTC/RTC.c:90:6:RTC_Init	72	static,ignoring_inline_asm

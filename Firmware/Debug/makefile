@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (12.3.rel1)
+# Toolchain: GNU Tools for STM32 (13.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -15,6 +15,7 @@ RM := rm -rf
 -include Driver/USART/subdir.mk
 -include Driver/Timer/subdir.mk
 -include Driver/SPI/subdir.mk
+-include Driver/RTC/subdir.mk
 -include Driver/Logs/subdir.mk
 -include Driver/I2C/subdir.mk
 -include Driver/GPIO/subdir.mk

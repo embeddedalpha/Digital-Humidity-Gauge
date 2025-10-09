@@ -9,8 +9,7 @@ Devices/BME280/BME280.o: ../Devices/BME280/BME280.c \
  D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/DMA/DMA.h \
  D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/DMA/DMA_Defs.h \
  D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/I2C/I2C_Defs.h \
- D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/SPI/SPI.h \
- D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/SPI/SPI_Defs.h
+ ../Devices/BME280/BME280_Defs.h
 ../Devices/BME280/BME280.h:
 ../Inc/main.h:
 ../Inc/stm32f407xx.h:
@@ -27,5 +26,4 @@ D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/GPIO/GPIO_Defs.h:
 D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/DMA/DMA.h:
 D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/DMA/DMA_Defs.h:
 D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/I2C/I2C_Defs.h:
-D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/SPI/SPI.h:
-D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/SPI/SPI_Defs.h:
+../Devices/BME280/BME280_Defs.h:

@@ -13,6 +13,15 @@
 #include "Timer/Timer.h"
 #include "CAN_Defs.h"
 
+typedef struct {
+	  uint32_t id;       // 11-bit (STD) in bits[10:0] or 29-bit (EXT) in bits[28:0]
+	  uint8_t  dlc;
+	  uint8_t  ide;      // 0=STD, 1=EXT
+	  uint8_t  rtr;      // 0=Data, 1=Remote
+	  uint8_t  data[8];
+	  uint32_t timestamp;  // ticks from DWT/TIM (optional)
+	} can_frame_t;
+
 typedef struct CAN_Config
 {
 	CAN_TypeDef *Port;
@@ -45,6 +54,8 @@ typedef struct CAN_Config
 
 CAN_Status_T CAN_Init(CAN_Config *config);
 CAN_Status_T CAN_Reset(CAN_Config *config);
+CAN_Status_T CAN_Set_Filter(CAN_Config *config);
+
 
 
 

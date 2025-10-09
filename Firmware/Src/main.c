@@ -9,7 +9,7 @@
 #include "../GC9A01/GC9A01_Image.h"
 #include "RTC/RTC.h"
 
-#define frame_delay 5
+#define frame_delay 1000
 FileSystem_Typedef nn;
 
 #include "BME280.h"
@@ -24,6 +24,10 @@ GC9A01_Config Display;
 
 RTC_Config rtc;
 
+void Display_Init(void);
+
+
+
 int main(void)
 {
 	MCU_Clock_Setup();
@@ -31,35 +35,112 @@ int main(void)
 
 	Delay_s(1);
 
-	BME280_I2C.Port = I2C1;
-	BME280_I2C.Speed_Mode = I2C_Configuration.Speed_Mode.FM_Mode;
-	BME280_I2C.SDA_Pin = I2C_Configuration.Pin.__I2C1__.SDA.PB7;
-	BME280_I2C.SCL_Pin = I2C_Configuration.Pin.__I2C1__.SCL.PB6;
-	BME280_I2C.Mode = I2C_Configuration.Mode.Master;
-	BME280_I2C.DMA_Control = I2C_Configuration.DMA_Control.RX_DMA_Enable | I2C_Configuration.DMA_Control.TX_DMA_Enable;
+	//	BME280_I2C.Port = I2C1;
+	//	BME280_I2C.Speed_Mode = I2C_Configuration.Speed_Mode.FM_Mode;
+	//	BME280_I2C.SDA_Pin = I2C_Configuration.Pin.__I2C1__.SDA.PB7;
+	//	BME280_I2C.SCL_Pin = I2C_Configuration.Pin.__I2C1__.SCL.PB6;
+	//	BME280_I2C.Mode = I2C_Configuration.Mode.Master;
+	//	BME280_I2C.DMA_Control = I2C_Configuration.DMA_Control.RX_DMA_Enable | I2C_Configuration.DMA_Control.TX_DMA_Enable;
+	//
+	//
+	//	Sensor1.I2C_Port = &BME280_I2C;
+	//	Sensor1.device_Address = BME280_Configurations.Device_Address.Ox76;
+	//	Sensor1.Settings.Temperature_Oversampling = BME280_Configurations.Temperature_Oversampling.Oversampling_X_1;
+	//	Sensor1.Settings.Filter_Coefficients = BME280_Configurations.Filter_Coeff.Off;
+	//	Sensor1.Settings.Humidity_Oversampling = BME280_Configurations.Humidity_Oversampling.Oversampling_X_1;
+	//	Sensor1.Settings.Pressure_Oversampling = BME280_Configurations.Pressure_Oversampling.Oversampling_X_1;
+	//	Sensor1.Settings.Standby_Time = BME280_Configurations.T_Standby_ms.t_standby_ms_0x5;
+	//
+	//	BME280_Init(&Sensor1);
+	//
+	//
+	//	rtc.Format = RTC_Configurations.Format.H12;
+
+	Display_Init();
 
 
-	Sensor1.I2C_Port = &BME280_I2C;
-	Sensor1.device_Address = BME280_Configurations.Device_Address.Ox76;
-	Sensor1.Settings.Temperature_Oversampling = BME280_Configurations.Temperature_Oversampling.Oversampling_X_1;
-	Sensor1.Settings.Filter_Coefficients = BME280_Configurations.Filter_Coeff.Off;
-	Sensor1.Settings.Humidity_Oversampling = BME280_Configurations.Humidity_Oversampling.Oversampling_X_1;
-	Sensor1.Settings.Pressure_Oversampling = BME280_Configurations.Pressure_Oversampling.Oversampling_X_1;
-	Sensor1.Settings.Standby_Time = BME280_Configurations.T_Standby_ms.t_standby_ms_0x5;
+	uint16_t color1 = 0x77c0;
+	uint16_t color2 = 0x77bc;
+	uint16_t color3 = 0xe904;
 
-	BME280_Init(&Sensor1);
+	GC9A01_DrawArcStroke(&Display, 120, 120, 120, 0, 120,10, color1);
 
+	GC9A01_DrawArcStroke(&Display, 120, 120, 110, 120, 240, 10, color2);
 
-	rtc.Format = RTC_Configurations.Format.H12;
+	GC9A01_DrawArcStroke(&Display, 120, 120, 100, 240, 360-1,10, color3);
 
+	GC9A01_DrawArcStroke(&Display, 120, 120, 90, 40, 160-1,10, color1);
 
+	GC9A01_DrawArcStroke(&Display, 120, 120, 80, 80, 280,10, color2);
+
+	GC9A01_DrawArcStroke(&Display, 120, 120, 70, 120, 340,10, color3);
+//
+//	GC9A01_DrawArcStroke(&Display, 120, 120, 80, 120+40, 240+40, 10, color2);
+
+//	GC9A01_DrawArcStroke(&Display, 120, 120, 70, 240+40, 360+40,10, color3);
 
 	for(;;)
 	{
 
 
+//		for(int i = 1; i <= 360; i++)
+//		{
+//			GC9A01_DrawArcStroke(&Display, 120, 120, 100, 0, i,10, color2);
+//			Delay_milli(1);
+//		}
 
 
+
+
+//		GC9A01_Fill(&Display, 0xF8F8);        // clear to black
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 120, 15, color);
+//
+//		Delay_milli(frame_delay);
+//
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 100, 15, color);
+//
+//		Delay_milli(frame_delay);
+//
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 80, 15, color);
+//
+//		Delay_milli(frame_delay);
+//
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 60, 15, color);
+//
+//		Delay_milli(frame_delay);
+//
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 40, 15, color);
+//
+//		Delay_milli(frame_delay);
+//
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 20, 15, color);
+//
+//
+//		Delay_milli(frame_delay);
+//
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 20, 15, 0xffff);
+//
+//		Delay_milli(frame_delay);
+//
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 40, 15, 0xffff);
+//
+//		Delay_milli(frame_delay);
+//
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 60, 15, 0xffff);
+//
+//		Delay_milli(frame_delay);
+//
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 80, 15, 0xffff);
+//
+//		Delay_milli(frame_delay);
+//
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 100, 15, 0xffff);
+//
+//		Delay_milli(frame_delay);
+//
+//		GC9A01_DrawCircleStroke(&Display,120, 120, 120, 15, 0xffff);
+//
+//		Delay_milli(frame_delay);
 
 
 	}
@@ -83,17 +164,13 @@ void Display_Init(void)
 	Global_SPI.data_format    = SPI_Configurations.Data_Format.Bit8;
 	Global_SPI.crc            = SPI_Configurations.CRC_Enable.Disable;
 	Global_SPI.interrupt      = SPI_Configurations.Interrupts.Disable;
-
-
-
 	Display.SPI_Port = &Global_SPI;
-	Display.dc_pin = 2;
-	Display.dc_port = GPIOA;
 	Display.rst_pin = 0;
 	Display.rst_port = GPIOA;
 	Display.cs_pin = 1;
 	Display.cs_port = GPIOA;
-
+	Display.dc_pin = 2;
+	Display.dc_port = GPIOA;
 
 	GC9A01_Init(&Display);
 

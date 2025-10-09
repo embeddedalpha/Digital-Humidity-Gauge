@@ -9,6 +9,7 @@
 "./Driver/GPIO/GPIO.o"
 "./Driver/I2C/I2C.o"
 "./Driver/Logs/Logs.o"
+"./Driver/RTC/RTC.o"
 "./Driver/SPI/SPI.o"
 "./Driver/Timer/Timer.o"
 "./Driver/USART/USART.o"

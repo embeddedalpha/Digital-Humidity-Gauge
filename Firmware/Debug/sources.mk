@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (12.3.rel1)
+# Toolchain: GNU Tools for STM32 (13.3.rel1)
 ################################################################################
 
 ELF_SRCS := 
@@ -33,6 +33,7 @@ Driver/DMA \
 Driver/GPIO \
 Driver/I2C \
 Driver/Logs \
+Driver/RTC \
 Driver/SPI \
 Driver/Timer \
 Driver/USART \

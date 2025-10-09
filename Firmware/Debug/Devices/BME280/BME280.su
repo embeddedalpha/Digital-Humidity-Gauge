@@ -1,7 +1,5 @@
+../Inc/main.h:131:26:Delay_us	16	static
 ../Inc/main.h:140:26:Delay_ms	24	static
-D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/GPIO/GPIO.h:71:23:GPIO_Pin_Low	16	static
-D:/STM32F407_Projects/Digital-Humidity-Gauge/Driver/GPIO/GPIO.h:121:23:GPIO_Pin_High	16	static
-../Devices/BME280/BME280.c:12:14:CS_L	16	static
-../Devices/BME280/BME280.c:13:14:CS_H	16	static
-../Devices/BME280/BME280.c:56:9:BME280_Init	56	static
-../Devices/BME280/BME280.c:98:6:BME280_Get_Data	56	static
+../Devices/BME280/BME280.c:82:9:BME280_Init	88	static
+../Devices/BME280/BME280.c:131:6:BME280_Get_Data	88	static
+../Devices/BME280/BME280.c:187:9:BME280_Soft_Reset	24	static
