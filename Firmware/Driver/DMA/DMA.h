@@ -195,6 +195,9 @@ void DMA_Set_Target(DMA_Config *config);
  */
 void DMA_Set_Trigger(DMA_Config *config);
 
+void DMA_Clear_Flags(DMA_Config *config);
+void DMA_Reset_Trigger(DMA_Config *config);
+
 /**
  * @brief Performs a memory-to-memory data transfer using DMA.
  *
@@ -210,5 +213,6 @@ void DMA_Memory_To_Memory_Transfer(uint32_t *source,
                           uint8_t source_data_size, uint8_t dest_data_size,
                           uint32_t *destination, bool source_increment,
                           bool destination_increment, uint16_t length);
+
 
 #endif /* DMA_H_ */

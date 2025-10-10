@@ -22,3 +22,5 @@
 ../Driver/DMA/DMA.c:1572:6:DMA_Set_Target	3
 ../Driver/DMA/DMA.c:1621:6:DMA_Set_Trigger	7
 ../Driver/DMA/DMA.c:1678:6:DMA_Memory_To_Memory_Transfer	8
+../Driver/DMA/DMA.c:1781:6:DMA_Clear_Flags	7
+../Driver/DMA/DMA.c:1773:6:DMA_Reset_Trigger	2

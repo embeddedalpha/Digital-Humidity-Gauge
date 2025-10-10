@@ -1769,3 +1769,47 @@ void DMA_Memory_To_Memory_Transfer(uint32_t *source,
 
 	DMA2_Stream0->CR &= ~DMA_SxCR_EN;
 }
+
+void DMA_Reset_Trigger(DMA_Config *config)
+{
+	config->Request.Stream->CR &= ~DMA_SxCR_EN;  // Enable the DMA stream
+	while((config->Request.Stream->CR & DMA_SxCR_EN) == 1); // Wait till DMA stream is enabled
+	DMA_Clear_Flags(config);
+
+}
+
+void DMA_Clear_Flags(DMA_Config *config)
+{
+	// Bit shift values for streams 0 to 7
+	static const uint8_t LIFCR_Shifts[4] = {0, 6, 16, 22};
+	static const uint8_t HIFCR_Shifts[4] = {0, 6, 16, 22};
+
+	DMA_TypeDef *controller = config->Request.Controller;
+	DMA_Stream_TypeDef *stream = config->Request.Stream;
+	uint32_t shift;
+
+	if (controller == DMA1 || controller == DMA2)
+	{
+		// Determine the correct shift value and clear the corresponding flags in LIFCR or HIFCR
+		if (stream >= DMA1_Stream0 && stream <= DMA1_Stream3)
+		{
+			shift = LIFCR_Shifts[stream - DMA1_Stream0];
+			controller->LIFCR |= 0x3F << shift;  // Clear interrupt flags for the stream
+		}
+		else if (stream >= DMA1_Stream4 && stream <= DMA1_Stream7)
+		{
+			shift = HIFCR_Shifts[stream - DMA1_Stream4];
+			controller->HIFCR |= 0x3F << shift;  // Clear interrupt flags for the stream
+		}
+		else if (stream >= DMA2_Stream0 && stream <= DMA2_Stream3)
+		{
+			shift = LIFCR_Shifts[stream - DMA2_Stream0];
+			controller->LIFCR |= 0x3F << shift;  // Clear interrupt flags for the stream
+		}
+		else if (stream >= DMA2_Stream4 && stream <= DMA2_Stream7)
+		{
+			shift = HIFCR_Shifts[stream - DMA2_Stream4];
+			controller->HIFCR |= 0x3F << shift;  // Clear interrupt flags for the stream
+		}
+	}
+}
