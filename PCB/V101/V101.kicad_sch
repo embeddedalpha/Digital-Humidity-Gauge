@@ -1,0 +1,190 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "2bb6e42f-287e-4818-b6e1-26da2df0523c")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 190.5 234.95)
+		(size 12.7 3.81)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "61dd63c7-6200-4cc1-bdd9-da014d7b9dc3")
+		(property "Sheetname" "Index"
+			(at 190.5 234.2384 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "Index.kicad_sch"
+			(at 190.5 239.3446 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "V101"
+				(path "/2bb6e42f-287e-4818-b6e1-26da2df0523c"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 190.5 240.03)
+		(size 12.7 3.81)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "67cff6b8-b58f-4d70-82ec-acfee8531199")
+		(property "Sheetname" "Block_Diagram"
+			(at 190.5 239.3184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "Block_Diagram.kicad_sch"
+			(at 190.5 244.4246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "V101"
+				(path "/2bb6e42f-287e-4818-b6e1-26da2df0523c"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 190.5 250.19)
+		(size 12.7 3.81)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "7bf4efd1-b0d8-467c-841f-1f88be217ef2")
+		(property "Sheetname" "MCU"
+			(at 190.5 249.4784 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "MCU.kicad_sch"
+			(at 190.5 254.5846 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "V101"
+				(path "/2bb6e42f-287e-4818-b6e1-26da2df0523c"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 190.5 245.11)
+		(size 12.7 3.81)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "a91b7c73-4128-43e2-8b65-c7e425d68cc5")
+		(property "Sheetname" "Project_Architecture"
+			(at 190.5 244.3984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "Project_Architecture.kicad_sch"
+			(at 190.5 249.5046 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "V101"
+				(path "/2bb6e42f-287e-4818-b6e1-26da2df0523c"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
