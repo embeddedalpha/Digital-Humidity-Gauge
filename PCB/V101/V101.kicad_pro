@@ -628,6 +628,22 @@
     [
       "7bf4efd1-b0d8-467c-841f-1f88be217ef2",
       "MCU"
+    ],
+    [
+      "c8e95473-f617-4ba5-be50-45b0179e07ec",
+      "Power"
+    ],
+    [
+      "365ddd10-1d92-4508-9f35-2b0988a801cb",
+      "Sensors"
+    ],
+    [
+      "39221d1a-c991-44a5-9f0e-70e43461fc41",
+      "Interface-RS485"
+    ],
+    [
+      "c6dee409-c458-4e84-a7b2-bca403348684",
+      "Interface-CANFD Sheet"
     ]
   ],
   "text_variables": {}

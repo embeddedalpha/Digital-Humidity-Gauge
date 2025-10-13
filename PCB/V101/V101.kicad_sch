@@ -6,6 +6,94 @@
 	(paper "A4")
 	(lib_symbols)
 	(sheet
+		(at 190.5 260.35)
+		(size 12.7 3.81)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "365ddd10-1d92-4508-9f35-2b0988a801cb")
+		(property "Sheetname" "Sensors"
+			(at 190.5 259.6384 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "Sensors.kicad_sch"
+			(at 190.5 264.7446 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "V101"
+				(path "/2bb6e42f-287e-4818-b6e1-26da2df0523c"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 190.5 265.43)
+		(size 12.7 3.81)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "39221d1a-c991-44a5-9f0e-70e43461fc41")
+		(property "Sheetname" "Interface-RS485"
+			(at 190.5 264.7184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "Interface-RS485.kicad_sch"
+			(at 190.5 269.8246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "V101"
+				(path "/2bb6e42f-287e-4818-b6e1-26da2df0523c"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 190.5 234.95)
 		(size 12.7 3.81)
 		(exclude_from_sim no)
@@ -177,6 +265,94 @@
 			(project "V101"
 				(path "/2bb6e42f-287e-4818-b6e1-26da2df0523c"
 					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 190.5 270.51)
+		(size 12.7 3.81)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "c6dee409-c458-4e84-a7b2-bca403348684")
+		(property "Sheetname" "Interface-CANFD Sheet"
+			(at 190.5 269.7984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "Interface-CANFD.kicad_sch"
+			(at 190.5 274.9046 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "V101"
+				(path "/2bb6e42f-287e-4818-b6e1-26da2df0523c"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 190.5 255.27)
+		(size 12.7 3.81)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "c8e95473-f617-4ba5-be50-45b0179e07ec")
+		(property "Sheetname" "Power"
+			(at 190.5 254.5584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+				(hide yes)
+			)
+		)
+		(property "Sheetfile" "Power.kicad_sch"
+			(at 190.5 259.6646 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "V101"
+				(path "/2bb6e42f-287e-4818-b6e1-26da2df0523c"
+					(page "6")
 				)
 			)
 		)
