@@ -644,6 +644,10 @@
     [
       "c6dee409-c458-4e84-a7b2-bca403348684",
       "Interface-CANFD Sheet"
+    ],
+    [
+      "5eb4a3e1-30d7-4617-8c94-cca3dd2000cb",
+      "Mechanical-Parts"
     ]
   ],
   "text_variables": {}

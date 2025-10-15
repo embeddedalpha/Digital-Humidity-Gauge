@@ -40,9 +40,9 @@
 		)
 		(uuid "1757910f-1b95-41bf-a3d4-dce747e75772")
 	)
-	(text "Debug"
+	(text "Mechanical Parts"
 		(exclude_from_sim no)
-		(at 52.578 147.066 0)
+		(at 73.152 146.304 0)
 		(effects
 			(font
 				(size 5.08 5.08)
