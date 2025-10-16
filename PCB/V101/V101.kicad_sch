@@ -6,8 +6,8 @@
 	(paper "A4")
 	(lib_symbols)
 	(image
-		(at 146.05 87.63)
-		(scale 1.27656)
+		(at 149.86 88.9)
+		(scale 1.28967)
 		(uuid "644ee74b-f515-4c6f-bb15-5b3af0049b11")
 		(data "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a"
 			"HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy"
@@ -3636,7 +3636,7 @@
 		)
 	)
 	(sheet
-		(at 190.5 260.35)
+		(at 289.56 180.34)
 		(size 12.7 3.81)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3652,7 +3652,7 @@
 		)
 		(uuid "365ddd10-1d92-4508-9f35-2b0988a801cb")
 		(property "Sheetname" "Sensors"
-			(at 190.5 259.6384 0)
+			(at 289.56 179.6284 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3662,7 +3662,7 @@
 			)
 		)
 		(property "Sheetfile" "Sensors.kicad_sch"
-			(at 190.5 264.7446 0)
+			(at 289.56 184.7346 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3680,7 +3680,7 @@
 		)
 	)
 	(sheet
-		(at 190.5 265.43)
+		(at 289.56 185.42)
 		(size 12.7 3.81)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3696,7 +3696,7 @@
 		)
 		(uuid "39221d1a-c991-44a5-9f0e-70e43461fc41")
 		(property "Sheetname" "Interface-RS485"
-			(at 190.5 264.7184 0)
+			(at 289.56 184.7084 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3706,7 +3706,7 @@
 			)
 		)
 		(property "Sheetfile" "Interface-RS485.kicad_sch"
-			(at 190.5 269.8246 0)
+			(at 289.56 189.8146 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3724,7 +3724,7 @@
 		)
 	)
 	(sheet
-		(at 190.5 275.59)
+		(at 289.56 195.58)
 		(size 12.7 3.81)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3740,7 +3740,7 @@
 		)
 		(uuid "5eb4a3e1-30d7-4617-8c94-cca3dd2000cb")
 		(property "Sheetname" "Mechanical-Parts"
-			(at 190.5 274.8784 0)
+			(at 289.56 194.8684 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3750,7 +3750,7 @@
 			)
 		)
 		(property "Sheetfile" "Mechanical-Parts.kicad_sch"
-			(at 190.5 279.9846 0)
+			(at 289.56 199.9746 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3768,7 +3768,7 @@
 		)
 	)
 	(sheet
-		(at 190.5 234.95)
+		(at 289.56 154.94)
 		(size 12.7 3.81)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3784,7 +3784,7 @@
 		)
 		(uuid "61dd63c7-6200-4cc1-bdd9-da014d7b9dc3")
 		(property "Sheetname" "Index"
-			(at 190.5 234.2384 0)
+			(at 289.56 154.2284 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3794,7 +3794,7 @@
 			)
 		)
 		(property "Sheetfile" "Index.kicad_sch"
-			(at 190.5 239.3446 0)
+			(at 289.56 159.3346 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3812,7 +3812,7 @@
 		)
 	)
 	(sheet
-		(at 190.5 240.03)
+		(at 289.56 160.02)
 		(size 12.7 3.81)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3828,7 +3828,7 @@
 		)
 		(uuid "67cff6b8-b58f-4d70-82ec-acfee8531199")
 		(property "Sheetname" "Block_Diagram"
-			(at 190.5 239.3184 0)
+			(at 289.56 159.3084 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3838,7 +3838,7 @@
 			)
 		)
 		(property "Sheetfile" "Block_Diagram.kicad_sch"
-			(at 190.5 244.4246 0)
+			(at 289.56 164.4146 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3856,7 +3856,7 @@
 		)
 	)
 	(sheet
-		(at 190.5 250.19)
+		(at 289.56 170.18)
 		(size 12.7 3.81)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3872,7 +3872,7 @@
 		)
 		(uuid "7bf4efd1-b0d8-467c-841f-1f88be217ef2")
 		(property "Sheetname" "MCU"
-			(at 190.5 249.4784 0)
+			(at 289.56 169.4684 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3882,7 +3882,7 @@
 			)
 		)
 		(property "Sheetfile" "MCU.kicad_sch"
-			(at 190.5 254.5846 0)
+			(at 289.56 174.5746 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3900,7 +3900,7 @@
 		)
 	)
 	(sheet
-		(at 190.5 245.11)
+		(at 289.56 165.1)
 		(size 12.7 3.81)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3916,7 +3916,7 @@
 		)
 		(uuid "a91b7c73-4128-43e2-8b65-c7e425d68cc5")
 		(property "Sheetname" "Project_Architecture"
-			(at 190.5 244.3984 0)
+			(at 289.56 164.3884 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3926,7 +3926,7 @@
 			)
 		)
 		(property "Sheetfile" "Project_Architecture.kicad_sch"
-			(at 190.5 249.5046 0)
+			(at 289.56 169.4946 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3944,7 +3944,7 @@
 		)
 	)
 	(sheet
-		(at 190.5 270.51)
+		(at 289.56 190.5)
 		(size 12.7 3.81)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3960,7 +3960,7 @@
 		)
 		(uuid "c6dee409-c458-4e84-a7b2-bca403348684")
 		(property "Sheetname" "Interface-CANFD Sheet"
-			(at 190.5 269.7984 0)
+			(at 289.56 189.7884 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3970,7 +3970,7 @@
 			)
 		)
 		(property "Sheetfile" "Interface-CANFD.kicad_sch"
-			(at 190.5 274.9046 0)
+			(at 289.56 194.8946 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3988,7 +3988,7 @@
 		)
 	)
 	(sheet
-		(at 190.5 255.27)
+		(at 289.56 175.26)
 		(size 12.7 3.81)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4004,7 +4004,7 @@
 		)
 		(uuid "c8e95473-f617-4ba5-be50-45b0179e07ec")
 		(property "Sheetname" "Power"
-			(at 190.5 254.5584 0)
+			(at 289.56 174.5484 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4014,7 +4014,7 @@
 			)
 		)
 		(property "Sheetfile" "Power.kicad_sch"
-			(at 190.5 259.6646 0)
+			(at 289.56 179.6546 0)
 			(effects
 				(font
 					(size 1.27 1.27)
